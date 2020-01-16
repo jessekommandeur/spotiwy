@@ -1,4 +1,4 @@
-# spotiwy
+# SPOTIWY
 webprogrammeren
 
 **Samenvatting:**
@@ -72,9 +72,9 @@ Externe componenten:
 - Bootstrap
 
 Concurrerende bestaande websites:
-- 
+- tot op heden geen concurrentie gevonden
 
-Moeilijkste delen: 
+Uitdagende  onderdelen: 
 - De spotify API gebruiken.
 - Gebruikers koppelen aan hun spotify account. 
 - De playlist door meerdere mensen die in dezelfde kamer zitten laten aanpassen. 
