@@ -48,7 +48,7 @@ De features die we in onze webapplicatie willen implementeren zijn:
 	- Gebruikersnaam veranderen.
 	- Wachtwoorde veranderen.
 	- Een profielfoto kunnen toevoeven. (optioneel)
-- Er komt een alert in het scherm als de gebruiker bijvoorbeeld een niet bestaand kamernummer invoerd, of als de gebruikersnaam al bezet is. 
+- Er komt een alert in het scherm als de gebruiker bijvoorbeeld een niet bestaand kamernummer invoert, of als de gebruikersnaam al bezet is. 
 
 **Minimum viable product**
 
@@ -113,6 +113,12 @@ Dit zijn functies zoals:
 - Spotify Green:HEX #1DB954
 - Youtube Red:	HEX #FF0000
 
+**Languages**
+- Python
+- JavaScript
+- SQL
+- HTML/CSS (markup)
+
 **Schetsen**
 
 - Navigatieboom.png
@@ -128,4 +134,3 @@ Dit zijn functies zoals:
 - Normalroom.png
 - Register.png
 - Settings.png
-	
