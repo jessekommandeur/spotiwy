@@ -7,7 +7,7 @@ nav .navbar-brand {
 }
 
 nav .navbar-brand .indigo {
-    color: #5c44de;
+    color: #ffffff;
     font-family: "CustomFont", "Proxima Nova Alt Rg";
 }
 
@@ -17,6 +17,10 @@ nav .navbar-brand .indigo {
 
 .bg-dark2 {
     background-color: #262626;
+}
+
+.choice {
+    padding: 9px;
 }
 
 .border2 {
