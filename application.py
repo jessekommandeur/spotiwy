@@ -32,10 +32,27 @@ Session(app)
 db = SQL("sqlite:///spotiwy.db")
 
 @app.route("/", methods=["GET", "POST"])
-@login_required
+#@login_required
 def index():
-    #session["user_id"] = None
+    session["user_id"] = 1
     return render_template("index.html")
+
+
+@app.route("/settings", methods=["GET"])
+@login_required
+def settings():
+    return render_template("settings.html")
+
+
+@app.route("/help", methods=["GET"])
+@login_required
+def help():
+    return render_template("help.html")
+
+
+@app.route("/homepage", methods=["GET"])
+def homepage():
+    return render_template("homepage.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
