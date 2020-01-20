@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <form action="/Connect" method="post">
+        <p>
+           Connect your unique Spotify username
+        </p>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="usernamespotify" placeholder="e.g. qck1onpl2n6mlpdkiwt8rajq4" type="button">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="connect" placeholder="Connect to Spotify" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Connect</button>
+    </form>
+{% endblock %}
