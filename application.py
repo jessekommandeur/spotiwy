@@ -6,6 +6,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
+from account import login, logout, register, changeusername, changepassword
 
 # Configure application
 app = Flask(__name__)
@@ -32,5 +33,6 @@ db = SQL("sqlite:///spotiwy.db")
 
 @app.route("/", methods=["GET", "POST"])
 def layout():
-    session["user_id"] = 1
+    session["user_id"] = None
     return render_template("layout.html")
+
