@@ -11,12 +11,27 @@ nav .navbar-brand .indigo {
     font-family: "CustomFont", "Proxima Nova Alt Rg";
 }
 
+.setbutton {
+    padding: 10px;
+    margin: 10px;
+    border-style: solid;
+    border-color: #5c44de;
+    border-width: 2px;
+    background-color: #222222;
+    border-radius: 4px;
+    width: 20%;
+    text-align: center;
+    margin-left: 40%;
+    font-family: "CustomFont", "Proxima Nova Rg";
+
+}
+
 .navbar-brand {
-    background-color: #262626;
+    background-color: #222222;
 }
 
 .bg-dark2 {
-    background-color: #262626;
+    background-color: #222222;
 }
 
 .choice {
