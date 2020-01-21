@@ -280,10 +280,15 @@ def joinroom():
             if not request.form.get("roomnumber").isdigit():
                 return apology("should enter digits only number", 400)
 
+            session["roomnumber"] = userinput
+
             # go to room
             return redirect("/room.html", roomnumber = userinput)
                 # TODO
                 # redirect to matching room
+
+        else:
+            return apology("this room currently does not exist.")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -323,7 +328,7 @@ def remove():
 
     """remove song from list"""
 
-    db.execute("DELETE FROM rooms WHERE trackid = :trackid", likes = likes + 1, roomname = , songid = )
+    db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid = )
 
 visitors
 host
