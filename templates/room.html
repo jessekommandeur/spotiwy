@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+    {% if admin %}
+
+        <form action="/room" method="post">
+            <div class="leftbar">
+                <!--
+                <p>Room number: {{room_number}}</p>
+                <p>Visitors: {{visitors}}</p>
+                -->
+
+                <button>Disband room</button>
+            </div>
+        </form>
+
+        <!--
+        {% for song in playlist %}
+
+        {% endfor %}
+        -->
+
+    {% else %}
+
+        <form action="/room" method="post">
+            <div class="leftbar">
+                <!--
+                <p>Room number: {{room_number}}</p>
+                <p>Visitors: {{visitors}}</p>
+                -->
+
+                <button>Leave room</button>
+            </div>
+        </form>
+
+    {% endif %}
+
+{% endblock %}
