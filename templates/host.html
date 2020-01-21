@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <form action="/hostroom" method="post">
+        <img class="middle"src="static/icon.png">
+        <h2>
+            Choose together, listen better.
+        </h2>
+        <p>
+            Enter six digit room number below:
+        </p>
+        <div class="form-group">
+            <input class="form-control" name="roomnumber" placeholder="Room number" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Create room</button>
+    </form>
+{% endblock %}
