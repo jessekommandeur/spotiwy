@@ -32,9 +32,9 @@ Session(app)
 db = SQL("sqlite:///spotiwy.db")
 
 @app.route("/", methods=["GET", "POST"])
-#@login_required
+@login_required
 def index():
-    session["user_id"] = 1
+    #session["user_id"] = 1
     return render_template("index.html")
 
 
@@ -91,7 +91,7 @@ def register():
         hash=generate_password_hash(request.form.get("password")))
 
         # Redirect user to homepage
-        return redirect("/")
+        return redirect("/login")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -127,7 +127,7 @@ def login():
             return apology("invalid username or password", 400)
 
         # Remember which user has logged in
-        session["userid"] = rows[0]["id"]
+        session["userid"] = rows[0]["userid"]
 
         # Redirect user to homepage
         return redirect("/")
