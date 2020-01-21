@@ -2,59 +2,104 @@ import sys
 import spotipy
 import spotipy.util as util
 
-# scope = 'user-library-read'
+# Program to connect Spotify account with spotiwy
 
-# if len(sys.argv) > 1:
-#     username = sys.argv[1]
-# else:
-#     print("Usage: %s username" % (sys.argv[0],))
-#     sys.exit()
+# def connect(username):
+#     scope = 'user-library-read'
+#     token = util.prompt_for_user_token(username, scope)
 
-# token = util.prompt_for_user_token(username, scope)
+#     if token:
+#         print("Got the token for:", username)
+#     else:
+#         print("Can't get token for", username)
 
-# if token:
-#     sp = spotipy.Spotify(auth=token)
-#     results = sp.current_user_saved_tracks()
-#     for item in results['items']:
-#         track = item['track']
-#         print(track['name'] + ' - ' + track['artists'][0]['name'])
-# else:
-#     print("Can't get token for", username)
 
+#     # username = 'qck1onpl2n6mlpdkiwt8rajq4' #placeholder value here
+#     client_id = 'a96ff6651252429ca81979ee4a293c4f' #placeholder value here
+#     client_secret = '24bacae55a1b481cbed2106862e1e087' #placeholder value here
+#     redirect_uri = 'https://www.google.nl/callback/'
+#     scope = None
+
+
+#     user_token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
+#     print("The user token is:", user_token)
+
+# connect('qck1onpl2n6mlpdkiwt8rajq4')
+######################################################################################################
+
+# shows a user's playlists (need to be authenticated via oauth)
+# def Playlist(PlaylistID):
+
+def show_tracks(results):
+    for i, item in enumerate(results['items']):
+        track = item['track']
+        print(
+            "   %d %32.32s %s" %
+            (i, track['artists'][0]['name'], track['name']))
+
+
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        username = sys.argv[1]
+    else:
+        print("Whoops, need your username!")
+        print("usage: python user_playlists_contents.py [username]")
+        sys.exit()
+
+    token = util.prompt_for_user_token(username)
+
+    if token:
+        sp = spotipy.Spotify(auth=token)
+        playlists = sp.user_playlists(username)
+        for playlist in playlists['items']:
+            if playlist['owner']['id'] == username:
+                print()
+                print(playlist['name'])
+                print('  total tracks', playlist['tracks']['total'])
+                results = sp.playlist(playlist['id'], fields="tracks,next")
+                tracks = results['tracks']
+                show_tracks(tracks)
+                while tracks['next']:
+                    tracks = sp.next(tracks)
+                    show_tracks(tracks)
+    else:
+        print("Can't get token for", username)
+
+
+####################################################################################################
+
+######################################################################################################
+
+# import sys
 # import spotipy
 # import spotipy.util as util
+# # De gebruiker heeft een playlist gekozen voor de kamer. Daarna krijgen wij de ID van die playlist, en kunnen we deze functie aanroepen zodat gebruikers kunnen kijken wat er in de playlist zit.
+
+# def playlist2(PlaylistID):
+
+#     username = 'qck1onpl2n6mlpdkiwt8rajq4'
+#     token = util.prompt_for_user_token(username)
+#     sp = spotipy.Spotify(auth=token)
+#     playlist_id = PlaylistID
+#     # results = sp.playlist(playlist_id, fields="tracks,next")
+#     # test = sp.playlist_tracks(playlist_id, fields=None, limit=100, offset=0, market=None)
+#     # test2 = results['items']
+#     sp_playlist = sp.user_playlist_tracks(username, playlist_id)
+#     # tracks = sp_playlist['name']
+#     for element in sp_playlist:
+#         print(element)
+#     items = sp_playlist['items']
+#     items1 = items[0]
+#     print(items1['name'])
 
 
-# username = 'o2dznr7gbgsjrz727dcy9pn46' #placeholder value here
-# client_id = 'a96ff6651252429ca81979ee4a293c4f' #placeholder value here
-# client_secret = '24bacae55a1b481cbed2106862e1e087' #placeholder value here
-# redirect_uri = 'http://localhost:8888/callback/'
-# scope = None
+# playlist2('4pamLh9cgvJcT7btnB7Uod')
+# playlist_tracks = sp.user_playlist_tracks(user, playlist_id, fields=None, limit=100, offset=0, market=None)
+#######################################################################################################
+# shows a user's playlists (need to be authenticated via oauth)
 
-
-# user_token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
-# print(user_token)
-
-import sys
-import spotipy
-import spotipy.util as util
-
-# Shows the contents of every playlist owned by a user:
-# def show_tracks(tracks):
-#     for i, item in enumerate(tracks['items']):
-#         track = item['track']
-#         NaamLied = track['name']
-#         print("The name of the song is: ", NaamLied )
-#         NaamArtiest = (track['artists'][0]['name'])
-#         print("The name of the artist(s) is/are: ", NaamArtiest)
-
-# if __name__ == '__main__':
-#     if len(sys.argv) > 1:
-#         username = sys.argv[1] # De gebruikers van spotiwy geven de usernames op dus deze regel moet nog veranderd worden.
-#     else:
-#         print("Whoops, need your username!")
-#         print("usage: APItest.py [username]")
-#         sys.exit()
+# usage: python APItest.py [username]
+# def playlistInfo(username):
 
 #     token = util.prompt_for_user_token(username)
 
@@ -62,44 +107,14 @@ import spotipy.util as util
 #         sp = spotipy.Spotify(auth=token)
 #         playlists = sp.user_playlists(username)
 #         for playlist in playlists['items']:
-#             if playlist['owner']['id'] == username:
-#                 PlaylistName = playlist['name']
-#                 print("The name of the playlist is:", PlaylistName)
-#                 NummersInPlaylist = playlist['tracks']['total']
-#                 print ("The total number of tracks in the list is:", NummersInPlaylist)
-#                 results = sp.user_playlist(username, playlist['id'], fields="tracks,next")
-#                 tracks = results['tracks']
-#                 show_tracks(tracks)
-#                 while tracks['next']:
-#                     tracks = sp.next(tracks)
-#                     show_tracks(tracks)
+#             PlaylistName = playlist['name']
+#             print("The name of the playlist is:", PlaylistName)
+#             # prints the playlist id
+#             PlaylistID = playlist['id']
+#             print("The playlist id is:", PlaylistID)
 #     else:
-#         print("Can't get token for", username)
-
-####################################################################################################
-# shows a user's playlists (need to be authenticated via oauth)
-
-# usage: python APItest.py [username]
-
-# if len(sys.argv) > 1:
-#     username = sys.argv[1]
-# else:
-#     print("Whoops, need your username!")
-#     print("usage: python user_playlists.py [username]")
-#     sys.exit()
-
-# token = util.prompt_for_user_token(username)
-
-# if token:
-#     sp = spotipy.Spotify(auth=token)
-#     playlists = sp.user_playlists(username)
-#     for playlist in playlists['items']:
-#         print("The name of the playlist is:", playlist['name'])
-#         # prints the playlist id
-#         PlayListID = playlist['id']
-#         print("The playlist id is:", playlist['id'])
-# else:
-#     print("Can't get token for", username)
+#         print("Could not get token for", username)
+# playlistInfo("qck1onpl2n6mlpdkiwt8rajq4") #Deze moet automatisch in de functie worden ingevuld
 
 ##########################################################################################
 # shows tracks for the given artist
