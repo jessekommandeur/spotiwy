@@ -34,7 +34,6 @@ db = SQL("sqlite:///spotiwy.db")
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-    #session["user_id"] = 1
     return render_template("index.html")
 
 
@@ -210,3 +209,18 @@ def changepassword():
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("password.html")
+
+@app.route("/host", methods=["GET", "POST"])
+@login_required
+def host():
+
+    """Host a room"""
+
+    #User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        "TODO"
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("host.html")
