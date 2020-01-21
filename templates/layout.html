@@ -36,12 +36,13 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbar">
-                {% if session.user_id %}
+                {% if session.userid %}
                     <ul class="navbar-nav ml-auto mt-2">
 
                         <!-- TODO: DROPDOWN MENU -->
-                        <li class="nav-item"><a class="nav-link" href="/account">Account</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/settings">Settings</a></li>
                         <li class="nav-item"><a class="nav-link" href="/help">Help</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
                     </ul>
                 {% else %}
                     <ul class="navbar-nav ml-auto mt-2">
