@@ -1,6 +1,7 @@
 import sys
 import spotipy
 import spotipy.util as util
+from spotipy.oauth2 import SpotifyClientCredentials
 
 # Program to connect Spotify account with spotiwy
 
@@ -26,80 +27,42 @@ import spotipy.util as util
 
 # connect('qck1onpl2n6mlpdkiwt8rajq4')
 ######################################################################################################
+# Deze functie neemt als argument een PlaylistID en geeft de SongName en bijbehorende ArtistName.
+# Hiermee kunnen mensen die een room gejoined zijn kijken welke liedjes er al in de playlist staan.
+# Er wordt een list gereturned met daarin dicts met de naam, artiest en id van het lied.
 
-# shows a user's playlists (need to be authenticated via oauth)
-# def Playlist(PlaylistID):
+# def playlist(PlaylistID):
 
-def show_tracks(results):
-    for i, item in enumerate(results['items']):
-        track = item['track']
-        print(
-            "   %d %32.32s %s" %
-            (i, track['artists'][0]['name'], track['name']))
-
-
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        username = sys.argv[1]
-    else:
-        print("Whoops, need your username!")
-        print("usage: python user_playlists_contents.py [username]")
-        sys.exit()
-
-    token = util.prompt_for_user_token(username)
-
-    if token:
-        sp = spotipy.Spotify(auth=token)
-        playlists = sp.user_playlists(username)
-        for playlist in playlists['items']:
-            if playlist['owner']['id'] == username:
-                print()
-                print(playlist['name'])
-                print('  total tracks', playlist['tracks']['total'])
-                results = sp.playlist(playlist['id'], fields="tracks,next")
-                tracks = results['tracks']
-                show_tracks(tracks)
-                while tracks['next']:
-                    tracks = sp.next(tracks)
-                    show_tracks(tracks)
-    else:
-        print("Can't get token for", username)
-
-
-####################################################################################################
-
-######################################################################################################
-
-# import sys
-# import spotipy
-# import spotipy.util as util
-# # De gebruiker heeft een playlist gekozen voor de kamer. Daarna krijgen wij de ID van die playlist, en kunnen we deze functie aanroepen zodat gebruikers kunnen kijken wat er in de playlist zit.
-
-# def playlist2(PlaylistID):
-
-#     username = 'qck1onpl2n6mlpdkiwt8rajq4'
+#     username = 'qck1onpl2n6mlpdkiwt8rajq4' # De username wordt er automatisch ingezet
 #     token = util.prompt_for_user_token(username)
 #     sp = spotipy.Spotify(auth=token)
-#     playlist_id = PlaylistID
-#     # results = sp.playlist(playlist_id, fields="tracks,next")
-#     # test = sp.playlist_tracks(playlist_id, fields=None, limit=100, offset=0, market=None)
-#     # test2 = results['items']
-#     sp_playlist = sp.user_playlist_tracks(username, playlist_id)
-#     # tracks = sp_playlist['name']
-#     for element in sp_playlist:
-#         print(element)
-#     items = sp_playlist['items']
-#     items1 = items[0]
-#     print(items1['name'])
+#     results = sp.playlist(playlist_id=PlaylistID, fields="tracks,next")
+#     # Het aantal liedjes in de afspeellijst
+#     TotalSongs = results['tracks']['total']
+#     results2 = results['tracks']
+#     PlayList = []
+#     for Counter in range(TotalSongs):
+#         SongName = results2['items'][Counter]['track']['name']
+#         ArtistName = results2['items'][Counter]['track']['album']['artists'][0]['name']
+#         SongID = results2['items'][Counter]['track']['id']
+#         PlaylistDict = {}
+#         PlaylistDict['track'] = SongName
+#         PlaylistDict['artist'] = ArtistName
+#         PlaylistDict['songid'] = SongID
+#         PlayList.append(PlaylistDict)
+#     print(PlayList)
+
+#     return PlayList
 
 
-# playlist2('4pamLh9cgvJcT7btnB7Uod')
-# playlist_tracks = sp.user_playlist_tracks(user, playlist_id, fields=None, limit=100, offset=0, market=None)
-#######################################################################################################
-# shows a user's playlists (need to be authenticated via oauth)
+# playlist('4pamLh9cgvJcT7btnB7Uod') # De playlistID wordt er uiteraard automatisch ingezet.
 
-# usage: python APItest.py [username]
-# def playlistInfo(username):
+
+######################################################################################################
+# Deze functie neemt als argument de spotify username en geeft de naam (PlaylistName) en de ID's (PlaylistID) van zijn of haar playlists mee.
+# Hiermee kan de maker van een room kijken welke playlists die allemaal heeft.
+
+# def playlistinfo(username):
 
 #     token = util.prompt_for_user_token(username)
 
@@ -114,62 +77,96 @@ if __name__ == '__main__':
 #             print("The playlist id is:", PlaylistID)
 #     else:
 #         print("Could not get token for", username)
-# playlistInfo("qck1onpl2n6mlpdkiwt8rajq4") #Deze moet automatisch in de functie worden ingevuld
+# playlistinfo("qck1onpl2n6mlpdkiwt8rajq4") #Deze moet automatisch in de functie worden ingevuld
 
 ##########################################################################################
-# shows tracks for the given artist
+# Deze functie neemt als argument een naam van een artiest en geeft de TrackName en TrackID.
+# Hiermee kunnen gebruikers liedjes opzoeken om toe te voegen aan de afspeellijst.
 
-# usage: python APItest.py [artist name]
-
-# from spotipy.oauth2 import SpotifyClientCredentials
-# import spotipy
-# import sys
 # def search(naamartiest):
 
 #     client_credentials_manager = SpotifyClientCredentials()
 #     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 #     results = sp.search(q=naamartiest, limit=20)
 #     for number, track in enumerate(results['tracks']['items']):
+#         TrackName = track['name']
 #         TrackID = track['id']
-#         print(' ', number, track['name'], "---The ID of the track is:---", TrackID)
+#         print(' ', number, TrackName, "---The ID of the track is:---", TrackID)
 
-# search("marshmello") # De naam die de gebruikers invoeren, wordt in deze functie geplaatst.
+# search("Marshmello") # De artiestennaam die de gebruikers invoeren, wordt in deze functie geplaatst.
 ###########################################################################################
-
 # Adds tracks to a playlist
+# Deze functie neemt 3 argumenten, de spotify username, het playlist ID en de track ID van het lied dat je wil toevoegen.
 
-# if len(sys.argv) > 3:
-#     username = sys.argv[1]
-#     playlist_id = sys.argv[2]
-#     track_ids = sys.argv[3:]
-# else:
-#     print("Usage: %s username playlist_id track_id ..." % (sys.argv[0],))
-#     sys.exit()
+# def addtracks(username,playlist_id,track_ids):
 
-# scope = 'playlist-modify-public'
-# token = util.prompt_for_user_token(username, scope)
+#     scope = 'playlist-modify-public'
+#     token = util.prompt_for_user_token(username, scope)
 
-# if token:
-#     sp = spotipy.Spotify(auth=token)
-#     sp.trace = False
-#     results = sp.user_playlist_add_tracks(username, playlist_id, track_ids)
-#     print(results)
-# else:
-    # print("Can't get token for", username)
+#     if token:
+#         sp = spotipy.Spotify(auth=token)
+#         sp.trace = False
+#         TrackList = []
+#         TrackList.append(track_ids)
+#         results = sp.user_playlist_add_tracks(user=username, playlist_id=playlist_id, tracks=TrackList)
+#         print(results)
+#     else:
+#         print("Can't get token for", username)
 
-######################################################################################################
-# Read a playlist
+# addtracks('qck1onpl2n6mlpdkiwt8rajq4','04WYs2jTaeV9otTDJaCMNJ','5FBqdMefPnp3Xjdkhn51oc') # Voegt het nummer Solace van Feint toe aan afspeellijst1
 
-# from spotipy.oauth2 import SpotifyClientCredentials
-# import spotipy
-# import json
+####################################################################################################
+# Removes tracks from a playlist.
+# Deze functie neemt 3 argumenten, de spotify username, het playlist ID en de track ID van het lied dat je wil verwijderen.
 
-# client_credentials_manager = SpotifyClientCredentials()
-# sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+# def removetracks(username, playlist_id, track_ids):
 
-# playlist_id = 'spotify:user:spotifycharts:playlist:37i9dQZEVXbJiZcmkrIHGU'
-# results = sp.playlist(playlist_id)
-# print(json.dumps(results, indent=4))
+#     scope = 'playlist-modify-public'
+#     token = util.prompt_for_user_token(username, scope)
+
+#     if token:
+#         sp = spotipy.Spotify(auth=token)
+#         sp.trace = False
+#         TrackList = []
+#         TrackList.append(track_ids)
+#         results = sp.user_playlist_remove_all_occurrences_of_tracks(user=username, playlist_id=playlist_id, tracks=TrackList)
+#         print(results)
+#     else:
+#         print("Can't get token for", username)
+
+# removetracks('qck1onpl2n6mlpdkiwt8rajq4','04WYs2jTaeV9otTDJaCMNJ','5FBqdMefPnp3Xjdkhn51oc') # Verwijdert het nummer Solace van Feint uit afspeellijst1
+####################################################################################################
+
+import pprint
+import sys
+import spotipy
+import spotipy.util as util
+
+#Create a new playlist
+
+def createplaylist(username, playlist_name, playlist_description)
+
+if len(sys.argv) > 2:
+    username = sys.argv[1] # qck1onpl2n6mlpdkiwt8rajq4
+    playlist_name = sys.argv[2] # Playlist3
+    playlist_description = sys.argv[3] # De derde playlist
+else:
+    print(
+        "Usage: %s username playlist-name playlist-description" %
+        (sys.argv[0],))
+    sys.exit()
+
+scope = "playlist-modify-public"
+token = util.prompt_for_user_token(username, scope)
+
+if token:
+    sp = spotipy.Spotify(auth=token)
+    sp.trace = False
+    playlists = sp.user_playlist_create(username, playlist_name,
+                                        description=playlist_description)
+    pprint.pprint(playlists)
+else:
+    print("Can't get token for", username)
 
 # @app.route("/connect", methods=["GET", "POST"])
 # @login_required
