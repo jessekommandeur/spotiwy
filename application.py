@@ -50,11 +50,6 @@ def help():
     return render_template("help.html")
 
 
-@app.route("/homepage", methods=["GET"])
-def homepage():
-    return render_template("homepage.html")
-
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
 
@@ -228,46 +223,107 @@ def host():
 
         # insert roomname into database
         db.execute("INSERT INTO rooms (roomnumber, userid) VALUES(:roomnumber, :userid)", userid = session["userid"],
-            roomnumber=int(roomnumber))
+        roomnumber=int(roomnumber))
 
         # TODO
         # Create room settings
 
-        # go to room (adminside)
-        return redirect("/adminroom.html")
+        # give admin tag
+        admin = True
+
+        # go to room
+        return redirect("/room.html", admin = admin)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("host.html")
 
-@app.route("/room", methods=["GET", "POST"])
-@login_required
-def adminroom():
-
-    """Admin room"""
-
-    if request.method == "POST":
-
-    db.execute("INSERT INTO rooms ()")
-
-    db.execute("SELECT * from rooms WHERE roomnumber")
 
 
-# # @app.route("/room", methods=["GET", "POST"])
-# # @login_required
-# # def joinroom():
+# @app.route("/room", methods=["GET", "POST"])
+# @login_required
+# def admin():
 
-#     """Join a room"""
+#     """Admin room"""
 
 #     if request.method == "POST":
 
 
-#     return
-# # @app.route("/room", methods=["GET", "POST"])
-# # @login_required
-# # def visitorroom():
 
-#     """Room functions"""
+# @app.route("/room", methods=["GET", "POST"])
+# @login_required
+# def admin():
+
+#     """Admin room"""
+
+#     if request.method == "POST":
+
+
+
+@app.route("/homepage", methods=["GET", "POST"])
+def joinroom():
+
+    """Join a room"""
+
+    if request.method == "POST":
+
+        # get user input
+        userinput =  request.form.get("roomnumber")
+
+        if db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = userinput):
+
+            # ensure user enters 6 digit number
+            if not len(request.form.get("roomnumber")) == 6:
+                return apology("should enter 6 digit number", 400)
+
+            # ensure user enters digits only
+            if not request.form.get("roomnumber").isdigit():
+                return apology("should enter digits only number", 400)
+
+            # go to room
+            return redirect("/room.html", roomnumber = userinput)
+                # TODO
+                # redirect to matching room
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("homepage.html")
+
+@app.route("/room", methods=["GET", "POST"])
+def room():
+
+    """room functions"""
+
+    roomnumber = db.execute("SELECT roomnumber FROM rooms WHERE userid = :userid", userid = session["userid"])
+
+
+    return render_template("room.html")
+
+
+
+@app.route("/disband", methods=["GET"])
+@login_required
+def disband():
+
+    """disband room"""
+
+    #disbands and deletes room
+    db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
+    return redirect("/.html")
+
+@app.route("/like", methods=["GET"])
+def like():
+
+    """ like a song"""
+
+    db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1, roomname = , songid = )
+
+@app.route("/bin", methods=["GET"])
+def remove():
+
+    """remove song from list"""
+
+    db.execute("DELETE FROM rooms WHERE trackid = :trackid", likes = likes + 1, roomname = , songid = )
 
 visitors
 host
