@@ -4,36 +4,52 @@
 
     {% if admin %}
 
-        <form action="/room" method="post">
+        <form action="/disband" method="post">
             <div class="leftbar">
                 <!--
-                <p>Room number: {{room_number}}</p>
-                <p>Visitors: {{visitors}}</p>
+                <p>Room number: {{roomnumber}}</p>
                 -->
 
                 <button>Disband room</button>
             </div>
         </form>
 
-        <!--
-        {% for song in playlist %}
-
-        {% endfor %}
-        -->
-
     {% else %}
 
-        <form action="/room" method="post">
+        <form action="/" method="post">
             <div class="leftbar">
-                <!--
-                <p>Room number: {{room_number}}</p>
-                <p>Visitors: {{visitors}}</p>
-                -->
+                <p>Room number: {{roomnumber}}</p>
 
                 <button>Leave room</button>
             </div>
         </form>
 
     {% endif %}
+
+        <div class="playlist">
+            {% for element in playlist %}
+
+            <p>Song: {{song}}</p>
+            <p>Artist: {{artist}}</p>
+
+            <div class="rightbar">
+                <a href="/like"><img src=" --like-- "></a>
+                <p>{{likes}}</p>
+
+                {% if admin %}
+                    <img src=" --prullenbak-- ">
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+                <p>Add song to playlist</p>
+
+                <div class="rightbar">
+                    <a href="/add"><img src=" --plus-- "></a>
+                </div>
+
+        </div>
 
 {% endblock %}
