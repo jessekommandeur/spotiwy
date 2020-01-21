@@ -80,6 +80,24 @@ from spotipy.oauth2 import SpotifyClientCredentials
 # playlistinfo("qck1onpl2n6mlpdkiwt8rajq4") #Deze moet automatisch in de functie worden ingevuld
 
 ##########################################################################################
+def searchsong(query, limit, offset, Type):
+    username = 'qck1onpl2n6mlpdkiwt8rajq4'
+    token = util.prompt_for_user_token(username)
+
+    if token:
+        sp = spotipy.Spotify(auth=token)
+        playlists = sp.user_playlists(username)
+        results = sp.search(query, limit, offset, Type)
+        for number, track in enumerate(results['tracks']['items']):
+            TrackName = track['name']
+            TrackID = track['id']
+            print(' ', number, TrackName, "---The ID of the track is:---", TrackID)
+    else:
+        print("Could not get token for", username)
+
+
+searchsong("The Nights", 10, 0, 'track')
+##########################################################################################
 # Deze functie neemt als argument een naam van een artiest en geeft de TrackName en TrackID.
 # Hiermee kunnen gebruikers liedjes opzoeken om toe te voegen aan de afspeellijst.
 
@@ -144,7 +162,7 @@ import spotipy.util as util
 
 #Create a new playlist
 
-def createplaylist(username, playlist_name, playlist_description)
+# def createplaylist(username, playlist_name, playlist_description)
 
 if len(sys.argv) > 2:
     username = sys.argv[1] # qck1onpl2n6mlpdkiwt8rajq4
