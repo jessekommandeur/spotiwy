@@ -6,8 +6,8 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import login_required, apology
-from random import randrange
+from helpers import login_required, apology, generatenumber
+from random import randint
 
 # Configure application
 app = Flask(__name__)
@@ -211,19 +211,67 @@ def changepassword():
     else:
         return render_template("password.html")
 
+
+
 @app.route("/host", methods=["GET", "POST"])
 @login_required
 def host():
 
     """Host a room"""
 
-    #User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
-        "TODO"
+        # create room number
+        roomnumber = randint(100000, 999999)
+        while db.execute("SELECT * from rooms WHERE roomnumber = :roomnumber", roomnumber = roomnumber):
+            roomnumber = randint(100000, 999999)
+
+        # insert roomname into database
+        db.execute("INSERT INTO rooms (roomnumber, userid) VALUES(:roomnumber, :userid)", userid = session["userid"],
+            roomnumber=int(roomnumber))
+
+        # TODO
+        # Create room settings
+
+        # go to room (adminside)
+        return redirect("/adminroom.html")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-
-        # Send room number to host.html
         return render_template("host.html")
+
+@app.route("/room", methods=["GET", "POST"])
+@login_required
+def adminroom():
+
+    """Admin room"""
+
+    if request.method == "POST":
+
+    db.execute("INSERT INTO rooms ()")
+
+    db.execute("SELECT * from rooms WHERE roomnumber")
+
+
+# # @app.route("/room", methods=["GET", "POST"])
+# # @login_required
+# # def joinroom():
+
+#     """Join a room"""
+
+#     if request.method == "POST":
+
+
+#     return
+# # @app.route("/room", methods=["GET", "POST"])
+# # @login_required
+# # def visitorroom():
+
+#     """Room functions"""
+
+visitors
+host
+nummers
+artiesten
+
+
