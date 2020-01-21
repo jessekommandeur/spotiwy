@@ -301,7 +301,6 @@ def room():
 
     roomnumber = db.execute("SELECT roomnumber FROM rooms WHERE userid = :userid", userid = session["userid"])
 
-
     return render_template("room.html")
 
 
@@ -321,18 +320,36 @@ def like():
 
     """ like a song"""
 
-    db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1, roomname = , songid = )
+    db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1,
+    roomname = session["roomname"], songid = )
 
 @app.route("/bin", methods=["GET"])
 def remove():
 
     """remove song from list"""
 
-    db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid = )
+    db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid = playlist)
 
-visitors
-host
-nummers
-artiesten
+
+
+@app.route("/add", methods=["GET"], ["POST"]
+def add():
+
+    """add new song to list"""
+
+    if request.method == "POST":
+
+        "TODO: ZOEK OP NUMMER"
+
+        db.execute("INSERT INTO rooms () VALUES()", )
+
+        return redirect("/room")
+
+    else:
+        return render_template("add.html")
+
+    # song db.execute("SELECT song FROM rooms WHERE roomname = :roomname", roomname = session["roomname"])
+    # db.execute("SELECT artist FROM rooms WHERE roomname = :roomname", roomname = session["roomname"]))
+
 
 
