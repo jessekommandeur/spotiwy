@@ -1,5 +1,6 @@
 body {
-    background-color: #333333;
+    background-image: url("background2.png");
+    background-size: cover;
 }
 
 nav .navbar-brand {
@@ -97,5 +98,5 @@ main img {
 }
 
 #homebackground {
-     background-image: url("home_background.jpeg");
+
 }
