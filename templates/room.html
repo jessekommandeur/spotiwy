@@ -2,14 +2,11 @@
 
 {% block main %}
 
-    {% if admin %}
+    {% if session.admin %}
 
         <form action="/disband" method="post">
             <div class="leftbar">
-                <!--
                 <p>Room number: {{roomnumber}}</p>
-                -->
-
                 <button>Disband room</button>
             </div>
         </form>
@@ -19,7 +16,6 @@
         <form action="/" method="post">
             <div class="leftbar">
                 <p>Room number: {{roomnumber}}</p>
-
                 <button>Leave room</button>
             </div>
         </form>
@@ -29,15 +25,15 @@
         <div class="playlist">
             {% for element in playlist %}
 
-            <p>Song: {{song}}</p>
-            <p>Artist: {{artist}}</p>
+            <p>Song: {{element["song"]}}</p>
+            <p>Artist: {{element["artist"]}}</p>
 
             <div class="rightbar">
-                <a href="/like"><img src=" --like-- "></a>
+                <a href="/like"><img src="like.png"></a>
                 <p>{{likes}}</p>
 
-                {% if admin %}
-                    <img src=" --prullenbak-- ">
+                {% if session.admin %}
+                    <a href="/bin"><img src=" --prullenbak-- "></a>
                 {% endif %}
 
             </div>
@@ -47,7 +43,7 @@
                 <p>Add song to playlist</p>
 
                 <div class="rightbar">
-                    <a href="/add"><img src=" --plus-- "></a>
+                    <a href="/add"><img src="static/add.png" width="30px" height="30px"></a>
                 </div>
 
         </div>

@@ -6,7 +6,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import login_required, apology, generatenumber
+from helpers import login_required, apology, generatenumber, room_required
 from random import randint
 from API import searchsong
 
@@ -232,27 +232,15 @@ def host():
         db.execute("INSERT INTO rooms (roomnumber, userid) VALUES(:roomnumber, :userid)", userid = session["userid"],
         roomnumber=int(roomnumber))
 
-        # TODO
-        # Create room settings
-        # give admin tag
-
+        # give
         session["roomnumber"] = roomnumber
+
+        # give admin tag
+        session["admin"] = True
 
         return render_template("host.html", roomnumber = roomnumber)
 
-
-
-# @app.route("/room", methods=["GET", "POST"])
-# @login_required
-# def admin():
-
-#     """Admin room"""
-
-#     if request.method == "POST":
-
-
-
-@app.route("/homepage", methods=["GET", "POST"])
+@app.route("/joinroom", methods=["GET", "POST"])
 def joinroom():
 
     """Join a room"""
@@ -280,60 +268,79 @@ def joinroom():
                 # redirect to matching room
 
         else:
-            return apology("this room currently does not exist.")
+            # APOLOGY
+            return redirect("/")
+
+    else:
+        return render_template("joinroom.html")
+
+
+
+@app.route("/homepage", methods=["GET", "POST"])
+def homepage():
 
     # User reached route via GET (as by clicking a link or via redirect)
-    else:
-        return render_template("homepage.html")
+    return render_template("homepage.html")
 
 
 
 @app.route("/room", methods=["GET", "POST"])
+@room_required
 def room():
 
     """room functions"""
 
+    playlist = db.execute("SELECT * FROM rooms WHERE songid IS NOT NULL AND roomnumber = :roomnumber", roomnumber = session["roomnumber"])
+
     roomnumber = session["roomnumber"]
 
-    return render_template("room.html")
+    return render_template("room.html", roomnumber = session["roomnumber"], playlist = playlist)
 
 
 
-@app.route("/disband", methods=["GET"])
+@app.route("/disband", methods=["GET", "POST"])
 @login_required
+@room_required
 def disband():
 
     """admin disband room"""
 
-    #disbands and deletes room
-    db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
+    if request.method == "POST":
 
-    # clear room cookies and log user out
-    session.clear()
+        #disbands and deletes room
+        db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
+
+        # clear room cookies and log user out
+        session.clear()
 
     return redirect("/")
 
-@app.route("/disband", methods=["GET"])
+
+@app.route("/leave", methods=["GET"])
+@room_required
 def leave():
 
-    """ user leaves room"""
+    """user leaves room"""
 
     # clear visitors cookies
     session.clear()
 
     return redirect("/")
 
-# @app.route("/like", methods=["GET"])
-# def like():
+@app.route("/like", methods=["GET"])
+@room_required
+def like():
 
-#     """ like a song"""
+    """like a song"""
 
-#     likes = ("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = session["roomnumber"], songid =  )
+    likes = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = session["roomnumber"], songid = 1)
 
-#     db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1,
-#     roomname = session["roomname"], songid = )
+    db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1,
+    roomname = session["roomname"], songid = 1)
 
 # @app.route("/bin", methods=["GET"])
+# @login_required
+# @room_required
 # def remove():
 
 #     """remove song from list"""
@@ -343,6 +350,7 @@ def leave():
 
 
 @app.route("/add", methods=["GET", "POST"])
+@room_required
 def add():
 
     """add new song to list"""
@@ -356,11 +364,12 @@ def add():
             # APOLOGY
 
             # store song information in database
-            db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes, userid) VALUES(:roomnumber, :song, :songid, :artist, :likes, :userid)",
-            roomnumber = session["roomnumber"], song = songinfo[0]["track"], songid = songinfo[0]["songid"], artist = songinfo[0]["artist"], likes = 1,
-            userid = session["userid"])
+            db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes) VALUES(:roomnumber, :song, :songid, :artist, :likes)",
+            roomnumber = session["roomnumber"], song = songinfo[0]["track"], songid = songinfo[0]["songid"], artist = songinfo[0]["artist"], likes = 1)
 
-        return redirect("/room")
+            return redirect("/room")
+
+        return redirect("/add")
 
     else:
         return render_template("add.html")
