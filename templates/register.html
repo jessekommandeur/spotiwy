@@ -1,16 +1,53 @@
 {% extends "layout.html" %}
 
 {% block main %}
-    <form action="/register" method="post">
+    <form action="/register" id="user_error" method="post">
+
         <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+        <input autocomplete="off" id="username" autofocus class="form-control" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="form-group" class="alert alert-warning alert-dismissible" id ="user_alert">
+            <strong style="color:white;">Username already exists</strong>
         </div>
         <div class="form-group">
-            <input class="form-control" name="password" placeholder="Password" type="password">
+            <input class="form-control" id="password" name="password" placeholder="Password" type="password">
         </div>
         <div class="form-group">
-            <input class="form-control" name="confirmation" placeholder="Confirm Password" type="password">
+            <input class="form-control"  id="confirmation" name="confirmation" placeholder="Confirm Password" onfocusout="check_passw()" type="password">
         </div>
-        <button class="btn btn-primary" type="submit">Register</button>
+        <div class="form-group" class="alert alert-warning alert-dismissible" id ="passw_alert">
+            <strong style="color:white;">Password doesn't match</strong>
+        </div>
+        <button class="btn btn-primary" id="sumbit" type="submit">Register</button>
     </form>
+    <script>
+    // $("#sumbit").click(function(event){
+    //     event.preventDefault();
+        $("#user_alert").hide();
+        $(document).ready(function(){
+            document.getElementById("username").onkeyup = function(){
+                $.get('/usercheck?username=' + username.value, function(data) {
+                    if (data == false){
+                        $('#user_alert').show();
+                    }
+                    else {
+                        $('#user_alert').hide();
+                        // $(this).unbind("click");
+                    }
+                    });
+                };
+        });
+        $("#passw_alert").hide();
+        function check_passw() {
+                if (document.getElementById("password").value != document.getElementById("confirmation").value){
+                //  || document.getElementById("password").value.length > 0){
+                    $("#passw_alert").show();
+                }
+                else {
+                    $("#passw_alert").hide();
+                    // $(this).unbind("click");
+                };
+            };
+    // });
+    </script>
 {% endblock %}

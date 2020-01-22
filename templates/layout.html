@@ -40,20 +40,20 @@
                     <ul class="navbar-nav ml-auto mt-2">
 
                         <!-- TODO: DROPDOWN MENU -->
-                        <li class="nav-item"><a class="nav-link" href="/settings">Settings</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/help">Help</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
+                        <li class="nav-item navitem"><a class="nav-link" href="/settings">Settings</a></li>
+                        <li class="nav-item navitem"><a class="nav-link" href="/help">Help</a></li>
+                        <li class="nav-item navitem"><a class="nav-link" href="/logout">Log out</a></li>
                     </ul>
                 {% else %}
                     <ul class="navbar-nav ml-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/login">Log in</a></li>
+                        <li class="nav-item navitem"><a class="nav-link" href="/register">Register</a></li>
+                        <li class="nav-item navitem"><a class="nav-link" href="/login">Log in</a></li>
                     </ul>
                 {% endif %}
             </div>
         </nav>
 
-        <main class="container p-5">
+        <main id="homebackground" class="container p-5">
             {% block main %}{% endblock %}
         </main>
 

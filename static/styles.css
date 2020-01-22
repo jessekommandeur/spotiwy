@@ -58,3 +58,44 @@ main {
 main img {
     max-width: 100%;
 }
+
+#homepageslogan{
+    position: relative;
+    height: 100px;
+}
+
+#image{
+    height: 220px;
+    width: 220px;
+}
+
+#imagespacing{
+    height: 230px;
+}
+
+.roombutton{
+  background-color: #5c44de;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.2s;
+}
+
+.roombutton_hover:hover{
+    box-shadow: 0 50px 50px 0 rgba(0,0,0,0.24),0 50px 100px 0 rgba(0,0,0,0.19);
+}
+
+
+.navitem:hover {
+  background-color:#5c44de;
+}
+
+#homebackground {
+     background-image: url("home_background.jpeg");
+}
