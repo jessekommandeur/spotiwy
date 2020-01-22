@@ -83,6 +83,9 @@ from spotipy.oauth2 import SpotifyClientCredentials
 # playlistinfo("qck1onpl2n6mlpdkiwt8rajq4") #Deze moet automatisch in de functie worden ingevuld
 
 ##########################################################################################
+# Deze functie neemt 4 argumenten: De string die de gebruiker intypt (De titel van een lied (query)), het aantal nummers die worden opgehaald (limit), de offset en het type. In dit geval een track.
+# Het enige wat we nodig hebben van de gebruiker is de string die hij heeft ingetypt. De andere 3 argumenten zetten wij er in.
+
 # def searchsong(query, limit, offset, Type):
 #     username = 'qck1onpl2n6mlpdkiwt8rajq4'
 #     token = util.prompt_for_user_token(username)
@@ -91,15 +94,23 @@ from spotipy.oauth2 import SpotifyClientCredentials
 #         sp = spotipy.Spotify(auth=token)
 #         playlists = sp.user_playlists(username)
 #         results = sp.search(query, limit, offset, Type)
+#         SongList = []
 #         for number, track in enumerate(results['tracks']['items']):
-#             TrackName = track['name']
-#             TrackID = track['id']
-#             print(' ', number, TrackName, "---The ID of the track is:---", TrackID)
+#             SongName = track['name']
+#             ArtistName = results['tracks']['items'][0]['artists'][0]['name']
+#             SongID = track['id']
+#             SongDict = {}
+#             SongDict['track'] = SongName
+#             SongDict['artist'] = ArtistName
+#             SongDict['songid'] = SongID
+#             SongList.append(SongDict)
+#         print(SongList)
+#         return SongList
 #     else:
 #         print("Could not get token for", username)
 
 
-# searchsong("The Nights", 10, 0, 'track')
+# searchsong("Tender", 10, 0, 'track')
 ##########################################################################################
 # Deze functie neemt als argument een naam van een artiest en geeft de TrackName en TrackID.
 # Hiermee kunnen gebruikers liedjes opzoeken om toe te voegen aan de afspeellijst.
