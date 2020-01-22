@@ -1,7 +1,10 @@
+import pprint
 import sys
 import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
+
+###################################################################################################
 
 # Program to connect Spotify account with spotiwy
 
@@ -80,23 +83,23 @@ from spotipy.oauth2 import SpotifyClientCredentials
 # playlistinfo("qck1onpl2n6mlpdkiwt8rajq4") #Deze moet automatisch in de functie worden ingevuld
 
 ##########################################################################################
-def searchsong(query, limit, offset, Type):
-    username = 'qck1onpl2n6mlpdkiwt8rajq4'
-    token = util.prompt_for_user_token(username)
+# def searchsong(query, limit, offset, Type):
+#     username = 'qck1onpl2n6mlpdkiwt8rajq4'
+#     token = util.prompt_for_user_token(username)
 
-    if token:
-        sp = spotipy.Spotify(auth=token)
-        playlists = sp.user_playlists(username)
-        results = sp.search(query, limit, offset, Type)
-        for number, track in enumerate(results['tracks']['items']):
-            TrackName = track['name']
-            TrackID = track['id']
-            print(' ', number, TrackName, "---The ID of the track is:---", TrackID)
-    else:
-        print("Could not get token for", username)
+#     if token:
+#         sp = spotipy.Spotify(auth=token)
+#         playlists = sp.user_playlists(username)
+#         results = sp.search(query, limit, offset, Type)
+#         for number, track in enumerate(results['tracks']['items']):
+#             TrackName = track['name']
+#             TrackID = track['id']
+#             print(' ', number, TrackName, "---The ID of the track is:---", TrackID)
+#     else:
+#         print("Could not get token for", username)
 
 
-searchsong("The Nights", 10, 0, 'track')
+# searchsong("The Nights", 10, 0, 'track')
 ##########################################################################################
 # Deze functie neemt als argument een naam van een artiest en geeft de TrackName en TrackID.
 # Hiermee kunnen gebruikers liedjes opzoeken om toe te voegen aan de afspeellijst.
@@ -155,37 +158,25 @@ searchsong("The Nights", 10, 0, 'track')
 # removetracks('qck1onpl2n6mlpdkiwt8rajq4','04WYs2jTaeV9otTDJaCMNJ','5FBqdMefPnp3Xjdkhn51oc') # Verwijdert het nummer Solace van Feint uit afspeellijst1
 ####################################################################################################
 
-import pprint
-import sys
-import spotipy
-import spotipy.util as util
-
 #Create a new playlist
+# Deze functie neemt drie argumenten: De spotify username van de gebruiker, de naam van de playlist die je wil aanmaken en een korte beschrijving van de playlist.
 
-# def createplaylist(username, playlist_name, playlist_description)
+# def createplaylist(username, playlist_name, playlist_description):
 
-if len(sys.argv) > 2:
-    username = sys.argv[1] # qck1onpl2n6mlpdkiwt8rajq4
-    playlist_name = sys.argv[2] # Playlist3
-    playlist_description = sys.argv[3] # De derde playlist
-else:
-    print(
-        "Usage: %s username playlist-name playlist-description" %
-        (sys.argv[0],))
-    sys.exit()
+#     scope = "playlist-modify-public"
+#     token = util.prompt_for_user_token(username, scope)
 
-scope = "playlist-modify-public"
-token = util.prompt_for_user_token(username, scope)
+#     if token:
+#         sp = spotipy.Spotify(auth=token)
+#         sp.trace = False
+#         playlists = sp.user_playlist_create(username, playlist_name, description=playlist_description)
+#         pprint.pprint(playlists)
+#     else:
+#         print("Can't get token for", username)
 
-if token:
-    sp = spotipy.Spotify(auth=token)
-    sp.trace = False
-    playlists = sp.user_playlist_create(username, playlist_name,
-                                        description=playlist_description)
-    pprint.pprint(playlists)
-else:
-    print("Can't get token for", username)
+# createplaylist('qck1onpl2n6mlpdkiwt8rajq4', 'Playlist3', 'Derde Playlist')
 
+################################################################################################3
 # @app.route("/connect", methods=["GET", "POST"])
 # @login_required
 # def connect():
