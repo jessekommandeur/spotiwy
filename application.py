@@ -333,7 +333,7 @@ def add():
         song = searchsong(request.form.get("song"), 1, 0, "track")
 
         db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes) VALUES(:roomnumber, :song, :songid, :artist, :likes)",
-        roomnumber = session["roomnumber"], song = song[0]["track"], songid = song[0])
+        roomnumber = session["roomnumber"], song = song[0]["track"], songid = song[0]['songid'], artist = song[0]['artist'], likes = 1)
 
         return redirect("/room")
 
