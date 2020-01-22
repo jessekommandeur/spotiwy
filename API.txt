@@ -13,7 +13,7 @@ Client Secret: 6327175ca5894985be59ab4f8882e983
 
 export SPOTIPY_CLIENT_ID=b775ac73bb0e4a4e9189d3e6c1821c32
 export SPOTIPY_CLIENT_SECRET=6327175ca5894985be59ab4f8882e983
-export SPOTIPY_REDIRECT_URI=http://localhost:8888/callback/
+export SPOTIPY_REDIRECT_URI=https://www.google.nl/callback/
 
 Playlist1 playlist id: 04WYs2jTaeV9otTDJaCMNJ
 Playlist2 playlist id: 4pamLh9cgvJcT7btnB7Uod
