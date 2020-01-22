@@ -320,22 +320,22 @@ def leave():
 
     return redirect("/")
 
-@app.route("/like", methods=["GET"])
-def like():
+# @app.route("/like", methods=["GET"])
+# def like():
 
-    """ like a song"""
+#     """ like a song"""
 
-    likes = ("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = session["roomnumber"], songid =  )
+#     likes = ("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = session["roomnumber"], songid =  )
 
-    db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1,
-    roomname = session["roomname"], songid = )
+#     db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1,
+#     roomname = session["roomname"], songid = )
 
-@app.route("/bin", methods=["GET"])
-def remove():
+# @app.route("/bin", methods=["GET"])
+# def remove():
 
-    """remove song from list"""
+#     """remove song from list"""
 
-    db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid = )
+#     db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid = )
 
 
 
@@ -377,5 +377,9 @@ def usercheck():
     else:
         return jsonify(False)
 
+# @app.route("/searchdrpdwn", methods=["GET"])
+# def drpdwn():
 
+#     rel_songs = searchsong(request.args.get("song"), 5, 0, "track")
+#     print(rel_songs)
 
