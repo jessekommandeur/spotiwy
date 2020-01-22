@@ -5,30 +5,28 @@ import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
 
 ###################################################################################################
+def connect(username):
+    scope = 'user-library-read'
+    token = util.prompt_for_user_token(username, scope)
 
-# Program to connect Spotify account with spotiwy
-
-# def connect(username):
-#     scope = 'user-library-read'
-#     token = util.prompt_for_user_token(username, scope)
-
-#     if token:
-#         print("Got the token for:", username)
-#     else:
-#         print("Can't get token for", username)
+    if token:
+        print("Got the token for:", username)
+    else:
+        print("Can't get token for", username)
 
 
-#     # username = 'qck1onpl2n6mlpdkiwt8rajq4' #placeholder value here
-#     client_id = 'a96ff6651252429ca81979ee4a293c4f' #placeholder value here
-#     client_secret = '24bacae55a1b481cbed2106862e1e087' #placeholder value here
-#     redirect_uri = 'https://www.google.nl/callback/'
-#     scope = None
+    # username = 'qck1onpl2n6mlpdkiwt8rajq4' #placeholder
+    client_id = 'a96ff6651252429ca81979ee4a293c4f' #placeholder
+    client_secret = '24bacae55a1b481cbed2106862e1e087' #placeholder
+    redirect_uri = 'https://www.google.nl/callback/'
+    scope = None
 
 
-#     user_token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
-#     print("The user token is:", user_token)
+    user_token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
+    print("The user token is:", user_token)
 
-# connect('qck1onpl2n6mlpdkiwt8rajq4')
+
+connect('5q4hjdki3dulvsse9giqoxixt')
 ######################################################################################################
 # Deze functie neemt als argument een PlaylistID en geeft de SongName en bijbehorende ArtistName.
 # Hiermee kunnen mensen die een room gejoined zijn kijken welke liedjes er al in de playlist staan.
