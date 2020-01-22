@@ -2,9 +2,10 @@
 
 {% block main %}
     <form action="/register" id="user_error" method="post">
-
+        <p style="height: 80px;">
+        </p>
         <div class="form-group">
-        <input autocomplete="off" id="username" autofocus class="form-control" name="username" placeholder="Username" type="text">
+        <input  autocomplete="off" id="username" autofocus class="form-control" name="username" placeholder="Username" type="text">
         </div>
         <div class="form-group" class="alert alert-warning alert-dismissible" id ="user_alert">
             <strong style="color:white;">Username already exists</strong>
@@ -18,7 +19,7 @@
         <div class="form-group" class="alert alert-warning alert-dismissible" id ="passw_alert">
             <strong style="color:white;">Password doesn't match</strong>
         </div>
-        <button class="btn btn-primary" id="sumbit" type="submit">Register</button>
+        <button class="roombutton roombutton_hover" id="sumbit" type="submit">Register</button>
     </form>
     <script>
     // $("#sumbit").click(function(event){
