@@ -230,6 +230,8 @@ def host():
         # Create room settings
         # give admin tag
 
+        session["roomnumber"] = roomnumber
+
         # go to room
         return redirect("/room")
 
@@ -294,32 +296,46 @@ def room():
 
 
 
-# @app.route("/disband", methods=["GET"])
-# @login_required
-# def disband():
+@app.route("/disband", methods=["GET"])
+@login_required
+def disband():
 
-#     """disband room"""
+    """admin disband room"""
 
-#     #disbands and deletes room
-#     db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
-#     return redirect("/.html")
+    #disbands and deletes room
+    db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
 
-# @app.route("/like", methods=["GET"])
-# def like():
+    # clear room cookies and log user out
+    session.clear()
 
-#     """ like a song"""
+    return redirect("/")
 
-#     likes = ("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = , songid = )
+@app.route("/disband", methods=["GET"])
+def leave():
 
-#     db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1,
-#     roomname = session["roomname"], songid = )
+    """ user leaves room"""
 
-# @app.route("/bin", methods=["GET"])
-# def remove():
+    # clear visitors cookies
+    session.clear()
 
-#     """remove song from list"""
+    return redirect("/")
 
-#     db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid = playlist)
+@app.route("/like", methods=["GET"])
+def like():
+
+    """ like a song"""
+
+    likes = ("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = session["roomnumber"], songid =  )
+
+    db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1,
+    roomname = session["roomname"], songid = )
+
+@app.route("/bin", methods=["GET"])
+def remove():
+
+    """remove song from list"""
+
+    db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid = )
 
 
 
@@ -330,18 +346,19 @@ def add():
 
     if request.method == "POST":
 
-        song = searchsong(request.form.get("song"), 1, 0, "track")
+        # get song information from spotify
+        songinfo = searchsong(request.form.get("song"), 1, 0, "track")
 
-        db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes) VALUES(:roomnumber, :song, :songid, :artist, :likes)",
-        roomnumber = session["roomnumber"], song = song[0]["track"], songid = song[0])
+
+        # store song information in database
+        db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes, userid) VALUES(:roomnumber, :song, :songid, :artist, :likes, :userid)",
+        roomnumber = session["roomnumber"], song = songinfo[0]["track"], songid = songinfo[0]["songid"], artist = songinfo[0]["artist"], likes = 1,
+        userid = session["userid"])
 
         return redirect("/room")
 
     else:
         return render_template("add.html")
-
-    # song db.execute("SELECT song FROM rooms WHERE roomname = :roomname", roomname = session["roomname"])
-    # db.execute("SELECT artist FROM rooms WHERE roomname = :roomname", roomname = session["roomname"]))
 
 
 
