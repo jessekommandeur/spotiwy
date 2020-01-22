@@ -8,6 +8,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required, apology, generatenumber
 from random import randint
+from API import searchsong
 
 # Configure application
 app = Flask(__name__)
@@ -227,26 +228,14 @@ def host():
 
         # TODO
         # Create room settings
-
         # give admin tag
-        admin = True
 
         # go to room
-        return redirect("/room.html", admin = admin)
+        return redirect("/room")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("host.html")
-
-
-
-# @app.route("/room", methods=["GET", "POST"])
-# @login_required
-# def admin():
-
-#     """Admin room"""
-
-#     if request.method == "POST":
 
 
 
@@ -283,7 +272,7 @@ def joinroom():
             session["roomnumber"] = userinput
 
             # go to room
-            return redirect("/room.html", roomnumber = userinput)
+            return True #redirect("/room.html", roomnumber = userinput)
                 # TODO
                 # redirect to matching room
 
@@ -305,46 +294,46 @@ def room():
 
 
 
-@app.route("/disband", methods=["GET"])
-@login_required
-def disband():
+# @app.route("/disband", methods=["GET"])
+# @login_required
+# def disband():
 
-    """disband room"""
+#     """disband room"""
 
-    #disbands and deletes room
-    db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
-    return redirect("/.html")
+#     #disbands and deletes room
+#     db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
+#     return redirect("/.html")
 
-@app.route("/like", methods=["GET"])
-def like():
+# @app.route("/like", methods=["GET"])
+# def like():
 
-    """ like a song"""
+#     """ like a song"""
 
-    likes = ("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = , songid = )
+#     likes = ("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = , songid = )
 
-    db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1,
-    roomname = session["roomname"], songid = )
+#     db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1,
+#     roomname = session["roomname"], songid = )
 
-@app.route("/bin", methods=["GET"])
-def remove():
+# @app.route("/bin", methods=["GET"])
+# def remove():
 
-    """remove song from list"""
+#     """remove song from list"""
 
-    db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid = playlist)
+#     db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid = playlist)
 
 
 
-@app.route("/add", methods=["GET", "POST"]
+@app.route("/add", methods=["GET", "POST"])
 def add():
 
     """add new song to list"""
 
     if request.method == "POST":
 
-        "TODO: ZOEK OP NUMMER"
+        song = searchsong(request.form.get("song"), 1, 0, "track")
 
         db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes) VALUES(:roomnumber, :song, :songid, :artist, :likes)",
-        )
+        roomnumber = session["roomnumber"], song = song[0]["track"], songid = song[0])
 
         return redirect("/room")
 
