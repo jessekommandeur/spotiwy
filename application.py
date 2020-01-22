@@ -274,7 +274,7 @@ def joinroom():
             session["roomnumber"] = userinput
 
             # go to room
-            return True #redirect("/room.html", roomnumber = userinput)
+            return redirect("/room")
                 # TODO
                 # redirect to matching room
 
@@ -320,22 +320,22 @@ def leave():
 
     return redirect("/")
 
-@app.route("/like", methods=["GET"])
-def like():
+# @app.route("/like", methods=["GET"])
+# def like():
 
-    """ like a song"""
+#     """ like a song"""
 
-    likes = ("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = session["roomnumber"], songid =  )
+#     likes = ("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = session["roomnumber"], songid =  )
 
-    db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1,
-    roomname = session["roomname"], songid = )
+#     db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1,
+#     roomname = session["roomname"], songid = )
 
-@app.route("/bin", methods=["GET"])
-def remove():
+# @app.route("/bin", methods=["GET"])
+# def remove():
 
-    """remove song from list"""
+#     """remove song from list"""
 
-    db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid = )
+#     db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid = )
 
 
 
@@ -349,6 +349,10 @@ def add():
         # get song information from spotify
         songinfo = searchsong(request.form.get("song"), 1, 0, "track")
 
+        print(songinfo)
+        if songinfo != None:
+            # APOLOGY
+            return redirect("/room")
 
         # store song information in database
         db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes, userid) VALUES(:roomnumber, :song, :songid, :artist, :likes, :userid)",
