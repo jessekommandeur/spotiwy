@@ -320,6 +320,8 @@ def like():
 
     """ like a song"""
 
+    likes = ("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = , songid = )
+
     db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid", likes = likes + 1,
     roomname = session["roomname"], songid = )
 
@@ -332,7 +334,7 @@ def remove():
 
 
 
-@app.route("/add", methods=["GET"], ["POST"]
+@app.route("/add", methods=["GET", "POST"]
 def add():
 
     """add new song to list"""
@@ -341,7 +343,8 @@ def add():
 
         "TODO: ZOEK OP NUMMER"
 
-        db.execute("INSERT INTO rooms () VALUES()", )
+        db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes) VALUES(:roomnumber, :song, :songid, :artist, :likes)",
+        )
 
         return redirect("/room")
 
@@ -350,6 +353,23 @@ def add():
 
     # song db.execute("SELECT song FROM rooms WHERE roomname = :roomname", roomname = session["roomname"])
     # db.execute("SELECT artist FROM rooms WHERE roomname = :roomname", roomname = session["roomname"]))
+
+
+
+@app.route("/usercheck", methods=["GET"])
+def usercheck():
+    """Return true if username available, else false, in JSON format"""
+
+    # Receive username
+    username = request.args.get("username")
+
+    # Check if user name is unique
+    rows = db.execute("SELECT * FROM users WHERE username = :username",
+                      username=request.args.get("username"))
+    if not rows:
+        return jsonify(True)
+    else:
+        return jsonify(False)
 
 
 
