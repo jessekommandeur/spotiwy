@@ -110,7 +110,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 #         print("Could not get token for", username)
 
 
-# searchsong("Tender", 10, 0, 'track')
+# searchsong("Happy", 10, 0, 'track')
 ##########################################################################################
 # Deze functie neemt als argument een naam van een artiest en geeft de TrackName en TrackID.
 # Hiermee kunnen gebruikers liedjes opzoeken om toe te voegen aan de afspeellijst.
@@ -132,8 +132,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 
 # def addtracks(username,playlist_id,track_ids):
 
-#     scope = 'playlist-modify-public'
-#     token = util.prompt_for_user_token(username, scope)
+#     token = util.prompt_for_user_token(username)
 
 #     if token:
 #         sp = spotipy.Spotify(auth=token)
@@ -145,7 +144,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 #     else:
 #         print("Can't get token for", username)
 
-# addtracks('qck1onpl2n6mlpdkiwt8rajq4','04WYs2jTaeV9otTDJaCMNJ','5FBqdMefPnp3Xjdkhn51oc') # Voegt het nummer Solace van Feint toe aan afspeellijst1
+# addtracks('qck1onpl2n6mlpdkiwt8rajq4','0HnIK5tpE5AC567tb0WnRg','14sOS5L36385FJ3OL8hew4') # Voegt het nummer Happy Now van Kygo toe aan TestPlaylist
 
 ####################################################################################################
 # Removes tracks from a playlist.
@@ -153,8 +152,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 
 # def removetracks(username, playlist_id, track_ids):
 
-#     scope = 'playlist-modify-public'
-#     token = util.prompt_for_user_token(username, scope)
+#     token = util.prompt_for_user_token(username)
 
 #     if token:
 #         sp = spotipy.Spotify(auth=token)
@@ -166,10 +164,10 @@ from spotipy.oauth2 import SpotifyClientCredentials
 #     else:
 #         print("Can't get token for", username)
 
-# removetracks('qck1onpl2n6mlpdkiwt8rajq4','04WYs2jTaeV9otTDJaCMNJ','5FBqdMefPnp3Xjdkhn51oc') # Verwijdert het nummer Solace van Feint uit afspeellijst1
+# removetracks('qck1onpl2n6mlpdkiwt8rajq4','0HnIK5tpE5AC567tb0WnRg','14sOS5L36385FJ3OL8hew4') # Verwijdert het nummer Happy Now van Kygo uit TestPlaylist
 ####################################################################################################
 
-#Create a new playlist
+# Create a new playlist
 # Deze functie neemt drie argumenten: De spotify username van de gebruiker, de naam van de playlist die je wil aanmaken en een korte beschrijving van de playlist.
 
 # def createplaylist(username, playlist_name, playlist_description):
@@ -185,7 +183,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 #     else:
 #         print("Can't get token for", username)
 
-# createplaylist('qck1onpl2n6mlpdkiwt8rajq4', 'Playlist3', 'Derde Playlist')
+# createplaylist('qck1onpl2n6mlpdkiwt8rajq4', 'TestPlaylist', 'Een test playlist')
 
 ################################################################################################3
 # @app.route("/connect", methods=["GET", "POST"])
