@@ -391,3 +391,10 @@ def usercheck():
     else:
         return jsonify(False)
 
+<<<<<<< HEAD
+@app.route("/searchdrpdwn", methods=["GET"])
+def drpdwn():
+
+    print("test")
+    songs = searchsong(request.args.get("song"), 5, 0, "track")
+    return jsonify(songs)
