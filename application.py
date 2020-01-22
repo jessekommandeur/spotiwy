@@ -217,6 +217,12 @@ def host():
 
     if request.method == "POST":
 
+        # go to room
+        return redirect("/room")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+
         # create room number
         roomnumber = randint(100000, 999999)
         while db.execute("SELECT * from rooms WHERE roomnumber = :roomnumber", roomnumber = roomnumber):
@@ -232,12 +238,7 @@ def host():
 
         session["roomnumber"] = roomnumber
 
-        # go to room
-        return redirect("/room")
-
-    # User reached route via GET (as by clicking a link or via redirect)
-    else:
-        return render_template("host.html")
+        return render_template("host.html", roomnumber = roomnumber)
 
 
 
@@ -274,7 +275,7 @@ def joinroom():
             session["roomnumber"] = userinput
 
             # go to room
-            return True #redirect("/room.html", roomnumber = userinput)
+            return redirect("/room")
                 # TODO
                 # redirect to matching room
 
@@ -285,12 +286,14 @@ def joinroom():
     else:
         return render_template("homepage.html")
 
+
+
 @app.route("/room", methods=["GET", "POST"])
 def room():
 
     """room functions"""
 
-    roomnumber = db.execute("SELECT roomnumber FROM rooms WHERE userid = :userid", userid = session["userid"])
+    roomnumber = session["roomnumber"]
 
     return render_template("room.html")
 
@@ -349,11 +352,13 @@ def add():
         # get song information from spotify
         songinfo = searchsong(request.form.get("song"), 1, 0, "track")
 
+        if len(songinfo) != 0:
+            # APOLOGY
 
-        # store song information in database
-        db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes, userid) VALUES(:roomnumber, :song, :songid, :artist, :likes, :userid)",
-        roomnumber = session["roomnumber"], song = songinfo[0]["track"], songid = songinfo[0]["songid"], artist = songinfo[0]["artist"], likes = 1,
-        userid = session["userid"])
+            # store song information in database
+            db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes, userid) VALUES(:roomnumber, :song, :songid, :artist, :likes, :userid)",
+            roomnumber = session["roomnumber"], song = songinfo[0]["track"], songid = songinfo[0]["songid"], artist = songinfo[0]["artist"], likes = 1,
+            userid = session["userid"])
 
         return redirect("/room")
 
@@ -377,11 +382,10 @@ def usercheck():
     else:
         return jsonify(False)
 
+<<<<<<< HEAD
 @app.route("/searchdrpdwn", methods=["GET"])
 def drpdwn():
 
     print("test")
     songs = searchsong(request.args.get("song"), 5, 0, "track")
     return jsonify(songs)
-
-

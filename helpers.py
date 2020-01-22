@@ -40,6 +40,20 @@ def login_required(f):
     return decorated_function
 
 
+def room_required(f):
+    """
+    Decorate routes to require room.
+
+    http://flask.pocoo.org/docs/1.0/patterns/viewdecorators/
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("roomnumber") is None:
+            return redirect("/")
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 def generatenumber():
 
     """generates a random roomnumber"""
@@ -52,17 +66,5 @@ def generatenumber():
 
     return roomnumber
 
-# def numbercheck(roomname):
+# def songid:
 
-    # """checks is user input is valid"""
-
-    # # Ensure user enters 6 digit number
-    # if not len(request.form.get("roomnumber")) == 6:
-    #     return apology("should enter 6 digit number", 400)
-
-    # # Ensure user enters digits only
-    # if not request.form.get("roomnumber").isdigit():
-    #     return apology("should enter digits only number", 400)
-
-    # if not db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = roomnumber):
-    #     return apology("room does not exist", 400)

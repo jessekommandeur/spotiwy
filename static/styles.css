@@ -1,5 +1,6 @@
 body {
-    background-color: #333333;
+    background-image: url("background.png");
+    background-size: cover;
 }
 
 nav .navbar-brand {
@@ -82,7 +83,7 @@ main img {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
+  margin: 1px 1px;
   cursor: pointer;
   transition-duration: 0.2s;
 }
@@ -91,11 +92,10 @@ main img {
     box-shadow: 0 50px 50px 0 rgba(0,0,0,0.24),0 50px 100px 0 rgba(0,0,0,0.19);
 }
 
-
 .navitem:hover {
   background-color:#5c44de;
 }
 
-#homebackground {
-     background-image: url("home_background.jpeg");
+#heightchanger{
+    height: 230px;
 }
