@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <h1>
+       Your recent playlists
+    </h1>
+    <table style="width:100%" class="whitetext">
+        <tr>
+            <th></th>
+            <th><b>Song</b></th>
+            <th><b>Artist</b></th>
+            <th><b>Duration</b></th>
+        </tr>
+            {% for row in songinfo %}
+        <tr>
+            <th>{{row["song"]}}</th>
+            <th>{{row["artist"]}}</th>
+            <th>{{row["duration"]}}</th>
+
+        </tr>
+            {% endfor %}
+
+    </table>
+{% endblock %}
