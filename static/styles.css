@@ -12,6 +12,32 @@ nav .navbar-brand .indigo {
     font-family: "CustomFont", "Proxima Nova Alt Rg";
 }
 
+.leftbar {
+    margin-right: 88%;
+    margin-top: 81px;
+    padding-top: 10px;
+    padding-bottom: 120px;
+    border-style: solid;
+    border-width: 0px;
+    border-right-width: 2px;
+    border-top-width: 1px;
+    border-color: #5c44de;
+    padding-right: 10px;
+    font-family: "CustomFont", "Proxima Nova Alt Rg";
+    color: #ffffff;
+    clear: left;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #222222;
+}
+
+.whitetext {
+    color: #ffffff;
+    font-family: "CustomFont", "Proxima Nova Alt Rg";
+
+}
+
 .setbutton {
     padding: 10px;
     margin: 10px;
