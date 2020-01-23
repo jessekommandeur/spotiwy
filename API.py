@@ -6,98 +6,92 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from spotipy import oauth2
 
 ###################################################################################################
-# def prompt_for_user_token2(username, scope, client_id,
-#     client_secret, redirect_uri, cache_path=None):
-#     ''' prompts the user to login if necessary and returns
-#         the user token suitable for use with the spotipy.Spotify
-#         constructor
-#         Parameters:
-#          - username - the Spotify username
-#          - scope - the desired scope of the request
-#          - client_id - the client id of your app
-#          - client_secret - the client secret of your app
-#          - redirect_uri - the redirect URI of your app
-#          - cache_path - path to location to save tokens
-#     '''
+def prompt_for_user_token2(username, scope, client_id,
+    client_secret, redirect_uri, cache_path=None):
+    ''' prompts the user to login if necessary and returns
+        the user token suitable for use with the spotipy.Spotify
+        constructor
+        Parameters:
+         - username - the Spotify username
+         - scope - the desired scope of the request
+         - client_id - the client id of your app
+         - client_secret - the client secret of your app
+         - redirect_uri - the redirect URI of your app
+         - cache_path - path to location to save tokens
+    '''
 
-#     cache_path = cache_path or ".cache-" + username
-#     sp_oauth = oauth2.SpotifyOAuth('b775ac73bb0e4a4e9189d3e6c1821c32', '6327175ca5894985be59ab4f8882e983', 'https://www.google.nl/callback/',
-#         scope = scope, cache_path=cache_path)
+    cache_path = cache_path or ".cache-" + username
+    sp_oauth = oauth2.SpotifyOAuth('b775ac73bb0e4a4e9189d3e6c1821c32', '6327175ca5894985be59ab4f8882e983', 'https://www.google.nl/callback/',
+        scope = scope, cache_path=cache_path)
 
 
-#     token_info = sp_oauth.get_cached_token()
+    token_info = sp_oauth.get_cached_token()
 
-#     if not token_info:
-#         print('''
-#             User authentication requires interaction with your
-#             web browser. Once you enter your credentials and
-#             give authorization, you will be redirected to
-#             a url.  Paste that url you were directed to to
-#             complete the authorization.
-#         ''')
-#         auth_url = sp_oauth.get_authorize_url()
-#         import webbrowser
-#         return auth_url
-#             print("Opened %s in your browser" % auth_url)
-#             URL = auth_url
-#             print(URL)
-#         except:
-#             print("Please navigate here: %s" % auth_url)
-
-#     return URL
+    if not token_info:
+        print('''
+            User authentication requires interaction with your
+            web browser. Once you enter your credentials and
+            give authorization, you will be redirected to
+            a url.  Paste that url you were directed to to
+            complete the authorization.
+        ''')
+        auth_url = sp_oauth.get_authorize_url()
+        import webbrowser
+        return auth_url
 
 ###################################################################################################
-# def connect(username):
-#     scope = 'user-library-read'
-#     token = util.prompt_for_user_token(username, scope)
+def connect(username):
 
-#     if token:
-#         print("Got the token for:", username)
-#     else:
-#         print("Can't get token for", username)
+    # username = 'qck1onpl2n6mlpdkiwt8rajq4' #placeholder
+    client_id = 'a96ff6651252429ca81979ee4a293c4f' #placeholder
+    client_secret = '24bacae55a1b481cbed2106862e1e087' #placeholder
+    redirect_uri = 'https://www.google.nl/callback/'
+    scope = None
+
+    URL = prompt_for_user_token2(username, 'user-library-read', client_id, client_secret, redirect_uri)
+    print("De URL is: ", URL)
+    scope = 'user-library-read'
+    token = util.prompt_for_user_token(username, scope)
+
+    if token:
+        print("Got the token for:", username)
+    else:
+        print("Can't get token for", username)
+
+    user_token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
+    print("The user token is:", user_token)
+
+    return URL
 
 
-#     # username = 'qck1onpl2n6mlpdkiwt8rajq4' #placeholder
-#     client_id = 'a96ff6651252429ca81979ee4a293c4f' #placeholder
-#     client_secret = '24bacae55a1b481cbed2106862e1e087' #placeholder
-#     redirect_uri = 'https://www.google.nl/callback/'
-#     scope = None
-
-
-#     user_token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
-#     print("The user token is:", user_token)
-#     URL = prompt_for_user_token2(username, 'user-library-read', client_id, client_secret, redirect_uri)
-#     print("De URL is: ", URL)
-
-
-# connect('5q4hjdki3dulvsse9giqoxixt')
+# connect('o2dznr7gbgsjrz727dcy9pn46')
 ######################################################################################################
 # Deze functie neemt als argument een PlaylistID en geeft de SongName en bijbehorende ArtistName.
 # Hiermee kunnen mensen die een room gejoined zijn kijken welke liedjes er al in de playlist staan.
 # Er wordt een list gereturned met daarin dicts met de naam, artiest en id van het lied.
 
-# def playlist(PlaylistID):
+def playlist(PlaylistID):
 
-#     username = 'qck1onpl2n6mlpdkiwt8rajq4' # De username wordt er automatisch ingezet
-#     token = util.prompt_for_user_token(username)
-#     sp = spotipy.Spotify(auth=token)
-#     results = sp.playlist(playlist_id=PlaylistID, fields="tracks,next")
-#     # Het aantal liedjes in de afspeellijst
-#     TotalSongs = results['tracks']['total']
-#     results2 = results['tracks']
-#     PlayList = []
-#     for Counter in range(TotalSongs):
-#         SongName = results2['items'][Counter]['track']['name']
-#         ArtistName = results2['items'][Counter]['track']['album']['artists'][0]['name']
-#         SongID = results2['items'][Counter]['track']['id']
-#         PlaylistDict = {}
-#         PlaylistDict['track'] = SongName
-#         PlaylistDict['artist'] = ArtistName
-#         PlaylistDict['songid'] = SongID
-#         PlayList.append(PlaylistDict)
-#     print(PlayList)
+    username = 'qck1onpl2n6mlpdkiwt8rajq4' # De username wordt er automatisch ingezet
+    token = util.prompt_for_user_token(username)
+    sp = spotipy.Spotify(auth=token)
+    results = sp.playlist(playlist_id=PlaylistID, fields="tracks,next")
+    # Het aantal liedjes in de afspeellijst
+    TotalSongs = results['tracks']['total']
+    results2 = results['tracks']
+    PlayList = []
+    for Counter in range(TotalSongs):
+        SongName = results2['items'][Counter]['track']['name']
+        ArtistName = results2['items'][Counter]['track']['album']['artists'][0]['name']
+        SongID = results2['items'][Counter]['track']['id']
+        PlaylistDict = {}
+        PlaylistDict['track'] = SongName
+        PlaylistDict['artist'] = ArtistName
+        PlaylistDict['songid'] = SongID
+        PlayList.append(PlaylistDict)
+    print(PlayList)
 
-#     return PlayList
+    return PlayList
 
 
 # playlist('4pamLh9cgvJcT7btnB7Uod') # De playlistID wordt er uiteraard automatisch ingezet.
@@ -128,31 +122,31 @@ from spotipy import oauth2
 # Deze functie neemt 4 argumenten: De string die de gebruiker intypt (De titel van een lied (query)), het aantal nummers die worden opgehaald (limit), de offset en het type. In dit geval een track.
 # Het enige wat we nodig hebben van de gebruiker is de string die hij heeft ingetypt. De andere 3 argumenten zetten wij er in.
 
-# def searchsong(query, limit, offset, Type):
-#     username = 'qck1onpl2n6mlpdkiwt8rajq4'
-#     token = util.prompt_for_user_token(username)
+def searchsong(query, limit, offset, Type):
+    username = 'qck1onpl2n6mlpdkiwt8rajq4'
+    token = util.prompt_for_user_token(username)
 
-#     if token:
-#         sp = spotipy.Spotify(auth=token)
-#         playlists = sp.user_playlists(username)
-#         results = sp.search(query, limit, offset, Type)
-#         SongList = []
-#         for number, track in enumerate(results['tracks']['items']):
-#             SongName = track['name']
-#             ArtistName = results['tracks']['items'][0]['artists'][0]['name']
-#             SongID = track['id']
-#             SongDuration = track['duration_ms']
-#             SongDict = {}
-#             SongDict['track'] = SongName
-#             SongDict['artist'] = ArtistName
-#             SongDict['songid'] = SongID
-#             SongDict['duration'] = SongDuration
-#             SongList.append(SongDict)
-#         print(SongList)
-#         return SongList
-#     else:
-#         return None
-#         # apology
+    if token:
+        sp = spotipy.Spotify(auth=token)
+        playlists = sp.user_playlists(username)
+        results = sp.search(query, limit, offset, Type)
+        SongList = []
+        for number, track in enumerate(results['tracks']['items']):
+            SongName = track['name']
+            ArtistName = results['tracks']['items'][0]['artists'][0]['name']
+            SongID = track['id']
+            SongDuration = track['duration_ms']
+            SongDict = {}
+            SongDict['track'] = SongName
+            SongDict['artist'] = ArtistName
+            SongDict['songid'] = SongID
+            SongDict['duration'] = SongDuration
+            SongList.append(SongDict)
+        print(SongList)
+        return SongList
+    else:
+        return None
+        # apology
 
 
 # searchsong("Dance Monkey", 1, 0, 'track')
@@ -175,19 +169,18 @@ from spotipy import oauth2
 # Adds tracks to a playlist
 # Deze functie neemt 3 argumenten, de spotify username, het playlist ID en de track ID van het lied dat je wil toevoegen.
 
-# def addtracks(username,playlist_id,track_ids):
+def addtracks(username,playlist_id,track_ids):
 
-#     token = util.prompt_for_user_token(username)
+    token = util.prompt_for_user_token(username)
 
-#     if token:
-#         sp = spotipy.Spotify(auth=token)
-#         sp.trace = False
-#         TrackList = []
-#         TrackList.append(track_ids)
-#         results = sp.user_playlist_add_tracks(user=username, playlist_id=playlist_id, tracks=TrackList)
-#         print(results)
-#     else:
-#         print("Can't get token for", username)
+    if token:
+        sp = spotipy.Spotify(auth=token)
+        sp.trace = False
+        TrackList = []
+        TrackList.append(track_ids)
+        results = sp.user_playlist_add_tracks(user=username, playlist_id=playlist_id, tracks=TrackList)
+    else:
+        print("Can't get token for", username)
 
 # addtracks('qck1onpl2n6mlpdkiwt8rajq4','0HnIK5tpE5AC567tb0WnRg','14sOS5L36385FJ3OL8hew4') # Voegt het nummer Happy Now van Kygo toe aan TestPlaylist
 
@@ -195,19 +188,18 @@ from spotipy import oauth2
 # Removes tracks from a playlist.
 # Deze functie neemt 3 argumenten, de spotify username, het playlist ID en de track ID van het lied dat je wil verwijderen.
 
-# def removetracks(username, playlist_id, track_ids):
+def removetracks(username, playlist_id, track_ids):
 
-#     token = util.prompt_for_user_token(username)
+    token = util.prompt_for_user_token(username)
 
-#     if token:
-#         sp = spotipy.Spotify(auth=token)
-#         sp.trace = False
-#         TrackList = []
-#         TrackList.append(track_ids)
-#         results = sp.user_playlist_remove_all_occurrences_of_tracks(user=username, playlist_id=playlist_id, tracks=TrackList)
-#         print(results)
-#     else:
-#         print("Can't get token for", username)
+    if token:
+        sp = spotipy.Spotify(auth=token)
+        sp.trace = False
+        TrackList = []
+        TrackList.append(track_ids)
+        results = sp.user_playlist_remove_all_occurrences_of_tracks(user=username, playlist_id=playlist_id, tracks=TrackList)
+    else:
+        print("Can't get token for", username)
 
 # removetracks('qck1onpl2n6mlpdkiwt8rajq4','0HnIK5tpE5AC567tb0WnRg','14sOS5L36385FJ3OL8hew4') # Verwijdert het nummer Happy Now van Kygo uit TestPlaylist
 ####################################################################################################
@@ -215,28 +207,20 @@ from spotipy import oauth2
 # Create a new playlist
 # Deze functie neemt drie argumenten: De spotify username van de gebruiker, de naam van de playlist die je wil aanmaken en een korte beschrijving van de playlist.
 
-# def createplaylist(username, playlist_name, playlist_description):
+def createplaylist(username, playlist_name, playlist_description):
 
-#     scope = "playlist-modify-public"
-#     token = util.prompt_for_user_token(username, scope)
+    scope = "playlist-modify-public"
+    token = util.prompt_for_user_token(username, scope)
 
-#     if token:
-#         sp = spotipy.Spotify(auth=token)
-#         sp.trace = False
-#         playlists = sp.user_playlist_create(username, playlist_name, description=playlist_description)
-#         pprint.pprint(playlists)
-#     else:
-#         print("Can't get token for", username)
+    if token:
+        sp = spotipy.Spotify(auth=token)
+        sp.trace = False
+        playlists = sp.user_playlist_create(username, playlist_name, description=playlist_description)
+        return playlists['id']
+
+    else:
+        print("Can't get token for", username)
 
 # createplaylist('qck1onpl2n6mlpdkiwt8rajq4', 'TestPlaylist', 'Een test playlist')
 
 ################################################################################################3
-# @app.route("/connect", methods=["GET", "POST"])
-# @login_required
-# def connect():
-#     """Connect users to their spotify account"""
-#     # Connect pagina aanroepten.
-#     if request.method == "POST":
-#         if request.form.get() == 25
-#     else:
-#         return render_template("connect.html")
