@@ -298,22 +298,22 @@ def room():
 
 
 
-@app.route("/disband", methods=["GET", "POST"])
-@login_required
-@room_required
-def disband():
+# @app.route("/disband", methods=["GET", "POST"])
+# @login_required
+# @room_required
+# def disband():
 
-    """admin disband room"""
+#     """admin disband room"""
 
-    if request.method == "POST":
+#     if request.method == "POST":
 
-        #disbands and deletes room
-        db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
+#         #disbands and deletes room
+#         db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
 
-        # clear room cookies and log user out
-        session.clear()
+#         # clear room cookies and log user out
+#         session.clear()
 
-    return redirect("/")
+#     return redirect("/")
 
 
 @app.route("/leave", methods=["GET"])
@@ -391,10 +391,40 @@ def usercheck():
     else:
         return jsonify(False)
 
-<<<<<<< HEAD
-@app.route("/searchdrpdwn", methods=["GET"])
-def drpdwn():
+# <<<<<<< HEAD
+# @app.route("/searchdrpdwn", methods=["GET"])
+# def drpdwn():
 
-    print("test")
-    songs = searchsong(request.args.get("song"), 5, 0, "track")
-    return jsonify(songs)
+#     print("test")
+#     songs = searchsong(request.args.get("song"), 5, 0, "track")
+#     return jsonify(songs)
+
+@app.route("/history")
+@login_required
+def history():
+
+    songinfo = (db.execute("SELECT song, artist, duration FROM history WHERE userid = :userid AND roomid = :roomid", userid=session["user_id"]))
+
+    return render_template("history.html", songinfo = songinfo)
+
+@app.route("/disband", methods=["GET", "POST"])
+@login_required
+@room_required
+def disband():
+
+    """admin disband room"""
+
+    if request.method == "POST":
+
+        # store playlist data into history
+        db.execute(" INSERT INTO history(song, artist, duration)  SELECT song, artist, duration FROM rooms WHERE roomname = :roomname AND userid = :userid",
+        roomname = session["roomname"], userid = session["userid"])
+
+
+        # disbands and deletes room(data) from database
+        db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
+
+        # clear room cookies and log user out
+        session.clear()
+
+    return redirect("/")
