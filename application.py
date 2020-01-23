@@ -6,9 +6,9 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import login_required, apology, generatenumber, room_required
+from helpers import login_required, apology, generatenumber, room_required, converter, timer
 from random import randint
-from API import searchsong, createplaylist, Timer
+from API import searchsong, createplaylist
 
 # Configure application
 app = Flask(__name__)
@@ -437,7 +437,45 @@ def history():
     return render_template("history.html", songinfo = songinfo)
 
 
+@app.route("/passwordcheck", methods=["GET"])
+def passwordcheck():
+    """Return true if username available, else false, in JSON format"""
 
+    # Receive username
+    password = request.args.get("password")
+
+    if not password:
+        return jsonify(False)
+
+    rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.args.get("username"))
+
+    if not check_password_hash(rows[0]["hash"], request.args.get("password")):
+        return jsonify(False)
+    else:
+        return jsonify(True)
+
+@app.route("/usernamecheck", methods=["GET"])
+def usernamecheck():
+    """Return true if username exists, else false, in JSON format"""
+
+    # Receive username
+    username = request.args.get("username")
+    print("test")
+    if not request.args.get("username"):
+        return jsonify(False)
+    elif not db.execute("SELECT * FROM users WHERE username = :username", username=username):
+        return jsonify(False)
+    else:
+        return jsonify(True)
+
+
+@app.route("/searchdrpdwn", methods=["GET"])
+def drpdwn():
+
+    print("test")
+    songs = searchsong(request.args.get("song"), 5, 0, "track")
+
+    return json.dumps(songs)
 
 @app.route("/terms")
 def terms():

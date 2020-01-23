@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block main %}
-    <form action="/register" id="user_error" method="post">
+    <form action="/register" id="form" method="post">
         <p style="height: 80px;">
         </p>
         <div class="form-group">
@@ -25,13 +25,14 @@
         <input type="checkbox" name="T&C" value="T&C"> <a href="/terms"><b style="color:#5c44de;">terms & conditions</b></a>
         <br>
         <button class="roombutton roombutton_hover" id="sumbit" type="submit">Register</button>
-
     </form>
     <script>
+
     // $("#sumbit").click(function(event){
     //     event.preventDefault();
-        $("#user_alert").hide();
-        $(document).ready(function(){
+    $("#user_alert").hide();
+    $("#passw_alert").hide();
+    $(document).ready(function(){
             document.getElementById("username").onkeyup = function(){
                 $.get('/usercheck?username=' + username.value, function(data) {
                     if (data == false){
@@ -39,22 +40,31 @@
                     }
                     else {
                         $('#user_alert').hide();
-                        // $(this).unbind("click");
                     }
                     });
                 };
+    });
+    const form = document.getElementById("form");
+    form.addEventListener("submit", (e) => {
+        $.get('/usercheck?username=' + username.value, function(data) {
+        if (data == false){
+            e.preventDefault();
+        };
+        if (document.getElementById("password").value != document.getElementById("confirmation").value){
+            e.preventDefault();
+        };
         });
-        $("#passw_alert").hide();
-        function check_passw() {
-                if (document.getElementById("password").value != document.getElementById("confirmation").value){
-                //  || document.getElementById("password").value.length > 0){
-                    $("#passw_alert").show();
-                }
-                else {
-                    $("#passw_alert").hide();
-                    // $(this).unbind("click");
-                };
+    });
+
+    function check_passw() {
+            if (document.getElementById("password").value != document.getElementById("confirmation").value){
+                $("#passw_alert").show();
+            }
+            else {
+                $("#passw_alert").hide();
+
             };
-    // });
+    };
+
     </script>
 {% endblock %}

@@ -4,17 +4,22 @@
     <form action="/add" method="post">
         <div class="form-group">
             <input list="songlist" autocomplete="on" autofocus class="form-control" id="song" name="song" placeholder="Song name" type="text">
-            <datalist id="songlist">
-                <script>
+            <datalist id="songlist"></datalist>
+            <script>
                 $(document).ready(function(){
                     document.getElementById("song").onkeyup = function(){
                         var datalist = document.getElementById("songlist");
                         var songlist = []
                         $.get('/searchdrpdwn?song=' + song.value, function(songs){
-                            for (item in songs){
-                                songlist.push(item['track'])
-                            }
+                            // var liedjes = songs.split(",")
+
+                            // for(var n = 0; n < songs.length; n++){
+                            //     window.alert(songs.length)
+                            //     window.alert(songs)
+                            //     songlist.push(songs[n]['track'], songs[n]['artist'])
+                            // }
                         })
+                        // window.alert(songlist)
                         for(var i = 0; i < songlist.length; i++) {
                             var option = document.createElement("OPTION"),
                             track = document.createTextNode(songlist[i]);
@@ -26,7 +31,6 @@
                 })
 
                 </script>
-            </datalist>
         </div>
         <button class="btn btn-primary" type="submit">Add song</button>
     </form>
