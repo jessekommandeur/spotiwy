@@ -6,6 +6,8 @@ from random import randint
 
 from flask import redirect, render_template, request, session
 from functools import wraps
+from threading import Timer
+from API import addtracks
 
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///spotiwy.db")
@@ -66,5 +68,39 @@ def generatenumber():
 
     return roomnumber
 
-# def songid:
 
+
+def converter(mseconds):
+
+    """converts miliseconds to song duration"""
+
+    minutes = int(mseconds / 60000)
+    seconds = round(int(mseconds/1000 % 60),2)
+
+    return str("" + str(minutes) + ":" + str(seconds) + "")
+
+
+
+def songtoplaylist():
+
+    """ adds song to spotify playlist"""
+
+    mostliked = db.execute("SELECT MAX(likes) FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])
+    roomadmin = db.execute("SELECT MAX(userid) FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])
+    roomadminid = db.execute("SELECT * FROM users WHERE userid = :userid", userid = roomadmin)[0]["spotifykey"]
+    playlistid = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["playlistid"]
+
+    addtracks(roomadminid,playlistid,mostliked[0]["songid"])
+
+
+
+def timer(roomnumber):
+
+    """ recursive code"""
+
+    # if len songs_left < 1
+        # stop playing
+    # else
+        # song to playlist
+        # delete song from database
+        # timer (time, timer)

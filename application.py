@@ -8,7 +8,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required, apology, generatenumber, room_required
 from random import randint
-from API import searchsong, createplaylist
+from API import searchsong, createplaylist, Timer
 
 # Configure application
 app = Flask(__name__)
@@ -224,17 +224,13 @@ def host():
     else:
 
         # create room number
-        roomnumber = randint(100000, 999999)
-        while db.execute("SELECT * from rooms WHERE roomnumber = :roomnumber", roomnumber = roomnumber):
-            roomnumber = randint(100000, 999999)
+        roomnumber = generatenumber()
 
         # Query database for user spotify key
         spotifykey = db.execute("SELECT * FROM users WHERE userid = :userid", userid = session["userid"])[0]["spotifykey"]
 
         # Create playlist
         playlistid = createplaylist(spotifykey, "Spotiwy playlist", "This playlist was made with Spotiwy :)")
-
-        print(spotifykey + playlistid)
 
         # insert roomname into database
         db.execute("INSERT INTO rooms (roomnumber, userid, playlistid) VALUES(:roomnumber, :userid, :playlistid)", userid = session["userid"],
@@ -249,7 +245,7 @@ def host():
         return render_template("host.html", roomnumber = roomnumber)
 
 @app.route("/joinroom", methods=["GET", "POST"])
-def joinroom():
+def join():
 
     """Join a room"""
 
@@ -357,7 +353,12 @@ def add():
             db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes, duration) VALUES(:roomnumber, :song, :songid, :artist, :likes, :duration)",
             roomnumber = session["roomnumber"], song = songinfo[0]["track"], songid = songinfo[0]["songid"], artist = songinfo[0]["artist"], likes = 1, duration = songinfo[0]["duration"])
 
-            # timer(songinfo)
+            # query songs
+            rows = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])
+            roomnumber = session["roomnumber"]
+
+            if len(rows) < 2:
+                timer(roomnumber)
 
             return redirect("/room")
 
@@ -370,6 +371,7 @@ def add():
 
 @app.route("/usercheck", methods=["GET"])
 def usercheck():
+
     """Return true if username available, else false, in JSON format"""
 
     # Receive username
@@ -403,7 +405,7 @@ def disband():
 
         # store playlist data into history
         db.execute(" INSERT INTO history(song, artist, duration)  SELECT song, artist, duration FROM rooms WHERE roomname = :roomname AND userid = :userid",
-        roomname = session["roomname"], userid = session["userid"])
+        roomname = session["roomnumber"], userid = session["userid"])
 
 
         # disbands and deletes room(data) from database
@@ -422,7 +424,24 @@ def history():
 
     """displays previous playlists"""
 
-    songinfo = (db.execute("SELECT song, artist, duration FROM history WHERE userid = :userid AND roomnumber = :roomnumber",
-    userid = session["userid"], roomnumber = session["roomnumber"]))
-
+    songinfo = db.execute("SELECT song, artist, duration, roomname FROM history")
+    song_dict = {}
+    for song in songinfo:
+        song['duration'] = converter(song['duration'])
+        if song['roomname'] in song_dict:
+            print(type(song_dict[song['roomname']]))
+            song_dict[song['roomname']] = song_dict[song['roomname']] + [song]
+        else:
+            song_dict[song['roomname']] = [song]
+    print(song_dict)
     return render_template("history.html", songinfo = songinfo)
+
+
+
+
+@app.route("/terms")
+def terms():
+
+    """displays terms & conditions"""
+
+    return render_template("terms.html")

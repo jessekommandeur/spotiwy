@@ -5,21 +5,20 @@
 {% endblock %}
 
 {% block main %}
-    <h1>
+    <h1 class= "whitetext">
        Your recent playlists
     </h1>
-    <table style="width:100%" class="whitetext">
-        <tr>
-            <th></th>
+    <table style="width:100%">
+        <tr class="whitetext">
             <th><b>Song</b></th>
             <th><b>Artist</b></th>
             <th><b>Duration</b></th>
         </tr>
-            {% for row in songinfo %}
-        <tr>
-            <th>{{row["song"]}}</th>
-            <th>{{row["artist"]}}</th>
-            <th>{{row["duration"]}}</th>
+            {% for track in songinfo %}
+        <tr style="color:white;font-style:normal">
+            <th>{{track["song"]}}</th>
+            <th>{{track["artist"]}}</th>
+            <th>{{track["duration"]}}</th>
 
         </tr>
             {% endfor %}
