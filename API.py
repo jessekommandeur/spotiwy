@@ -3,30 +3,74 @@ import sys
 import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
+from spotipy import oauth2
 
 ###################################################################################################
-def connect(username):
-    scope = 'user-library-read'
-    token = util.prompt_for_user_token(username, scope)
+# def prompt_for_user_token2(username, scope, client_id,
+#     client_secret, redirect_uri, cache_path=None):
+#     ''' prompts the user to login if necessary and returns
+#         the user token suitable for use with the spotipy.Spotify
+#         constructor
+#         Parameters:
+#          - username - the Spotify username
+#          - scope - the desired scope of the request
+#          - client_id - the client id of your app
+#          - client_secret - the client secret of your app
+#          - redirect_uri - the redirect URI of your app
+#          - cache_path - path to location to save tokens
+#     '''
 
-    if token:
-        print("Got the token for:", username)
-    else:
-        print("Can't get token for", username)
-
-
-    # username = 'qck1onpl2n6mlpdkiwt8rajq4' #placeholder
-    client_id = 'a96ff6651252429ca81979ee4a293c4f' #placeholder
-    client_secret = '24bacae55a1b481cbed2106862e1e087' #placeholder
-    redirect_uri = 'https://www.google.nl/callback/'
-    scope = None
-
-
-    user_token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
-    print("The user token is:", user_token)
+#     cache_path = cache_path or ".cache-" + username
+#     sp_oauth = oauth2.SpotifyOAuth('b775ac73bb0e4a4e9189d3e6c1821c32', '6327175ca5894985be59ab4f8882e983', 'https://www.google.nl/callback/',
+#         scope = scope, cache_path=cache_path)
 
 
-connect('5q4hjdki3dulvsse9giqoxixt')
+#     token_info = sp_oauth.get_cached_token()
+
+#     if not token_info:
+#         print('''
+#             User authentication requires interaction with your
+#             web browser. Once you enter your credentials and
+#             give authorization, you will be redirected to
+#             a url.  Paste that url you were directed to to
+#             complete the authorization.
+#         ''')
+#         auth_url = sp_oauth.get_authorize_url()
+#         import webbrowser
+#         return auth_url
+#             print("Opened %s in your browser" % auth_url)
+#             URL = auth_url
+#             print(URL)
+#         except:
+#             print("Please navigate here: %s" % auth_url)
+
+#     return URL
+
+###################################################################################################
+# def connect(username):
+#     scope = 'user-library-read'
+#     token = util.prompt_for_user_token(username, scope)
+
+#     if token:
+#         print("Got the token for:", username)
+#     else:
+#         print("Can't get token for", username)
+
+
+#     # username = 'qck1onpl2n6mlpdkiwt8rajq4' #placeholder
+#     client_id = 'a96ff6651252429ca81979ee4a293c4f' #placeholder
+#     client_secret = '24bacae55a1b481cbed2106862e1e087' #placeholder
+#     redirect_uri = 'https://www.google.nl/callback/'
+#     scope = None
+
+
+#     user_token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
+#     print("The user token is:", user_token)
+#     URL = prompt_for_user_token2(username, 'user-library-read', client_id, client_secret, redirect_uri)
+#     print("De URL is: ", URL)
+
+
+# connect('5q4hjdki3dulvsse9giqoxixt')
 ######################################################################################################
 # Deze functie neemt als argument een PlaylistID en geeft de SongName en bijbehorende ArtistName.
 # Hiermee kunnen mensen die een room gejoined zijn kijken welke liedjes er al in de playlist staan.
@@ -84,31 +128,34 @@ connect('5q4hjdki3dulvsse9giqoxixt')
 # Deze functie neemt 4 argumenten: De string die de gebruiker intypt (De titel van een lied (query)), het aantal nummers die worden opgehaald (limit), de offset en het type. In dit geval een track.
 # Het enige wat we nodig hebben van de gebruiker is de string die hij heeft ingetypt. De andere 3 argumenten zetten wij er in.
 
-def searchsong(query, limit, offset, Type):
-    username = 'qck1onpl2n6mlpdkiwt8rajq4'
-    token = util.prompt_for_user_token(username)
+# def searchsong(query, limit, offset, Type):
+#     username = 'qck1onpl2n6mlpdkiwt8rajq4'
+#     token = util.prompt_for_user_token(username)
 
-    if token:
-        sp = spotipy.Spotify(auth=token)
-        playlists = sp.user_playlists(username)
-        results = sp.search(query, limit, offset, Type)
-        SongList = []
-        for number, track in enumerate(results['tracks']['items']):
-            SongName = track['name']
-            ArtistName = results['tracks']['items'][0]['artists'][0]['name']
-            SongID = track['id']
-            SongDict = {}
-            SongDict['track'] = SongName
-            SongDict['artist'] = ArtistName
-            SongDict['songid'] = SongID
-            SongList.append(SongDict)
-        return SongList
-    else:
-        return None
-        # Apology
+#     if token:
+#         sp = spotipy.Spotify(auth=token)
+#         playlists = sp.user_playlists(username)
+#         results = sp.search(query, limit, offset, Type)
+#         SongList = []
+#         for number, track in enumerate(results['tracks']['items']):
+#             SongName = track['name']
+#             ArtistName = results['tracks']['items'][0]['artists'][0]['name']
+#             SongID = track['id']
+#             SongDuration = track['duration_ms']
+#             SongDict = {}
+#             SongDict['track'] = SongName
+#             SongDict['artist'] = ArtistName
+#             SongDict['songid'] = SongID
+#             SongDict['duration'] = SongDuration
+#             SongList.append(SongDict)
+#         print(SongList)
+#         return SongList
+#     else:
+#         return None
+#         # apology
 
 
-searchsong("Tramontane", 10, 0, 'track')
+# searchsong("Dance Monkey", 1, 0, 'track')
 ##########################################################################################
 # Deze functie neemt als argument een naam van een artiest en geeft de TrackName en TrackID.
 # Hiermee kunnen gebruikers liedjes opzoeken om toe te voegen aan de afspeellijst.
