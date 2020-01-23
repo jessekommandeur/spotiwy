@@ -429,11 +429,9 @@ def history():
     for song in songinfo:
         song['duration'] = converter(song['duration'])
         if song['roomname'] in song_dict:
-            print(type(song_dict[song['roomname']]))
             song_dict[song['roomname']] = song_dict[song['roomname']] + [song]
         else:
             song_dict[song['roomname']] = [song]
-    print(song_dict)
     return render_template("history.html", songinfo = songinfo)
 
 
