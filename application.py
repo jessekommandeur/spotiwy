@@ -8,7 +8,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required, apology, generatenumber, room_required
 from random import randint
-from API import searchsong
+from API import searchsong, createplaylist
 
 # Configure application
 app = Flask(__name__)
@@ -228,9 +228,17 @@ def host():
         while db.execute("SELECT * from rooms WHERE roomnumber = :roomnumber", roomnumber = roomnumber):
             roomnumber = randint(100000, 999999)
 
+        # Query database for user spotify key
+        spotifykey = db.execute("SELECT * FROM users WHERE userid = :userid", userid = session["userid"])[0]["spotifykey"]
+
+        # Create playlist
+        playlistid = createplaylist(spotifykey, "Spotiwy playlist", "This playlist was made with Spotiwy :)")
+
+        print(spotifykey + playlistid)
+
         # insert roomname into database
-        db.execute("INSERT INTO rooms (roomnumber, userid) VALUES(:roomnumber, :userid)", userid = session["userid"],
-        roomnumber=int(roomnumber))
+        db.execute("INSERT INTO rooms (roomnumber, userid, playlistid) VALUES(:roomnumber, :userid, :playlistid)", userid = session["userid"],
+        roomnumber=int(roomnumber), playlistid = playlistid)
 
         # give
         session["roomnumber"] = roomnumber
@@ -298,22 +306,22 @@ def room():
 
 
 
-# @app.route("/disband", methods=["GET", "POST"])
-# @login_required
-# @room_required
-# def disband():
+@app.route("/disband", methods=["GET", "POST"])
+@login_required
+@room_required
+def disband():
 
-#     """admin disband room"""
+    """admin disband room"""
 
-#     if request.method == "POST":
+    if request.method == "POST":
 
-#         #disbands and deletes room
-#         db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
+        #disbands and deletes room
+        db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
 
-#         # clear room cookies and log user out
-#         session.clear()
+        # clear room cookies and log user out
+        session.clear()
 
-#     return redirect("/")
+    return redirect("/")
 
 
 @app.route("/leave", methods=["GET"])
@@ -364,8 +372,10 @@ def add():
             # APOLOGY
 
             # store song information in database
-            db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes) VALUES(:roomnumber, :song, :songid, :artist, :likes)",
-            roomnumber = session["roomnumber"], song = songinfo[0]["track"], songid = songinfo[0]["songid"], artist = songinfo[0]["artist"], likes = 1)
+            db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes, duration) VALUES(:roomnumber, :song, :songid, :artist, :likes, :duration)",
+            roomnumber = session["roomnumber"], song = songinfo[0]["track"], songid = songinfo[0]["songid"], artist = songinfo[0]["artist"], likes = 1, duration = songinfo[0]["duration"])
+
+            # timer(songinfo)
 
             return redirect("/room")
 
