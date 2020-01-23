@@ -306,24 +306,6 @@ def room():
 
 
 
-@app.route("/disband", methods=["GET", "POST"])
-@login_required
-@room_required
-def disband():
-
-    """admin disband room"""
-
-    if request.method == "POST":
-
-        #disbands and deletes room
-        db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
-
-        # clear room cookies and log user out
-        session.clear()
-
-    return redirect("/")
-
-
 @app.route("/leave", methods=["GET"])
 @room_required
 def leave():
@@ -409,13 +391,6 @@ def usercheck():
 #     songs = searchsong(request.args.get("song"), 5, 0, "track")
 #     return jsonify(songs)
 
-@app.route("/history")
-@login_required
-def history():
-
-    songinfo = (db.execute("SELECT song, artist, duration FROM history WHERE userid = :userid AND roomid = :roomid", userid=session["user_id"]))
-
-    return render_template("history.html", songinfo = songinfo)
 
 @app.route("/disband", methods=["GET", "POST"])
 @login_required
@@ -438,3 +413,16 @@ def disband():
         session.clear()
 
     return redirect("/")
+
+
+
+@app.route("/history")
+@login_required
+def history():
+
+    """displays previous playlists"""
+
+    songinfo = (db.execute("SELECT song, artist, duration FROM history WHERE userid = :userid AND roomnumber = :roomnumber",
+    userid = session["userid"], roomnumber = session["roomnumber"]))
+
+    return render_template("history.html", songinfo = songinfo)
