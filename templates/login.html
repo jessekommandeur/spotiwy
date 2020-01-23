@@ -1,65 +1,46 @@
 {% extends "layout.html" %}
 
 {% block main %}
-    <form action="/register" id="form" method="post">
+    <form action="/login" method="post">
         <p style="height: 80px;">
         </p>
         <div class="form-group">
-        <input  autocomplete="off" id="username" autofocus class="form-control" name="username" placeholder="Username" type="text">
+            <div class="form-group" class="alert alert-warning alert-dismissible" id ="username_alert">
+            <strong style="color:white;">Invalid username</strong>
         </div>
-        <div class="form-group" class="alert alert-warning alert-dismissible" id ="user_alert">
-            <strong style="color:white;">Username already exists</strong>
-        </div>
-        <div class="form-group">
-            <input class="form-control" id="password" name="password" placeholder="Password" type="password">
+            <input autocomplete="off" id ="username" autofocus class="form-control" name="username" placeholder="Username" onfocusout="checkusername()" type="text">
         </div>
         <div class="form-group">
-            <input class="form-control"  id="confirmation" name="confirmation" placeholder="Confirm Password" onfocusout="check_passw()" type="password">
+        <div class="form-group" class="alert alert-warning alert-dismissible" id ="password_alert">
+            <strong style="color:white;">Invalid login</strong>
         </div>
-        <div class="form-group" class="alert alert-warning alert-dismissible" id ="passw_alert">
-            <strong style="color:white;">Password doesn't match</strong>
+            <input class="form-control" id="password" onfocusout="checkpassword()" name="password" placeholder="Password" type="password">
         </div>
-        <button class="roombutton roombutton_hover" id="sumbit" type="submit">Register</button>
+        <button class="roombutton roombutton_hover" type="submit">Log in</button>
     </form>
     <script>
-
-    // $("#sumbit").click(function(event){
-    //     event.preventDefault();
-    $("#user_alert").hide();
-    $("#passw_alert").hide();
-    $(document).ready(function(){
-            document.getElementById("username").onkeyup = function(){
-                $.get('/usercheck?username=' + username.value, function(data) {
-                    if (data == false){
-                        $('#user_alert').show();
-                    }
-                    else {
-                        $('#user_alert').hide();
-                    }
-                    });
-                };
-    });
-    const form = document.getElementById("form");
-    form.addEventListener("submit", (e) => {
-        $.get('/usercheck?username=' + username.value, function(data) {
-        if (data == false){
-            e.preventDefault();
-        };
-        if (document.getElementById("password").value != document.getElementById("confirmation").value){
-            e.preventDefault();
-        };
-        });
-    });
-
-    function check_passw() {
-            if (document.getElementById("password").value != document.getElementById("confirmation").value){
-                $("#passw_alert").show();
+    $("#username_alert").hide();
+    function checkusername(){
+        $.get('/usernamecheck?username=' + username.value, function(data) {
+            if (data == false){
+                $('#username_alert').show();
             }
             else {
-                $("#passw_alert").hide();
-
-            };
+                $('#username_alert').hide();
+            }
+        });
     };
 
+    $("#password_alert").hide();
+    function checkpassword(){
+        $.get('/passwordcheck?password=' + password.value, function(data) {
+            if (data == false){
+                $('#password_alert').show();
+            }
+            else {
+                  $('#password_alert').hide();
+            }
+        });
+    };
     </script>
 {% endblock %}

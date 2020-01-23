@@ -9,6 +9,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required, apology, generatenumber, room_required, converter, timer
 from random import randint
 from API import searchsong, createplaylist
+import json
 
 # Configure application
 app = Flask(__name__)
@@ -327,11 +328,11 @@ def like():
 # @app.route("/bin", methods=["GET"])
 # @login_required
 # @room_required
-# def remove():
+# def bin():
 
 #     """remove song from list"""
 
-#     db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid = )
+#     db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid =  )
 
 
 
