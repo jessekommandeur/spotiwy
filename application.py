@@ -6,9 +6,9 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import login_required, apology, generatenumber, room_required, converter, timer
+from helpers import login_required, apology, generatenumber, room_required, converter, songtoplaylist
 from random import randint
-from API import searchsong, createplaylist, connect
+from API import searchsong, createplaylist, connect, addtracks
 import json
 
 # Configure application
@@ -396,8 +396,12 @@ def add():
             rows = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])
             roomnumber = session["roomnumber"]
 
-            if len(rows) < 2:
-                timer(roomnumber)
+            mostliked = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])
+            mostliked = {song["songid"] : song["likes"] for song in mostliked if song["likes"] != None}
+            roomadmin = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["userid"]
+            roomadminid = db.execute("SELECT * FROM users WHERE userid = :userid", userid = roomadmin)[0]["spotifykey"]
+            playlistid = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["playlistid"]
+            addtracks(roomadminid,playlistid,max(mostliked))
 
             return redirect("/room")
 
