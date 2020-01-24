@@ -46,25 +46,82 @@ def connect(username):
     client_id = 'a96ff6651252429ca81979ee4a293c4f' #placeholder
     client_secret = '24bacae55a1b481cbed2106862e1e087' #placeholder
     redirect_uri = 'https://www.google.nl/callback/'
-    scope = None
+    scope =None
 
     URL = prompt_for_user_token2(username, 'user-library-read', client_id, client_secret, redirect_uri)
     print("De URL is: ", URL)
-    scope = 'user-library-read'
-    token = util.prompt_for_user_token(username, scope)
+    # scope = 'user-library-read playlist-modify-public playlist-read-private playlist-modify-private playlist-read-collaborative'
+    # token = util.prompt_for_user_token(username, scope)
 
-    if token:
-        print("Got the token for:", username)
-    else:
-        print("Can't get token for", username)
+    # if token:
+    #     print("Got the token for:", username)
+    # else:
+    #     print("Can't get token for", username)
 
-    user_token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
-    print("The user token is:", user_token)
+    # user_token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
+    # print("The user token is:", user_token)
 
     return URL
 
+# connect("5q4hjdki3dulvsse9giqoxixt")
+#######################################################################################################
+def bitconnect(username, scope, client_id,
+    client_secret, redirect_uri, cache_path=None):
+    ''' prompts the user to login if necessary and returns
+        the user token suitable for use with the spotipy.Spotify
+        constructor
+        Parameters:
+         - username - the Spotify username
+         - scope - the desired scope of the request
+         - client_id - the client id of your app
+         - client_secret - the client secret of your app
+         - redirect_uri - the redirect URI of your app
+         - cache_path - path to location to save tokens
+    '''
 
-# connect('o2dznr7gbgsjrz727dcy9pn46')
+    cache_path = cache_path or ".cache-" + username
+    sp_oauth = oauth2.SpotifyOAuth('b775ac73bb0e4a4e9189d3e6c1821c32', '6327175ca5894985be59ab4f8882e983', 'https://www.google.nl/callback/',
+        scope = scope, cache_path=cache_path)
+
+
+    token_info = sp_oauth.get_cached_token()
+
+    if not token_info:
+        print('''
+            User authentication requires interaction with your
+            web browser. Once you enter your credentials and
+            give authorization, you will be redirected to
+            a url.  Paste that url you were directed to to
+            complete the authorization.
+        ''')
+        auth_url = sp_oauth.get_authorize_url()
+        try:
+            import webbrowser
+            webbrowser.open(auth_url)
+            print("Opened %s in your browser" % auth_url)
+        except BaseException:
+            print("Please navigate here: %s" % auth_url)
+
+        print()
+        print()
+        try:
+            response = raw_input("Enter the URL you were redirected to: ")
+        except NameError:
+            response = input("Enter the URL you were redirected to: ")
+
+        print()
+        print()
+
+        code = sp_oauth.parse_response_code(response)
+        token_info = sp_oauth.get_access_token(code)
+    # Auth'ed API request
+    if token_info:
+        return token_info['access_token']
+    else:
+        return None
+
+
+# bitconnect('o2dznr7gbgsjrz727dcy9pn46' , 'user-library-read playlist-modify-public playlist-read-private playlist-modify-private playlist-read-collaborative', 'a96ff6651252429ca81979ee4a293c4f', '24bacae55a1b481cbed2106862e1e087', 'https://www.google.nl/callback/', None)
 ######################################################################################################
 # Deze functie neemt als argument een PlaylistID en geeft de SongName en bijbehorende ArtistName.
 # Hiermee kunnen mensen die een room gejoined zijn kijken welke liedjes er al in de playlist staan.
@@ -209,8 +266,7 @@ def removetracks(username, playlist_id, track_ids):
 
 def createplaylist(username, playlist_name, playlist_description):
 
-    scope = "playlist-modify-public"
-    token = util.prompt_for_user_token(username, scope)
+    token = util.prompt_for_user_token(username)
 
     if token:
         sp = spotipy.Spotify(auth=token)
@@ -221,6 +277,6 @@ def createplaylist(username, playlist_name, playlist_description):
     else:
         print("Can't get token for", username)
 
-# createplaylist('qck1onpl2n6mlpdkiwt8rajq4', 'TestPlaylist', 'Een test playlist')
+# createplaylist('qck1onpl2n6mlpdkiwt8rajq4', 'dhejdgh', 'Een test playlist')
 
 ################################################################################################3
