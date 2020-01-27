@@ -173,3 +173,7 @@ main img {
 #heightchanger{
     height: 230px;
 }
+
+.nav.navbar-nav.navbar-right li a {
+    color: white;
+}
