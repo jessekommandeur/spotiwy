@@ -75,8 +75,7 @@ def converter(mseconds):
     """converts miliseconds to song duration"""
 
     minutes = int(mseconds / 60000)
-    seconds = round(int(mseconds/1000 % 60),2)
-
+    seconds = "{:02d}".format(int(mseconds/1000 % 60))
     return str("" + str(minutes) + ":" + str(seconds) + "")
 
 

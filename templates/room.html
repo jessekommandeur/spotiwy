@@ -2,13 +2,17 @@
 
 {% block main %}
 
+
     {% if session.admin %}
 
         <form action="/disband" method="post">
             <div class="leftbar">
-                <p>Room number: {{roomnumber}}</p><br><br><br><br><br><br><br><br><br><br><br><br>
-                <button>Disband room</button>
+                <p>Room number: {{roomnumber}}</p>
+                <br><br><br><br><br><br><br><br><br><br><br><br>
+                <button class="roombutton roombutton_hover" type="submit">Disband room</button>
             </div>
+
+
         </form>
 
     {% else %}
@@ -16,36 +20,44 @@
         <form action="/" method="post">
             <div class="leftbar">
                 <p>Room number: {{roomnumber}}</p><br><br><br><br><br><br><br><br><br><br><br><br>
-                <button>Leave room</button>
+                <button class="roombutton roombutton_hover" type="submit">Leave room</button>
             </div>
         </form>
 
     {% endif %}
 
-        <div class="playlist">
-            {% for element in playlist %}
-
-            <p>Song: {{element["song"]}}</p>
-            <p>Artist: {{element["artist"]}}</p>
-
-            <div class="rightbar">
-                <a href="/like"><img src="static/like.png" width="30px" height="30px"></a>
-                <p>{{likes}}</p>
+        <table class="playlist">
+            <tr>
+                <th><b>Song</b></th>
+                <th><b>Artist</b></th>
+                <th><b>Duration</b></th>
+                <th><b>likebutton</b></th>
+                <th><b>likes</b></th>
+                <th><b>bin</b></th>
+            </tr>
+                {% for element in playlist %}
+            <tr height="50px">
+                <th>{{element["song"]}}</th>
+                <th>{{element["artist"]}}</th>
+                <th>{{element["duration"]}}</th>
+                <th style="text-align:right"><a href="/like"><img src="static/like.png" width="30px" height="30px"></a> {{likes}}</th>
+                <th>  {{element["likes"]}}</th>
 
                 {% if session.admin %}
-                    <a href="/bin"><img src="static/bin.png" width="30px" height="30px"></a>
+                <th><a href="/bin"><img src="static/bin.png" width="30px" height="30px"></a></th>
+
                 {% endif %}
-
-            </div>
-
+            </tr>
             {% endfor %}
+        </table>
 
-                <p>Add song to playlist</p>
+        <table class="roombutton_hover addbutton">
+            <tr>
+                <th>add song to playlist</th>
+                <th><a href="/add"><img src="static/add.png" width="30px" height="30px"></a></th>
+            </tr>
+        </table>
 
-                <div class="rightbar">
-                    <a href="/add"><img src="static/add.png" width="30px" height="30px"></a>
-                </div>
 
-        </div>
 
 {% endblock %}

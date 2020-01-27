@@ -337,7 +337,7 @@ def room():
 
     roomnumber = session["roomnumber"]
 
-    return render_template("room.html", roomnumber = session["roomnumber"], playlist = playlist)
+    return render_template("room.html", roomnumber = session["roomnumber"], playlist = playlist, )
 
 
 
@@ -461,21 +461,25 @@ def disband():
 
 
 
-@app.route("/history")
-@login_required
+@app.route("/history", methods=["GET", "POST"])
 def history():
 
     """displays previous playlists"""
 
     songinfo = db.execute("SELECT song, artist, duration, roomname FROM history")
-    song_dict = {}
+    room_dict = {}
     for song in songinfo:
         song['duration'] = converter(song['duration'])
-        if song['roomname'] in song_dict:
-            song_dict[song['roomname']] = song_dict[song['roomname']] + [song]
+        if song['roomname'] in room_dict:
+            room_dict[song['roomname']] = room_dict[song['roomname']] + [song]
         else:
-            song_dict[song['roomname']] = [song]
-    return render_template("history.html", songinfo = songinfo)
+            room_dict[song['roomname']] = [song]
+
+    if request.method == "POST":
+        return render_template("playlist.html", roomnumber = int(request.form.get("roomnumber")), room_dict = room_dict)
+    else:
+        roomnumbers = [key for key in room_dict.keys()]
+        return render_template("history.html", room_dict = room_dict, roomnumbers=roomnumbers)
 
 
 @app.route("/passwordcheck", methods=["GET"])
@@ -511,7 +515,7 @@ def usernamecheck():
 
 
 @app.route("/searchdrpdwn", methods=["GET"])
-def drpdwn():
+def dropdown():
 
     print("test")
     songs = searchsong(request.args.get("song"), 5, 0, "track")
