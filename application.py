@@ -318,14 +318,20 @@ def join():
         return render_template("joinroom.html")
 
 
-
 @app.route("/homepage", methods=["GET", "POST"])
 def homepage():
 
-    # User reached route via GET (as by clicking a link or via redirect)
-    return render_template("homepage.html")
+    if request.method == "POST":
+        if not db.execute("SELECT roomnumber FROM rooms where roomnumber = :roomnumber", roomnumber = request.form.get("roomnumber")):
+            return render_template("homepage.html", error = "Invalid room")
+        else:
+            session["roomnumber"] = request.form.get("roomnumber")
+            # go to room
+            return redirect("/room")
 
-
+    else:
+        # User reached route via GET (as by clicking a link or via redirect)
+        return render_template("homepage.html")
 
 @app.route("/room", methods=["GET", "POST"])
 @room_required
