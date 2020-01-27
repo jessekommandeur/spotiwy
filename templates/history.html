@@ -1,41 +1,37 @@
 {% extends "layout.html" %}
-
 {% block title %}
-    History
+History
 {% endblock %}
-
 {% block main %}
-    <form action="/history" method="post">
-        <h1 class= "whitetext">
-           Search playlist
-        </h1>
-        <div>
-        <input list="roomlist" autocomplete="off" id="roomnumber" autofocus class="form-control" name="roomnumber" placeholder="Enter roomnumber" type="text">
-        <button id = "sumbit" class="roombutton roombutton_hover" type="submit">Search</button>
-        </div>
-        <datalist id="roomlist"></datalist>
-        <script>
-        document.getElementById("roomnumber").onkeyup = function(){
-            document.getElementById('roomlist').innerHTML = '';
-            var datalist = document.getElementById("roomlist");
-            var roomlist = {{roomnumbers}}
-            for(var i = 0; i < roomlist.length; i++) {
-                var option = document.createElement("OPTION"),
-                room = document.createTextNode(roomlist[i]);
-                option.appendChild(room);
-                option.setAttribute("value",roomlist[i]);
-                datalist.insertBefore(option,datalist.lastChild);
-                }
-            }
-        </script>
-
-    <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
-        <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
-        <a class="a2a_button_facebook"></a>
-        <a class="a2a_button_twitter"></a>
-        <a class="a2a_button_whatsapp"></a>
-        </div>
-        <script async src="https://static.addtoany.com/menu/page.js"></script>
-
-    </form>
+<form action="/history" method="post">
+   <h1 class= "whitetext">
+      Search playlist
+   </h1>
+   <div>
+      <input list="roomlist" autocomplete="off" id="roomnumber" autofocus class="form-control" name="roomnumber" placeholder="Enter roomnumber" type="text">
+      <button id = "sumbit" class="roombutton roombutton_hover" type="submit">Search</button>
+   </div>
+   <datalist id="roomlist"></datalist>
+   <script>
+      document.getElementById("roomnumber").onkeyup = function(){
+          document.getElementById('roomlist').innerHTML = '';
+          var datalist = document.getElementById("roomlist");
+          var roomlist = {{roomnumbers}}
+          for(var i = 0; i < roomlist.length; i++) {
+              var option = document.createElement("OPTION"),
+              room = document.createTextNode(roomlist[i]);
+              option.appendChild(room);
+              option.setAttribute("value",roomlist[i]);
+              datalist.insertBefore(option,datalist.lastChild);
+              }
+          }
+   </script>
+   <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+      <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+      <a class="a2a_button_whatsapp"></a>
+   </div>
+   <script async src="https://static.addtoany.com/menu/page.js"></script>
+</form>
 {% endblock %}
