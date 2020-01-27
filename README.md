@@ -1,8 +1,16 @@
-# SPOTIWY
-webprogrammeren
+# webprogrammeren IK
+Productnaam: Spotiwy
+Team: 10
+
+Teamleden:
+Koen Berenschot
+Jonne Hoek spaans 
+Jesse Kommandeur
+Thomas Meijer
+
 
 **Samenvatting:**
-Met onze webapplicatie kunnen gebruikers met een Spotify premium account een ‘room’ aanmaken. 
+Met onze webapplicatie kunnen gebruikers met een Spotify account een ‘room’ aanmaken. 
 Deze kamer kan beginnen met een geïmporteerde afspeellijst maar ook als lege lijst zonder nummer. 
 Gebruikers kunnen vervolgens eigen nummers  toevoegen aan de lijst. Gebruikers Ook kunnen zij 
 elkaars nummers 'liken' waardoor de meest 'gelikede' nummers bovenaan in de lijst komen te staan. 
