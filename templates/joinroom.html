@@ -1,10 +1,13 @@
 {% extends "layout.html" %}
-{% block main %}
-<form action="/joinroom" method="post">
-   </h1>
-   <div class="form-group">
-      <input size= "11" class="form-control" name="roomnumber" style="text-align: center" placeholder="room number" type="text">
-   </div>
-   <button class="roombutton roombutton_hover" type="submit">Join Room</button>
-</form>
-{% endblock %}
+
+   {% block main %}
+
+      <form action="/joinroom" method="post">
+         </h1>
+         <div class="form-group">
+            <input size= "11" class="form-control" name="roomnumber" style="text-align: center" placeholder="room number" type="text">
+         </div>
+         <button class="roombutton roombutton_hover" type="submit">Join Room</button>
+      </form>
+
+   {% endblock %}

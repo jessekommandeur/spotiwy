@@ -1,15 +1,18 @@
 {% extends "layout.html" %}
-{% block main %}
-<h1 class="whitetext" style="color:#5C44DE;" "text-align:center;"> What is Spotiwy?</h1>
-<p class="helptext">
-   &bull; By using Spotiwy you can either 'host' or 'join' a room.<br>
-   &bull; If you host a room, you need to be connected to spotify.<br>
-   &bull; When hosting, a playlist will be made on your Spotify account.<br>
-   &bull; You can add numbers to the queue of your room by pressing the + button.<br>
-   &bull; After the current song is almost finished, Spotiwy will move the highest liked song to your playlist.<br>
-   &bull; You or your host will recieve a room number. You can share this roomnumber to let others join the room<br>
-</p>
-<form action="/" method="get">
-   <button class="btn btn-primary" value="Go to Homepage" type="submit">Homepage</button>
-</form>
-{% endblock %}
+
+   {% block main %}
+
+      <h1 class="whitetext" style="color:#5C44DE;" "text-align:center;"> What is Spotiwy?</h1>
+      <p class="helptext">
+         &bull; By using Spotiwy you can either 'host' or 'join' a room.<br>
+         &bull; If you host a room, you need to be connected to spotify.<br>
+         &bull; When hosting, a playlist will be made on your Spotify account.<br>
+         &bull; You can add numbers to the queue of your room by pressing the + button.<br>
+         &bull; After the current song is almost finished, Spotiwy will move the highest liked song to your playlist.<br>
+         &bull; You or your host will recieve a room number. You can share this roomnumber to let others join the room<br>
+      </p>
+      <form action="/" method="get">
+         <button class="btn btn-primary" value="Go to Homepage" type="submit">Homepage</button>
+      </form>
+
+   {% endblock %}
