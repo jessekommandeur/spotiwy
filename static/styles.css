@@ -48,6 +48,13 @@ nav .navbar-brand .indigo {
 
 }
 
+.helptext {
+    color: #ffffff;
+    font-family: "CustomFont", "Proxima Nova Alt Rg";
+    text-align: left;
+    margin-left: 325px;
+}
+
 .setbutton {
     padding: 10px;
     margin: 10px;
