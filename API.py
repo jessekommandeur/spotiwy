@@ -127,28 +127,28 @@ def bitconnect(username, scope, client_id,
 # Hiermee kunnen mensen die een room gejoined zijn kijken welke liedjes er al in de playlist staan.
 # Er wordt een list gereturned met daarin dicts met de naam, artiest en id van het lied.
 
-def playlist(PlaylistID):
+# def playlist(PlaylistID):
 
-    username = 'qck1onpl2n6mlpdkiwt8rajq4' # De username wordt er automatisch ingezet
-    token = util.prompt_for_user_token(username)
-    sp = spotipy.Spotify(auth=token)
-    results = sp.playlist(playlist_id=PlaylistID, fields="tracks,next")
-    # Het aantal liedjes in de afspeellijst
-    TotalSongs = results['tracks']['total']
-    results2 = results['tracks']
-    PlayList = []
-    for Counter in range(TotalSongs):
-        SongName = results2['items'][Counter]['track']['name']
-        ArtistName = results2['items'][Counter]['track']['album']['artists'][0]['name']
-        SongID = results2['items'][Counter]['track']['id']
-        PlaylistDict = {}
-        PlaylistDict['track'] = SongName
-        PlaylistDict['artist'] = ArtistName
-        PlaylistDict['songid'] = SongID
-        PlayList.append(PlaylistDict)
-    print(PlayList)
+#     username = 'qck1onpl2n6mlpdkiwt8rajq4' # De username wordt er automatisch ingezet
+#     token = util.prompt_for_user_token(username)
+#     sp = spotipy.Spotify(auth=token)
+#     results = sp.playlist(playlist_id=PlaylistID, fields="tracks,next")
+#     # Het aantal liedjes in de afspeellijst
+#     TotalSongs = results['tracks']['total']
+#     results2 = results['tracks']
+#     PlayList = []
+#     for Counter in range(TotalSongs):
+#         SongName = results2['items'][Counter]['track']['name']
+#         ArtistName = results2['items'][Counter]['track']['album']['artists'][0]['name']
+#         SongID = results2['items'][Counter]['track']['id']
+#         PlaylistDict = {}
+#         PlaylistDict['track'] = SongName
+#         PlaylistDict['artist'] = ArtistName
+#         PlaylistDict['songid'] = SongID
+#         PlayList.append(PlaylistDict)
+#     print(PlayList)
 
-    return PlayList
+#     return PlayList
 
 
 # playlist('4pamLh9cgvJcT7btnB7Uod') # De playlistID wordt er uiteraard automatisch ingezet.
@@ -176,8 +176,7 @@ def playlist(PlaylistID):
 # playlistinfo("qck1onpl2n6mlpdkiwt8rajq4") #Deze moet automatisch in de functie worden ingevuld
 
 ##########################################################################################
-# Deze functie neemt 4 argumenten: De string die de gebruiker intypt (De titel van een lied (query)), het aantal nummers die worden opgehaald (limit), de offset en het type. In dit geval een track.
-# Het enige wat we nodig hebben van de gebruiker is de string die hij heeft ingetypt. De andere 3 argumenten zetten wij er in.
+# This function takes 4 arguments: The string that consists of the input of the user (The title of the song)(query), the amount of numbers that will be returned(limit), the offset and the type. In our case we use 'track', since we want to be able to search by song name.
 
 def searchsong(query, limit, offset, Type):
     username = 'qck1onpl2n6mlpdkiwt8rajq4'
@@ -185,28 +184,30 @@ def searchsong(query, limit, offset, Type):
 
     if token:
         sp = spotipy.Spotify(auth=token)
-        playlists = sp.user_playlists(username)
         results = sp.search(query, limit, offset, Type)
+        # The sp.search() function returns a giant dictionary with all the song information in it
         SongList = []
+        # Loop through the results to pick out the information we need
         for number, track in enumerate(results['tracks']['items']):
             SongName = track['name']
             ArtistName = results['tracks']['items'][0]['artists'][0]['name']
             SongID = track['id']
             SongDuration = track['duration_ms']
+            # Place the song name, artist name, song id and song duration into a dictionary
             SongDict = {}
             SongDict['track'] = SongName
             SongDict['artist'] = ArtistName
             SongDict['songid'] = SongID
             SongDict['duration'] = SongDuration
+            # Place the dict with those 4 keys into a list
             SongList.append(SongDict)
         print(SongList)
         return SongList
     else:
         return None
-        # apology
 
 
-# searchsong("Dance Monkey", 1, 0, 'track')
+# searchsong("Dance Monkey", 3, 0, 'track')
 ##########################################################################################
 # Deze functie neemt als argument een naam van een artiest en geeft de TrackName en TrackID.
 # Hiermee kunnen gebruikers liedjes opzoeken om toe te voegen aan de afspeellijst.
@@ -223,8 +224,8 @@ def searchsong(query, limit, offset, Type):
 
 # search("Marshmello") # De artiestennaam die de gebruikers invoeren, wordt in deze functie geplaatst.
 ###########################################################################################
-# Adds tracks to a playlist
-# Deze functie neemt 3 argumenten, de spotify username, het playlist ID en de track ID van het lied dat je wil toevoegen.
+# Adds tracks to a Spotify playlist
+# This function takes 3 arguments: The Spotify username, the playlist ID and the track ID of the song that will be added
 
 def addtracks(username,playlist_id,track_ids):
 
@@ -233,8 +234,10 @@ def addtracks(username,playlist_id,track_ids):
     if token:
         sp = spotipy.Spotify(auth=token)
         sp.trace = False
+        # Placing the track id into a list, since for some reason the function doesn't work when you don't.
         TrackList = []
         TrackList.append(track_ids)
+        # This spotipy function will add the given song to a users playlist
         results = sp.user_playlist_add_tracks(user=username, playlist_id=playlist_id, tracks=TrackList)
     else:
         print("Can't get token for", username)
@@ -242,8 +245,8 @@ def addtracks(username,playlist_id,track_ids):
 # addtracks('qck1onpl2n6mlpdkiwt8rajq4','0HnIK5tpE5AC567tb0WnRg','14sOS5L36385FJ3OL8hew4') # Voegt het nummer Happy Now van Kygo toe aan TestPlaylist
 
 ####################################################################################################
-# Removes tracks from a playlist.
-# Deze functie neemt 3 argumenten, de spotify username, het playlist ID en de track ID van het lied dat je wil verwijderen.
+# Removes tracks from a playlist
+# This function takes 3 arguments: The Spotify username, the playlist ID and the track ID of the song that will be added
 
 def removetracks(username, playlist_id, track_ids):
 
@@ -254,15 +257,15 @@ def removetracks(username, playlist_id, track_ids):
         sp.trace = False
         TrackList = []
         TrackList.append(track_ids)
+        # This spotipy function will remove the given song from a users playlist
         results = sp.user_playlist_remove_all_occurrences_of_tracks(user=username, playlist_id=playlist_id, tracks=TrackList)
     else:
         print("Can't get token for", username)
 
 # removetracks('qck1onpl2n6mlpdkiwt8rajq4','0HnIK5tpE5AC567tb0WnRg','14sOS5L36385FJ3OL8hew4') # Verwijdert het nummer Happy Now van Kygo uit TestPlaylist
 ####################################################################################################
-
-# Create a new playlist
-# Deze functie neemt drie argumenten: De spotify username van de gebruiker, de naam van de playlist die je wil aanmaken en een korte beschrijving van de playlist.
+# Creates a new Spotify playlist
+# This function takes 3 arguments: The Spotify username, the name of the playlist that will be made and a short description of the playlist
 
 def createplaylist(username, playlist_name, playlist_description):
 
