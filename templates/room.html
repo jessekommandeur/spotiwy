@@ -1,63 +1,64 @@
 {% extends "layout.html" %}
 
-{% block main %}
+   {% block main %}
 
+      {% if session.admin %}
 
-    {% if session.admin %}
-
-        <form action="/disband" method="post">
+         <form action="/disband" method="post">
             <div class="leftbar">
-                <p>Room number: {{roomnumber}}</p>
-                <br><br><br><br><br><br><br><br><br><br><br><br>
-                <button class="roombutton roombutton_hover" type="submit">Disband room</button>
+               <p>Room number: {{roomnumber}}</p>
+               <br><br><br><br><br><br><br><br><br><br><br><br>
+               <button class="roombutton roombutton_hover" type="submit">Disband room</button>
             </div>
+         </form>
 
+      {% else %}
 
-        </form>
-
-    {% else %}
-
-        <form action="/" method="post">
+         <form action="/" method="post">
             <div class="leftbar">
-                <p>Room number: {{roomnumber}}</p><br><br><br><br><br><br><br><br><br><br><br><br>
-                <button class="roombutton roombutton_hover" type="submit">Leave room</button>
+               <p>Room number: {{roomnumber}}</p>
+               <br><br><br><br><br><br><br><br><br><br><br><br>
+               <button class="roombutton roombutton_hover" type="submit">Leave room</button>
             </div>
-        </form>
+         </form>
 
-    {% endif %}
+      {% endif %}
 
-        <table class="playlist">
+         <table class="playlist">
             <tr>
-                <th><b>Song</b></th>
-                <th><b>Artist</b></th>
-                <th><b>Duration</b></th>
-                <th><b>likebutton</b></th>
-                <th><b>likes</b></th>
-                <th><b>bin</b></th>
+               <th><b>Song</b></th>
+               <th><b>Artist</b></th>
+               <th><b>Duration</b></th>
+               <th><b>likebutton</b></th>
+               <th><b>likes</b></th>
+               <th><b>bin</b></th>
             </tr>
-                {% for element in playlist %}
+
+      {% for element in playlist %}
+
             <tr height="50px">
-                <th>{{element["song"]}}</th>
-                <th>{{element["artist"]}}</th>
-                <th>{{element["duration"]}}</th>
-                <th style="text-align:right"><a href="/like"><img src="static/like.png" width="30px" height="30px"></a> {{likes}}</th>
-                <th>  {{element["likes"]}}</th>
+               <th>{{element["song"]}}</th>
+               <th>{{element["artist"]}}</th>
+               <th>{{element["duration"]}}</th>
+               <th style="text-align:right"><a href="/like"><img src="static/like.png" width="30px" height="30px"></a> {{likes}}</th>
+               <th>{{element["likes"]}}</th>
 
-                {% if session.admin %}
-                <th><a href="/bin"><img src="static/bin.png" width="30px" height="30px"></a></th>
+         {% if session.admin %}
 
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </table>
+               <th><a href="/bin"><img src="static/bin.png" width="30px" height="30px"></a></th>
 
-        <table class="roombutton_hover addbutton">
-            <tr>
-                <th>add song to playlist</th>
-                <th><a href="/add"><img src="static/add.png" width="30px" height="30px"></a></th>
-            </tr>
-        </table>
+         {% endif %}
 
+         </tr>
 
+      {% endfor %}
 
-{% endblock %}
+      </table>
+      <table class="roombutton_hover addbutton">
+         <tr>
+            <th>add song to playlist</th>
+            <th><a href="/add"><img src="static/add.png" width="30px" height="30px"></a></th>
+         </tr>
+      </table>
+
+   {% endblock %}
