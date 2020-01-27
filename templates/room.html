@@ -6,7 +6,7 @@
 
         <form action="/disband" method="post">
             <div class="leftbar">
-                <p>Room number: {{roomnumber}}</p>
+                <p>Room number: {{roomnumber}}</p><br><br><br><br><br><br><br><br><br><br><br><br>
                 <button>Disband room</button>
             </div>
         </form>
@@ -15,7 +15,7 @@
 
         <form action="/" method="post">
             <div class="leftbar">
-                <p>Room number: {{roomnumber}}</p>
+                <p>Room number: {{roomnumber}}</p><br><br><br><br><br><br><br><br><br><br><br><br>
                 <button>Leave room</button>
             </div>
         </form>
@@ -29,11 +29,11 @@
             <p>Artist: {{element["artist"]}}</p>
 
             <div class="rightbar">
-                <a href="/like"><img src="like.png"></a>
+                <a href="/like"><img src="static/like.png" width="30px" height="30px"></a>
                 <p>{{likes}}</p>
 
                 {% if session.admin %}
-                    <a href="/bin"><img src=" --prullenbak-- "></a>
+                    <a href="/bin"><img src="static/bin.png" width="30px" height="30px"></a>
                 {% endif %}
 
             </div>
