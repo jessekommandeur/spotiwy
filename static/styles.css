@@ -87,6 +87,10 @@ nav .navbar-brand .indigo {
     border: 2px solid #5C44DE;
 }
 
+.bigbutton:active {
+    border: 2px solid #3B0673;
+}
+
 .border2 {
     border-color: #5c44de;
     border-style: solid;
