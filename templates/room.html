@@ -40,15 +40,14 @@
                <th>{{element["song"]}}</th>
                <th>{{element["artist"]}}</th>
                <th>{{element["duration"]}}</th>
-               <th style="text-align:right"><a href="/like"><img src="static/like.png" width="30px" height="30px"></a> {{likes}}</th>
+               <th style="text-align:right"><img width="30px" height="30px" src="static/like.png" onmouseover="this.src='static/liked.png';" onmouseout="this.src='static/like.png';"> {{likes}}</th>
                <th>{{element["likes"]}}</th>
 
          {% if session.admin %}
 
-               <th><a href="/bin"><img src="static/bin.png" width="30px" height="30px"></a></th>
+               <th><a href="/bin"><img width="30px" height="30px" src="static/bin.png" onmouseover="this.src='static/binned.png';" onmouseout="this.src='static/bin.png';" ></a></th>
 
          {% endif %}
-
          </tr>
 
       {% endfor %}
