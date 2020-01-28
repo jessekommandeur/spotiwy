@@ -1,13 +1,35 @@
 {% extends "layout.html" %}
+{% block main %}
+<form action="/joinroom" method="post">
+   </h1>
+   <div class="form-group">
+      <input size= "11" class="form-control" name="roomnumber" style="text-align: center" placeholder="room number" type="text">
+   </div>
+   <datalist id="roomlist"></datalist>
+   <button class="roombutton roombutton_hover" type="submit">Join Room</button>
+</form>
+   <script>
 
-   {% block main %}
+      // Live check user input
+      document.getElementById("roomnumber").onkeyup = function(){
 
-      <form action="/joinroom" method="post">
-         </h1>
-         <div class="form-group">
-            <input size= "11" class="form-control" name="roomnumber" style="text-align: center" placeholder="room number" type="text">
-         </div>
-         <button class="roombutton roombutton_hover" type="submit">Join Room</button>
-      </form>
+          // Empty previous datalist
+          document.getElementById('roomlist').innerHTML = '';
 
-   {% endblock %}
+          // Link datalist
+          var datalist = document.getElementById("roomlist");
+
+          // Retrieve roomnumbers
+          var roomlist = {{roomnumbers}}
+
+          // Add roomnumber options to datalist
+          for(var i = 0; i < roomlist.length; i++) {
+              var option = document.createElement("OPTION"),
+              room = document.createTextNode(roomlist[i]);
+              option.appendChild(room);
+              option.setAttribute("value",roomlist[i]);
+              datalist.insertBefore(option,datalist.lastChild);
+              }
+          }
+   </script>
+{% endblock %}

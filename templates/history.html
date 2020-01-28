@@ -18,18 +18,27 @@
          </div>
          <datalist id="roomlist"></datalist>
          <script>
-            document.getElementById("roomnumber").onkeyup = function(){
-                document.getElementById('roomlist').innerHTML = '';
-                var datalist = document.getElementById("roomlist");
-                var roomlist = {{roomnumbers}}
-                for(var i = 0; i < roomlist.length; i++) {
-                    var option = document.createElement("OPTION"),
-                    room = document.createTextNode(roomlist[i]);
-                    option.appendChild(room);
-                    option.setAttribute("value",roomlist[i]);
-                    datalist.insertBefore(option,datalist.lastChild);
-                    }
-                }
+         // Execute function when user searches
+         document.getElementById("roomnumber").onkeyup = function(){
+
+            // Empty previous datalist
+             document.getElementById('roomlist').innerHTML = '';
+
+             // Link to datalist
+             var datalist = document.getElementById("roomlist");
+
+             // Retrieve roomnumbers
+             var roomlist = {{roomnumbers}}
+
+             // Create datalist option for roomnumbers
+             for(var i = 0; i < roomlist.length; i++) {
+                 var option = document.createElement("OPTION"),
+                 room = document.createTextNode(roomlist[i]);
+                 option.appendChild(room);
+                 option.setAttribute("value",roomlist[i]);
+                 datalist.insertBefore(option,datalist.lastChild);
+                 }
+             }
          </script>
          <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
             <a class="a2a_dd" href="https://www.addtoany.com/share"></a>

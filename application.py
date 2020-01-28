@@ -6,7 +6,7 @@ from flask_session import Session
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import login_required, apology, generatenumber, room_required, converter, songtoplaylist
+from helpers import login_required, apology, generatenumber, room_required, converter, songtoplaylist, roominfo
 from API import searchsong, createplaylist, connect, addtracks
 from celery import Celery
 import json
@@ -368,28 +368,33 @@ def join():
 
     """Join a room"""
 
-    # User reached route via POST
+    # Retrieve roomnumbers
+    room_dict = roominfo()[0]
+    roomnumbers = [key for key in room_dict.keys()]
+
     if request.method == "POST":
 
-        # Get room number from user
-        userinput = request.form.get("roomnumber")
+        # get user input
+        userinput =  request.form.get("roomnumber")
 
-        # If room exists
+        # Ensure room exists
         if db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = userinput):
 
-            # Remember room of user
+            # Save current room
             session["roomnumber"] = userinput
 
-            # Go to room
+            # Redirect to room
             return redirect("/room")
 
-        # Decline if room number invalid
         else:
-            return redirect("/homepage")
 
-    # User reached route via GET
+            # Return user to homepage
+            return redirect("/")
+
     else:
-        return render_template("joinroom.html")
+
+        # Render template with available rooms
+        return render_template("joinroom.html", roomnumbers = roomnumbers)
 
 
 @app.route("/homepage", methods=["GET", "POST"])
@@ -514,20 +519,17 @@ def add():
         return render_template("add.html")
 
 
-@app.route("/usercheck", methods=["GET"])
-def usercheck():
+@app.route("/availability", methods=["GET"])
+def availability():
 
     """Checks if username is available, in json format"""
-
-    # Receive username
-    username = request.args.get("username")
 
     # Query database for username
     rows = db.execute("SELECT * FROM users WHERE username = :username",
             username=request.args.get("username"))
 
     # If available, return True
-    if not rows:
+    if len(rows) < 1:
         return jsonify(True)
 
     # Else, return False
@@ -563,52 +565,44 @@ def disband():
 @app.route("/history", methods=["GET", "POST"])
 def history():
 
-    """Display history of room"""
+    """displays previous playlists"""
 
-    # Query database for song info
-    songinfo = db.execute("SELECT * FROM history")
+    # Retrieve history
+    room_dict, songinfo = roominfo()[0], roominfo()[1]
 
-    # Create dict with room history
-    roomdict = {}
-    for song in songinfo:
-        song['duration'] = converter(song['duration'])
-        if song['roomname'] in roomdict:
-            roomdict[song['roomname']] = roomdict[song['roomname']] + [song]
-        else:
-            roomdict[song['roomname']] = [song]
-
-    # User reached route via POST
+    # Render playlist with added variable
     if request.method == "POST":
+        return render_template("playlist.html", roomnumber = int(request.form.get("roomnumber")), room_dict = room_dict)
 
-        # User can search for room
-        return render_template("playlist.html", roomnumber = int(request.form.get("roomnumber")), roomdict = roomdict)
-
-    # User reached route via GET
+    # Return search menu with roomnumbers
     else:
-
-        # Create list with room numbers
-        roomnumbers = [key for key in roomdict.keys()]
-        return render_template("history.html", roomdict = roomdict, roomnumbers = roomnumbers)
+        roomnumbers = [key for key in room_dict.keys()]
+        return render_template("history.html", room_dict = room_dict, roomnumbers=roomnumbers)
 
 
 @app.route("/passwordcheck", methods=["GET"])
 def passwordcheck():
+    """Checks if password and username are valid"""
 
-    """Checks if password is available, in json format"""
-
-    # Get user input
+    # Receive username
     password = request.args.get("password")
+    username = request.args.get("username")
 
-    # Check for input
+    # Ensure password has input
     if not password:
         return jsonify(False)
 
-    # Query database for username
+    # Retrieve data for username
     rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.args.get("username"))
 
-    # Ensure login is valid
-    if not check_password_hash(rows[0]["hash"], request.args.get("password")):
+    # Ensure username exists
+    if len(rows) < 1:
         return jsonify(False)
+
+    # Ensure password matches
+    elif not check_password_hash(rows[0]["hash"], request.args.get("password")):
+        return jsonify(False)
+
     else:
         return jsonify(True)
 

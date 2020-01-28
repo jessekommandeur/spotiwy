@@ -37,3 +37,12 @@ def connect3():
 
 
 ##########################################################
+
+
+  # Ensure user enters 6 digit number
+            if not len(request.form.get("roomnumber")) == 6:
+                return apology("should enter 6 digit number", 400)
+
+            # ensure user enters digits only
+            if not request.form.get("roomnumber").isdigit():
+                return apology("should enter digits only number", 400)

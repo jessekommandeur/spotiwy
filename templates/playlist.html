@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
 
-<<<<<<< HEAD
 {% block title %}
     History
 {% endblock %}
@@ -44,56 +43,4 @@
     </style>
 
 {% endblock %}
-=======
-   {% block title %}
 
-      History
-
-   {% endblock %}
-
-   {% block main %}
-
-      <h1 class= "whitetext">
-
-         Playlist room: {{roomnumber}}
-
-         </h1>
-         <div>
-            <table style="width:100%;border-collapse: collapse;">
-               <tr>
-                  <th><b>Song</b></th>
-                  <th><b>Artist</b></th>
-                  <th><b>Duration</b></th>
-               </tr>
-
-            {% for song in room_dict[roomnumber] %}
-
-               <tr>
-                  <td>{{song['song']}}</th>
-                  <td>{{song['artist']}}</th>
-                  <td>{{song['duration']}}</th>
-               </tr>
-
-            {% endfor %}
-
-            </table>
-         </div>
-      <style>
-         tr:nth-child(even){background-color: grey}
-         th{
-         padding: 8px;
-         }
-         th{
-         background-color: #5c44de;
-         color: white;
-         }
-         td{
-         color: white;
-         }
-         tr{
-         background-color: #2e2d33
-         }
-      </style>
-
-   {% endblock %}
->>>>>>> 4f7a7fb3c322da7997023c41660451e6fc929595
