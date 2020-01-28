@@ -265,8 +265,8 @@ def join():
     """Join a room"""
 
     # Retrieve roomnumbers
-    room_dict = roominfo()[0]
-    roomnumbers = [key for key in room_dict.keys()]
+    roomdict = roominfo()[0]
+    roomnumbers = [key for key in roomdict.keys()]
 
     if request.method == "POST":
 
@@ -460,16 +460,16 @@ def history():
     """displays previous playlists"""
 
     # Retrieve history
-    room_dict, songinfo = roominfo()[0], roominfo()[1]
+    roomdict, songinfo = roominfo()[0], roominfo()[1]
 
     # Render playlist with added variable
     if request.method == "POST":
-        return render_template("playlist.html", roomnumber = int(request.form.get("roomnumber")), room_dict = room_dict)
+        return render_template("playlist.html", roomnumber = int(request.form.get("roomnumber")), roomdict = roomdict)
 
     # Return search menu with roomnumbers
     else:
-        roomnumbers = [key for key in room_dict.keys()]
-        return render_template("history.html", room_dict = room_dict, roomnumbers=roomnumbers)
+        roomnumbers = [key for key in roomdict.keys()]
+        return render_template("history.html", roomdict = roomdict, roomnumbers=roomnumbers)
 
 
 @app.route("/passwordcheck", methods=["GET"])

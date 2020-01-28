@@ -110,7 +110,7 @@ def roominfo():
 
     # Retrieve history from database
     songinfo = db.execute("SELECT song, artist, duration, roomname FROM history")
-    room_dict = {}
+    roomdict = {}
 
     # Create dict with history per room
     for song in songinfo:
@@ -119,11 +119,11 @@ def roominfo():
         song['duration'] = converter(song['duration'])
 
         # If the roomnumber exists add song to value
-        if song['roomname'] in room_dict:
-            room_dict[song['roomname']] = room_dict[song['roomname']] + [song]
+        if song['roomname'] in roomdict:
+            roomdict[song['roomname']] = roomdict[song['roomname']] + [song]
 
         # If roomnumber doesn't exist create dict item
         else:
-            room_dict[song['roomname']] = [song]
+            roomdict[song['roomname']] = [song]
 
-    return [room_dict, songinfo]
+    return [roomdict, songinfo]
