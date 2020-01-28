@@ -48,22 +48,22 @@ def connect(username):
     redirect_uri = 'https://www.google.nl/callback/'
     scope =None
 
-    URL = prompt_for_user_token2(username, 'user-library-read', client_id, client_secret, redirect_uri)
-    print("De URL is: ", URL)
-    # scope = 'user-library-read playlist-modify-public playlist-read-private playlist-modify-private playlist-read-collaborative'
-    # token = util.prompt_for_user_token(username, scope)
+    # URL = prompt_for_user_token2(username, 'user-library-read', client_id, client_secret, redirect_uri)
+    # print("De URL is: ", URL)
+    scope = 'user-library-read playlist-modify-public playlist-read-private playlist-modify-private playlist-read-collaborative user-top-read'
+    token = util.prompt_for_user_token(username, scope)
 
-    # if token:
-    #     print("Got the token for:", username)
-    # else:
-    #     print("Can't get token for", username)
+    if token:
+        print("Got the token for:", username)
+    else:
+        print("Can't get token for", username)
 
-    # user_token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
-    # print("The user token is:", user_token)
+    user_token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
+    print("The user token is:", user_token)
 
-    return URL
+    # return URL
 
-# connect("5q4hjdki3dulvsse9giqoxixt")
+connect("qck1onpl2n6mlpdkiwt8rajq4")
 #######################################################################################################
 def bitconnect(username, scope, client_id,
     client_secret, redirect_uri, cache_path=None):
