@@ -200,3 +200,18 @@ main img {
 .nav.navbar-nav.navbar-right li a {
     color: white;
 }
+
+.tablerow:nth-child(even){background-color: #80808080}
+
+.tableheader{
+  padding: 8px;
+  background-color: #5c44de;
+  color: white;
+}
+.tableitem{
+    color: white;
+}
+.tablerow{
+    background-color: #2e2d3380
+
+}

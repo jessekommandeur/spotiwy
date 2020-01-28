@@ -9,38 +9,20 @@
        Playlist room: {{roomnumber}}
     </h1>
     <div>
-    <table style="width:100%;border-collapse: collapse;">
+    <table class="playlist" style="width:100%;border-collapse: collapse;">
         <tr>
             <th><b>Song</b></th>
             <th><b>Artist</b></th>
             <th><b>Duration</b></th>
         </tr>
     {% for song in roomdict[roomnumber] %}
-        <tr>
-            <td>{{song['song']}}</th>
-            <td>{{song['artist']}}</th>
-            <td>{{song['duration']}}</th>
+        <tr class="tablerow">
+            <td class="tableitem">{{song['song']}}</th>
+            <td class="tableitem">{{song['artist']}}</th>
+            <td class="tableitem">{{song['duration']}}</th>
         </tr>
     {% endfor %}
     </table>
     </div>
-    <style>
-        tr:nth-child(even){background-color: grey}
-        th{
-          padding: 8px;
-        }
-        th{
-          background-color: #5c44de;
-          color: white;
-        }
-        td{
-            color: white;
-        }
-        tr{
-            background-color: #2e2d33
-
-        }
-    </style>
 
 {% endblock %}
-
