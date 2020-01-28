@@ -8,7 +8,6 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required, apology, generatenumber, room_required, converter, songtoplaylist, roominfo
 from API import searchsong, createplaylist, connect, addtracks
-from celery import Celery
 import json
 
 # Configure application
@@ -16,29 +15,6 @@ app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-
-#### NOG COMMENTS ########################################################################################
-
-# Configure celery for background processes
-def make_celery(app):
-    celery = Celery(app.import_name, backend=app.config['CELERY_RESULT_BACKEND'], broker=app.config['CELERY_BROKER_URL'])
-    celery.conf.update(app.config)
-
-    class ContextTask(celery.Task):
-        def _call_(self, *args, **kwargs):
-            with app.app_context():
-                return self.run(*args, **kwargs)
-
-    celery.Task = ContextTask
-    return celery
-
-app.config.update(
-    CELERY_BROKER_URL='redis://localhost:8080',
-    CELERY_RESULT_BACKEND='redis://localhost:8080')
-
-#### NOG COMMENTS ########################################################################################
-
-celery = make_celery(app)
 
 # Ensure responses aren't cached
 @app.after_request
@@ -56,7 +32,6 @@ Session(app)
 
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///spotiwy.db")
-
 
 
 """ START MAIN FUNCTIONS """
@@ -89,7 +64,7 @@ def help():
     return render_template("help.html")
 
 
-#### NOG COMMENTS DOOR JONNE ########################################################################################
+#### NOG COMMENTS DOOR JORIS ########################################################################################
 @app.route("/register", methods=["GET", "POST"])
 def register():
 
@@ -169,7 +144,7 @@ def login():
     # User reached route via GET
     else:
         return render_template("login.html")
-#### NOG COMMENTS DOOR JONNE ########################################################################################
+#### NOG COMMENTS DOOR JORIS ########################################################################################
 
 
 @app.route("/logout")
@@ -242,85 +217,6 @@ def changepassword():
     # User reached route via GET
     else:
         return render_template("password.html")
-
-
-@celery.task
-def checker():
-
-    """Checks to ensure room queues run smooth"""
-
-    # Query database for rooms and songs
-    rooms = db.execute("SELECT * FROM rooms WHERE song IS NULL")
-    songs = db.execute("SELECT * FROM rooms WHERE song IS NOT NULL")
-
-    # Check every room
-    for room in rooms:
-
-        # If there is only 1 song, add song to spotify playlist
-        if len(db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = room["roomnumber"])) == 2:
-
-            # Check if song is already playing
-            if db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND song IS NOT NULL", roomnumber = room["roomnumber"])[0]["playing"] == "no":
-
-                # Add song to spotify playlist
-                songid = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND song IS NOT NULL", roomnumber = room["roomnumber"])[0]["songid"]
-                roomadmin = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = room["roomnumber"])[0]["userid"]
-                roomadminid = db.execute("SELECT * FROM users WHERE userid = :userid", userid = roomadmin)[0]["spotifykey"]
-                playlistid = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = room["roomnumber"])[0]["playlistid"]
-                addtracks(roomadminid,playlistid,songid)
-
-                # Update song status to 'playing'
-                db.execute("UPDATE rooms SET playing = :playing WHERE roomnumber = :roomnumber AND songid = :songid",
-                        playing = "yes", roomnumber = room["roomnumber"], songid = songid)
-
-    # Query every 'playing' song
-    playing = db.execute("SELECT * FROM rooms WHERE playing = :playing", playing = "yes")
-
-    # Check if song is almost finished
-    for song in playing:
-        if db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = song["roomnumber"])[0]["duration"] < 10000:
-
-            # If almost finished, add new song to playlist
-            mostliked = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND playing = :playing", roomnumber = song["roomnumber"], playing = "no")
-            mostliked = {song2["songid"] : song2["likes"] for song2 in mostliked if song2["likes"] != None}
-            songid = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND song IS NOT NULL", roomnumber = song["roomnumber"])[0]["songid"]
-            roomadmin = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = song["roomnumber"])[0]["userid"]
-            roomadminid = db.execute("SELECT * FROM users WHERE userid = :userid", userid = roomadmin)[0]["spotifykey"]
-            playlistid = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = song["roomnumber"])[0]["playlistid"]
-            addtracks(roomadminid,playlistid,max(mostliked))
-
-            # Delete old song
-            db.execute("DELETE FROM rooms WHERE playing = :playing AND roomnumber = :roomnumber", playing = "yes", roomnumber = song["roomnumber"])
-
-            # Update new song status to 'playing'
-            db.execute("UPDATE rooms SET playing = :playing WHERE roomnumber = :roomnumber AND songid = :songid", playing = "yes", roomnumber = song["roomnumber"], songid = max(mostliked))
-
-        # Else, duration decreases
-        else:
-            db.execute("UPDATE rooms SET duration = :duration", duration = song["duration"] - 1000)
-
-#### NOG COMMENTS DOOR KOEN ########################################################################################
-
-    # Check again?
-    # wait 990 ms
-    # checker()
-
-
-    # query database
-        # for every room
-            # if room has 1 song
-                # add song to playlist
-
-    # for current song
-        # if song is almost finished
-            # get highest song after this one
-            # add to playlist
-            # set new one to 1 like
-            # delete old from rooms
-
-        # else
-            # time -1 sec
-#### NOG COMMENTS DOOR KOEN ########################################################################################
 
 
 @app.route("/host", methods=["GET", "POST"])
@@ -491,22 +387,18 @@ def add():
             # store song information in database
             db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes, duration, playing) VALUES(:roomnumber, :song, :songid, :artist, :likes, :duration, :playing)",
                     roomnumber = session["roomnumber"], song = songinfo[0]["track"], songid = songinfo[0]["songid"], artist = songinfo[0]["artist"],
-                    likes = 1, duration = songinfo[0]["duration"], playing = "no")
+                    likes = 1, duration = converter(songinfo[0]["duration"]), playing = "no")
 
             # Add song to queue
             rows = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])
             roomnumber = session["roomnumber"]
 
-#### NOG WEGHALEN ########################################################################################
-
-            # mostliked = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])
-            # mostliked = {song["songid"] : song["likes"] for song in mostliked if song["likes"] != None}
-            # roomadmin = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["userid"]
-            # roomadminid = db.execute("SELECT * FROM users WHERE userid = :userid", userid = roomadmin)[0]["spotifykey"]
-            # playlistid = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["playlistid"]
-            # addtracks(roomadminid,playlistid,max(mostliked))
-
-#### NOG WEGHALEN ########################################################################################
+            mostliked = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])
+            mostliked = {song["songid"] : song["likes"] for song in mostliked if song["likes"] != None}
+            roomadmin = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["userid"]
+            roomadminid = db.execute("SELECT * FROM users WHERE userid = :userid", userid = roomadmin)[0]["spotifykey"]
+            playlistid = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["playlistid"]
+            addtracks(roomadminid,playlistid,max(mostliked))
 
             # Go to room
             return redirect("/room")
