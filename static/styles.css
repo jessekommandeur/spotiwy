@@ -80,6 +80,15 @@ nav .navbar-brand .indigo {
 
 .choice {
     padding: 9px;
+
+}
+
+.bigbutton:hover {
+    border: 2px solid #5C44DE;
+}
+
+.bigbutton:active {
+    border: 2px solid #3B0673;
 }
 
 .border2 {
@@ -150,9 +159,22 @@ main img {
     box-shadow: 0 50px 50px 0 rgba(0,0,0,0.24),0 50px 100px 0 rgba(0,0,0,0.19);
 }
 
-.navitem:hover {
-  background-color:#5c44de;
+.navitem {
+  padding:3px 2px;
+  margin: 1px;
+  font-size: 15px;
+  color: #FFFFFF;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #ffffff;
+  background-color: #222222;
 }
+
+.navitem:hover {
+    background-color: #5C44DE ;
+}
+
 
 .playlist{
     width:100%;
