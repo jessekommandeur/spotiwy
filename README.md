@@ -3,10 +3,10 @@ Productnaam: Spotiwy
 Team: 10
 
 Teamleden:
-Koen Berenschot
-Jonne Hoek spaans
-Jesse Kommandeur
-Thomas Meijer
+Koen Berenschot: application.py, html
+Jonne Hoek spaans: JavaScript, html
+Jesse Kommandeur: application.py, html
+Thomas Meijer: API.py, html
 
 
 **Samenvatting:**
@@ -20,15 +20,13 @@ vormgegeven met een gemakkelijk navigeerbare site.
 
 Deze features zijn nodig voor het minimum viable product:
 - Inlog/registratie systeem.
-- Een homepage, waarop gebruikers uit de volgende opties kunnen kiezen:
+-Homepage waarop gebruikers uit de volgende opties kunnen kiezen:
 	- Host.
 	- Join.
 	- Playlists bekijken.
-	- Koppelen aan spotify account.
-- Een pagina waarin gebruikers een kamer kunnen 'hosten'.
-- Een pagina waarin gebruikers een kamer kunnen 'joinen'.
-- Twee pagina's waarin de 'host' en gebruikers die de kamer hebben gejoined, acties op de playlist kunnen uitvoeren.
-- Een koppel pagina, waarin gebruikers hun spotify account kunnen linken.
+- Pagina waarin gebruikers een kamer kunnen 'hosten'.
+- Pagina waarin gebruikers een kamer kunnen 'joinen'.
+- Pagina waarin de 'host' en gebruikers die de kamer hebben gejoined, acties op de playlist kunnen uitvoeren.
 
 
 ** Key Feautures**
