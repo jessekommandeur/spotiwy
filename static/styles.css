@@ -80,6 +80,11 @@ nav .navbar-brand .indigo {
 
 .choice {
     padding: 9px;
+
+}
+
+.bigbutton:hover {
+    border: 2px solid #5C44DE;
 }
 
 .border2 {
