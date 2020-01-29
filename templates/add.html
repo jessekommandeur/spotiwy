@@ -3,7 +3,7 @@
 {% block main %}
     <form action="/add" method="post">
         <div class="form-group">
-            <input list="songlist" autocomplete="on" autofocus class="form-control" id="song" name="song" placeholder="Song name" type="text">
+            <input list="songlist" autocomplete="off" autofocus class="form-control" id="song" name="song" placeholder="Song name" type="text">
             <datalist style="background-color:grey;" class="dropdown" id="songlist"></datalist>
             <script>
                     // Execute on user search

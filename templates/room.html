@@ -28,7 +28,7 @@
             <tr>
                <th><b>Song</b></th>
                <th><b>Artist</b></th>
-               <th style="text-align: center;"><b>Duration</b></th>
+               <th><b>Duration</b></th>
             </tr>
 
       {% for element in playlist %}
@@ -36,15 +36,15 @@
             <tr class="tablerow"  id="{{element['songid']}}" height="50px">
                <td class="tableitem">{{element["song"]}}</td>
                <td class="tableitem">{{element["artist"]}}</td>
-               <td class="tableitem" style="text-align: center;">{{element["duration"]}}</td>
-               <td class="tableitem" style="text-align:right;width:30px;"><img onclick="like('{{element['songid']}}')" width="30px" height="30px" src="static/like.png" onmouseover="this.src='static/liked.png';" onmouseout="this.src='static/like.png';"></td>
-               <td class="tableitem" id="{{element['songid']}}">{{element["likes"]}}</td>
+               <td class="tableitem">{{element["duration"]}}</td>
+               <td class="tableitem" style="text-align:right;width:30px;position:static;"><img onclick="like('{{element['song']}}')" width="30px" height="30px" src="static/like.png" onmouseover="this.src='static/liked.png';" onmouseout="this.src='static/like.png';"></td>
+               <td class="tableitem" id="{{element['song']}}">{{element["likes"]}}</td>
 
-         <!--{% if session.admin %}-->
+         {% if session.admin %}
 
                <td  onclick="removesong('{{element['songid']}}')" class="tableitem"><a><img value="delete" width="30px" height="30px" src="static/bin.png" onmouseover="this.src='static/binned.png';" onmouseout="this.src='static/bin.png';" ></a></td>
 
-         <!--{% endif %}-->
+         {% endif %}
 
             </tr>
 
@@ -52,22 +52,22 @@
 
       </table>
       <script>
-            function like(songid) {
-               $.get('/like' ,{'songid' : songid}, function(newlikes) {
-                  document.getElementById(songid).innerHTML = newlikes['likes'];
+            function like(song) {
+               $.get('/like' ,{'song' : song}, function(newlikes) {
+                  document.getElementById(song).innerHTML = newlikes['likes'];
             });
             }
 
             function removesong(songid){
                var element = document.getElementById(songid);
                element.parentNode.removeChild(element);
-               $.get('/bin' ,{'binned' : songid}, function(newlikes) {
+               $.get('/bin' ,{'binned' : songid}, function() {
                });
             };
       </script>
-      <p style="height: 20px;"></p>
       <form action="/add" method="get">
          <button class="addbutton roombutton_hover" type="submit">add song to playlist  <img src="static/add.png" width="30px" height="30px"></button>
       </form>
+
 
    {% endblock %}

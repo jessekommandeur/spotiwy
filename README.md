@@ -65,7 +65,7 @@ De extra features die we uiteindelijk geïmplementeerd hebben zijn:
 - Alerts in JavaScript.
 - Terms & Conditions.
 - Een help pagina.
-- Gebruikers kunnen nummers liken.
+- Gebruikers die ingelogd zijn kunnen nummers liken.
 - De host kan nummers verwijderen.
 - Wanneer de 'host' de kamer verlaat, wordt de kamer verwijderd.
 - Gebruikers kunnen de kamer verlaten.
@@ -97,7 +97,7 @@ functies application.py
 
 ### room:
 - room(): zorgt ervoor dat de Spotify nummers worden weergegeven op de room pagina.
-- like(): zorgt ervoor dat gebruikers nummers kunnen liken.
+- like(): zorgt ervoor dat ingelogde gebruikers nummers kunnen liken.
 - bin(): zorgt ervoor dat de host van een kamer nummers kan verwijderen.
 - add(): zorgt ervoor dat gebruikers nummers aan de playlist kunnen toevoegen.
 - leave(): zorgt ervoor dat gebruikers een kamer kunnen verlaten.
