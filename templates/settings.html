@@ -2,7 +2,13 @@
 
         {% block main %}
 
-                <p class="setbutton"><a href="/changeusername">Change Username</a></p>
-                <p class="setbutton"><a href="/changepassword">Change Password</a></p>
+                <br><br>
+                <form action="/changeusername" method="get">
+                        <button class="roombutton" style="width:20%">Change Username</button><br>
+                </form>
+                <br>
+                <form action="/changepassword" method="get">
+                        <button class="roombutton" style="width:20%">Change Password</button>
+                </form>
 
-        {% endblock %}
+{% endblock %}
