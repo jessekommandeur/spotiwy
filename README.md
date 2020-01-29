@@ -1,12 +1,12 @@
 # webprogrammeren IK
-Productnaam: Spotiwy
-Team: 10
+- Productnaam: ***Spotiwy***
+- Team: ***10***
 
-### Teamleden:
-Koen Berenschot: vooral application.py, html, css
-Jonne Hoek spaans: vooral JavaScript functies, html, css
-Jesse Kommandeur: vooral application.py, html, css
-Thomas Meijer: vooral API.py, html, css
+***Teamleden:***
+- Koen Berenschot: vooral application.py, html, css
+- Jonne Hoek spaans: vooral JavaScript functies, html, css
+- Jesse Kommandeur: vooral application.py, html, css
+- Thomas Meijer: vooral API.py, html, css
 
 
 ## Samenvatting
@@ -34,7 +34,7 @@ Deze features zijn nodig voor het minimum viable product:
 	- Playlists bekijken.
 
 ## Key Feautures
-De features die we in onze webapplicatie geïmplementeerd hebben zijn:
+De belangrijkste features die we in onze webapplicatie geïmplementeerd hebben zijn:
 - Een registratie systeem waarmee gebruikers een account kunnen aanmaken.
 - Een login systeem waarmee gebruikers met een bestaand account kunnen inloggen.
 - Op de host pagina kunnen ingelogde gebruikers een kamer aanmaken.
@@ -45,6 +45,7 @@ De features die we in onze webapplicatie geïmplementeerd hebben zijn:
 
 
 ## Extra Features
+De extra features die we in onze webapplicatie geïmplementeerd hebben zijn:
 - Alerts in JavaScript
 - Terms & Conditions
 - Gebruikers kunnen een nummer liken
@@ -61,7 +62,7 @@ De features die we in onze webapplicatie geïmplementeerd hebben zijn:
 ## Main functions
 functies application.py
 
-### navigatie:
+***navigatie:***
 - index(): verwijst gebruikers naar index pagina.
 - settings(): verwijst gebruikers naar settings pagina.
 - help(): verwijst gebruikers naar de help pagina.
