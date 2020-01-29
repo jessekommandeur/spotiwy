@@ -4,6 +4,7 @@
 - Productnaam: **Spotiwy**
 - Team: **10**
 
+
 **Teamleden:**
 - Koen Berenschot: vooral application.py, html, css
 - Jonne Hoek spaans: vooral JavaScript functies, html, css
@@ -25,7 +26,7 @@ vormgegeven met een gemakkelijk navigeerbare site.
 - In API.py staan functies die de koppeling met spotify mogelijk maakt.
 - In helpers.py staan hulpfuncties voor application.py
 - In README.md staat uiteraard de read me.
-- In handleiding.txt wordt beschreven hoe de API gekoppeld kan worden wanneer je de website voor de eerste keer wilt runnen
+- In HANDLEIDING.txt wordt beschreven hoe de API gekoppeld kan worden wanneer je de website voor de eerste keer wilt runnen.
 - In de map static staan:
     - De afbeeldingen van de webapplicatie.
     - De lettertypen van de webapplicatie.
@@ -34,7 +35,6 @@ vormgegeven met een gemakkelijk navigeerbare site.
 - In de map templates staan:
     - Alle HTML pagina's.
     - op sommige pagina's staat JavaScript.
-
 
 
 ## Minimum viable product
@@ -48,14 +48,15 @@ Deze features van de MVP zijn:
 	- Join.
 	- Playlists bekijken.
 
+
 ## Key Feautures
 De belangrijkste features die we uiteindelijk geïmplementeerd hebben zijn:
 - Een registratie systeem waarmee gebruikers een account kunnen aanmaken.
 - Een login systeem waarmee gebruikers met een bestaand account kunnen inloggen.
-- Op de host pagina kunnen ingelogde gebruikers een kamer aanmaken.
-- Er worden verschillende kamers met bijbehorend kamernummer gegenereerd.
+- Een host pagina waar ingelogde gebruikers een kamer kunnen aanmaken.
+- Er worden verschillende kamers met bijbehorende kamernummers gegenereerd.
 - Gebruikers kunnen een kamer joinen op basis van het kamernummer.
-- Gebruikers kunnen een nummer aan een kamer toevoegen en de lijst bekijken.
+- Gebruikers kunnen een nummer aan een kamer toevoegen en de afspeellijst bekijken.
 - De geschiedenis van een kamer wordt opgeslagen en kan bekeken worden.
 
 
@@ -65,7 +66,7 @@ De extra features die we uiteindelijk geïmplementeerd hebben zijn:
 - Terms & Conditions
 - Gebruikers kunnen een nummer liken
 - De host kan nummer verwijderen
-- Wanneer de 'host' de kamer verlaat, wordt de playlist gestopt. (TODO THOMAS)
+- Wanneer de 'host' de kamer verlaat, wordt de kamer verwijderd.
 - Gebruikers kunnen de kamer verlaten
 - Op de host pagina kan host van de room de volgende kameropties toevoegen:
 	- De 'host' kan nummers deleten.
@@ -73,6 +74,7 @@ De extra features die we uiteindelijk geïmplementeerd hebben zijn:
 - Een settings pagina, waarop gebruikers:
 	- Gebruikersnaam kunnen veranderen.
 	- Wachtwoord kunnen veranderen veranderen.
+- Een help pagina.
 
 
 ## Main functions
@@ -82,7 +84,7 @@ functies application.py
 - index(): verwijst gebruikers naar index pagina.
 - settings(): verwijst gebruikers naar settings pagina.
 - help(): verwijst gebruikers naar de help pagina.
-- terms(): verwijst gebruikers naar de terms & conditions
+- terms(): verwijst gebruikers naar de terms & conditions.
 
 ### account:
 - register(): zorgt ervoor dat nieuwe gebruikers een account kunnen aanmaken.
@@ -94,7 +96,7 @@ functies application.py
 ### room setup:
 - host(): zorgt ervoor dat gebruikers een room kunnen aanmaken.
 - joinroom(): zorgt ervoor dat gebruikers een bestaande kamer kunnen joinen.
-- homepage(): zorgt ervoor dat gebruikers die eeen onjuist kamernummer worden doorverwezen
+- homepage(): zorgt ervoor dat gebruikers die eeen onjuist kamernummer worden doorverwezen.
 
 ### room:
 - room(): zorgt ervoor dat de Spotify nummers worden weergegeven op de room pagina.
@@ -110,7 +112,7 @@ functies application.py
 
 ### cotrole:
 - availability(): controleert of een gebruikersnaam al in gebruik is.
-- passwordcheck(): gaat na of de twee ingevoerde wachtwoorden overeenkomen
+- passwordcheck(): gaat na of de twee ingevoerde wachtwoorden overeenkomen.
 - usernamecheck(): gaat na of de gebruikersnaam beschikbaar is.
 
 
@@ -118,7 +120,7 @@ functies application.py
 functies helpers.py
 
 ### cookies:
-- login_required(): controleert of gebruiker is ingelogd met een bestaand account
+- login_required(): controleert of gebruiker is ingelogd met een bestaand account.
 - room_required(): controleert of een gebruiker momenteel in een room zitten.
 
 ### coverteren en genereren:
@@ -133,23 +135,16 @@ functies helpers.py
 ## API functions
 functies API.py
 
-- createplaylist(): maakt playlist aan in spotify
+- createplaylist(): maakt playlist aan in spotify.
 - searchsong(): zoekt via de s API nummers in spotify op.
 - addtracks(): voegt nummers aan spotify playlist toe.
 - removetracks(): verwijderd nummers uit spotify playlist.
 
 ## Database
 Tables van applicatie
-- users: slaat data van ingelogde gebruikers op
-- rooms: slaat data van een kamer op
+- users: slaat data van ingelogde gebruikers op.
+- rooms: slaat data van een kamer op.
 - history: slaat data van een kamer op als deze verwijdert is.
-
-## Database
-Tables van applicatie
-- users: slaat data van ingelogde gebruikers op
-- rooms: slaat data van een kamer op
-- history: slaat data van een kamer op als deze verwijdert is.
-
 
 ## Plugins en Frameworks
 - Flask
