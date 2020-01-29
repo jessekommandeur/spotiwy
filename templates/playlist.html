@@ -12,10 +12,11 @@
         </h1>
         <div>
         <table class="playlist" style="width:100%;border-collapse: collapse;">
-            <tr>
+            <tr style="font-size: 20px;">
                 <th><b>Song</b></th>
                 <th><b>Artist</b></th>
-                <th><b>Duration</b></th>
+                <th style="text-align: center;"><b>Duration</b></th>
+                <th style="text-align: center;"><img src="static/liked.png" width="25px" height="25px" style="margin-bottom: 5px;" ></th>
             </tr>
 
         {% for song in roomdict[roomnumber] %}
@@ -23,7 +24,8 @@
             <tr class="tablerow" height="50px">
                 <td class="tableitem">{{song['song']}}</th>
                 <td class="tableitem">{{song['artist']}}</th>
-                <td class="tableitem">{{song['duration']}}</th>
+                <td class="tableitem" style="text-align: center;">{{song['duration']}}</th>
+                <td class="tableitem" style="text-align: center;">{{song['liked']}}</th>
             </tr>
 
         {% endfor %}

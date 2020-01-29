@@ -109,7 +109,7 @@ def roominfo():
     """Collects information about existing rooms"""
 
     # Retrieve history from database
-    songinfo = db.execute("SELECT song, artist, duration, roomname FROM history")
+    songinfo = db.execute("SELECT song, artist, duration, roomname, liked FROM history")
     roomdict = {}
 
     # Create dict with history per room

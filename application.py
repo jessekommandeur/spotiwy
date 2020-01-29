@@ -63,6 +63,13 @@ def help():
 
     return render_template("help.html")
 
+@app.route("/terms")
+def terms():
+
+    """displays terms & conditions"""
+
+    return render_template("terms.html")
+
 
 #### NOG COMMENTS DOOR JORIS ########################################################################################
 @app.route("/register", methods=["GET", "POST"])
@@ -441,8 +448,9 @@ def disband():
 
     # Insert every song into history table
     for song2 in songs:
-        db.execute("INSERT INTO history(song, artist, duration, roomname, userid) VALUES(:song, :artist, :duration, :roomnumber, :userid)",
-                song = song2["song"], artist = song2["artist"], duration = song2["duration"], roomnumber = session["roomnumber"], userid = session["userid"])
+        db.execute("INSERT INTO history(song, artist, duration, roomname, userid, liked) VALUES(:song, :artist, :duration, :roomnumber, :userid, :liked)",
+                song = song2["song"], artist = song2["artist"], duration = song2["duration"], roomnumber = session["roomnumber"], userid = session["userid"],
+                liked = song2["likes"])
 
     # Deletes room from database
     db.execute("DELETE FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])
@@ -524,13 +532,6 @@ def dropdown():
     songs = searchsong(request.args.get("song"), 5, 0, "track")
 
     return {'songs':songs}
-
-@app.route("/terms")
-def terms():
-
-    """displays terms & conditions"""
-
-    return render_template("terms.html")
 
 
 @app.route("/bin", methods=["GET"])
