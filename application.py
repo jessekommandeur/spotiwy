@@ -436,19 +436,19 @@ def disband():
 
     """Admin disbands room"""
 
-    # User reached route via POST
-    if request.method == "POST":
+    # Query database for room songs
+    songs = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND songid IS NOT NULL", roomnumber = session["roomnumber"])
 
-        # Insert queue into history
-        db.execute(" INSERT INTO history(song, artist, duration)  SELECT song, artist, duration FROM rooms WHERE roomname = :roomname AND userid = :userid",
-        roomname = session["roomnumber"], userid = session["userid"])
+    # Insert every song into history table
+    for song2 in songs:
+        db.execute("INSERT INTO history(song, artist, duration, roomname, userid) VALUES(:song, :artist, :duration, :roomnumber, :userid)",
+                song = song2["song"], artist = song2["artist"], duration = song2["duration"], roomnumber = session["roomnumber"], userid = session["userid"])
 
+    # Deletes room from database
+    db.execute("DELETE FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])
 
-        # Deletes room from database
-        db.execute("DELETE FROM rooms WHERE userid = :userid", userid = session["userid"])
-
-        # Clear user cookies
-        session.clear()
+    # Clear user cookies
+    session.clear()
 
     # Go to index
     return redirect("/")
