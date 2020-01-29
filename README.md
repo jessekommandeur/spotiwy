@@ -1,8 +1,8 @@
 # webprogrammeren IK
-- Productnaam: ***Spotiwy***
-- Team: ***10***
+- Productnaam: **Spotiwy**
+- Team: **10**
 
-***Teamleden:***
+**Teamleden:**
 - Koen Berenschot: vooral application.py, html, css
 - Jonne Hoek spaans: vooral JavaScript functies, html, css
 - Jesse Kommandeur: vooral application.py, html, css
@@ -62,7 +62,7 @@ De extra features die we in onze webapplicatie geïmplementeerd hebben zijn:
 ## Main functions
 functies application.py
 
-***navigatie:***
+### navigatie:
 - index(): verwijst gebruikers naar index pagina.
 - settings(): verwijst gebruikers naar settings pagina.
 - help(): verwijst gebruikers naar de help pagina.
