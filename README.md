@@ -1,3 +1,5 @@
+![screenshot webapplicatie](/static/homepage.png "homepage")
+
 # webprogrammeren IK
 - Productnaam: **Spotiwy**
 - Team: **10**
