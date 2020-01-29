@@ -1,28 +1,31 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    History
-{% endblock %}
+    {% block title %}
+        History
+    {% endblock %}
 
-{% block main %}
-    <h1 class= "whitetext">
-       Playlist room: {{roomnumber}}
-    </h1>
-    <div>
-    <table class="playlist" style="width:100%;border-collapse: collapse;">
-        <tr>
-            <th><b>Song</b></th>
-            <th><b>Artist</b></th>
-            <th><b>Duration</b></th>
-        </tr>
-    {% for song in roomdict[roomnumber] %}
-        <tr class="tablerow">
-            <td class="tableitem">{{song['song']}}</th>
-            <td class="tableitem">{{song['artist']}}</th>
-            <td class="tableitem">{{song['duration']}}</th>
-        </tr>
-    {% endfor %}
-    </table>
-    </div>
+    {% block main %}
 
-{% endblock %}
+        <h1 class= "whitetext">
+           Playlist room: {{roomnumber}}
+        </h1>
+        <div>
+        <table class="playlist" style="width:100%;border-collapse: collapse;">
+            <tr>
+                <th><b>Song</b></th>
+                <th><b>Artist</b></th>
+                <th><b>Duration</b></th>
+            </tr>
+        {% for song in roomdict[roomnumber] %}
+            <tr class="tablerow">
+                <td class="tableitem">{{song['song']}}</th>
+                <td class="tableitem">{{song['artist']}}</th>
+                <td class="tableitem">{{song['duration']}}</th>
+            </tr>
+
+        {% endfor %}
+
+        </table>
+        </div>
+
+    {% endblock %}

@@ -1,35 +1,36 @@
 {% extends "layout.html" %}
-{% block main %}
-<form action="/joinroom" method="post">
-   </h1>
-   <div class="form-group">
-      <input size= "11" class="form-control" name="roomnumber" style="text-align: center" placeholder="room number" type="text">
-   </div>
-   <datalist id="roomlist"></datalist>
-   <button class="roombutton roombutton_hover" type="submit">Join Room</button>
-</form>
-   <script>
 
-      // Live check user input
-      document.getElementById("roomnumber").onkeyup = function(){
+    {% block main %}
 
-          // Empty previous datalist
-          document.getElementById('roomlist').innerHTML = '';
+        <form action="/joinroom" method="post">
+           <div class="form-group">
+              <input size= "11" class="form-control" name="roomnumber" style="text-align: center" placeholder="room number" type="text">
+           </div>
+           <datalist id="roomlist"></datalist>
+           <button class="roombutton roombutton_hover" type="submit">Join Room</button>
+        </form>
+        <script>
+            // Live check user input
+            document.getElementById("roomnumber").onkeyup = function(){
 
-          // Link datalist
-          var datalist = document.getElementById("roomlist");
+            // Empty previous datalist
+            document.getElementById('roomlist').innerHTML = '';
 
-          // Retrieve roomnumbers
-          var roomlist = {{roomnumbers}}
+            // Link datalist
+            var datalist = document.getElementById("roomlist");
 
-          // Add roomnumber options to datalist
-          for(var i = 0; i < roomlist.length; i++) {
-              var option = document.createElement("OPTION"),
-              room = document.createTextNode(roomlist[i]);
-              option.appendChild(room);
-              option.setAttribute("value",roomlist[i]);
-              datalist.insertBefore(option,datalist.lastChild);
-              }
-          }
-   </script>
-{% endblock %}
+            // Retrieve roomnumbers
+            var roomlist = {{roomnumbers}}
+
+            // Add roomnumber options to datalist
+            for(var i = 0; i < roomlist.length; i++) {
+                var option = document.createElement("OPTION"),
+                room = document.createTextNode(roomlist[i]);
+                option.appendChild(room);
+                option.setAttribute("value",roomlist[i]);
+                datalist.insertBefore(option,datalist.lastChild);
+                }
+            }
+       </script>
+
+    {% endblock %}
