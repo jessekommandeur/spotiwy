@@ -16,6 +16,7 @@ zijn liken en kan de host nummers verwijderen. Met deze webapplicatie willen we 
 Na afloop van een feestje kan men eventueel de afspeellijst terugvinden via de history functie. De applicatie is visueel aantrekkelijk
 vormgegeven met een gemakkelijk navigeerbare site.
 
+
 ## Opmerkekingen voor de lezer
 - Alle bestanden staan in de git repository branch 'master'.
 - In application.py staan de functies die ervoor zorgen dat alle features op onze website functioneren.
@@ -42,6 +43,7 @@ Deze features van de MVP
 	- Host.
 	- Join.
 	- Playlists bekijken.
+	-
 
 ## Key Feautures
 De belangrijkste features die we geïmplementeerd hebben zijn:
@@ -68,6 +70,7 @@ De extra features die we geïmplementeerd hebben zijn:
 - Een settings pagina, waarop gebruikers:
 	- Gebruikersnaam kunnen veranderen.
 	- Wachtwoord kunnen veranderen veranderen.
+
 
 ## Main functions
 functies application.py
@@ -107,6 +110,7 @@ functies application.py
 - passwordcheck(): gaat na of de twee ingevoerde wachtwoorden overeenkomen
 - usernamecheck(): gaat na of de gebruikersnaam beschikbaar is.
 
+
 ## Helper functions
 functies helpers.py
 
@@ -122,6 +126,7 @@ functies helpers.py
 - songtoplaylist(): voegt nummers toe aan een bestaande spotify playlist.
 - roominfo(): verzameld informatie over bestaande kamers.
 
+
 ## API functions
 functies API.py:
 
@@ -136,6 +141,13 @@ Tables van applicatie
 - rooms: slaat data van een kamer op
 - history: slaat data van een kamer op als deze verwijdert is.
 
+## Database
+Tables van applicatie
+- users: slaat data van ingelogde gebruikers op
+- rooms: slaat data van een kamer op
+- history: slaat data van een kamer op als deze verwijdert is.
+
+
 ## Plugins en Frameworks
 - Flask
 - Flask_session
@@ -145,6 +157,7 @@ Tables van applicatie
 - Bootstrapper: header
 - Spotipy: API
 - SQL: data
+
 
 ## CSS Colours
 - Indigo: HEX #5C44DE
