@@ -16,11 +16,21 @@ zijn liken en kan de host nummers verwijderen. Met deze webapplicatie willen we 
 Na afloop van een feestje kan men eventueel de afspeellijst terugvinden via de history functie. De applicatie is visueel aantrekkelijk
 vormgegeven met een gemakkelijk navigeerbare site.
 
-## Opmerkekingen voor de lezer
-- Alle bestanden staan in de git repository branch 'master'.
-- In application.py staan de functies die ervoor zorgen dat alle features op onze website functioneren.
+## Belangrijke punten
+- Alle bestanden staan in de git repository in de branch 'master'.
 - In API.py staan functies die gebruikmaken van de spotify API.
-- In helpers.py staan alle hulpfuncties
+- In application.py staan de voornaamste functies die zorgen dat alle features op onze website goed functioneren.
+- In helpers.py staan een aantal hulpfuncties die we nodig hebben in application.py
+- In spotiwy.db staan drie tabellen: users, rooms en history. In deze drie tabellen wordt belangrijke informatie opgeslagen die nodig is om de site goed te laten functioneren.
+- In README.md staat uiteraard de read me.
+- In het mapje static staan:
+    - De afbeeldingen die we gebruikt hebben voor de website.
+    - De lettertypen die we gebruikt hebben voor de website.
+    - In styles.css staat alle css code die we hebben gebruikt om onze website te stylen.
+    - In stylesheet.css worden de lettertypen geconfigureerd
+- In het mapje templates staan:
+    - Alle html pagina's van onze website.
+    - In sommige pagina's staat JavaScript.
 
 ## Minimum viable product
 Deze features zijn nodig voor het minimum viable product:
