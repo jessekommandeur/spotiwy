@@ -3,16 +3,15 @@
    {% block main %}
 
       <form action="/host" method="post">
+         <p style="height: 60px;"></p>
          <h1 id="homepageslogan" style="color:white;">
             Set up your room
          </h1>
          <br>
          <p class="roomnumber">
-            Your room number is {{roomnumber}}
+            Your room number is <b>{{roomnumber}}</b>
          </p>
          <br>
-            <input type="checkbox" name="disablevisitors" value="disable"><p class="checkbox"> Disable add function for visitors</p><br>
-            <input type="checkbox" name="maxlikes" value="disable"><p class="checkbox"> Set max likes to 1 per minute</p><br>
          <button class="roombutton roombutton_hover" type="submit">Host room</button>
       </form>
 

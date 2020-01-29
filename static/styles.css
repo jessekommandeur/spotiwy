@@ -207,6 +207,232 @@ main img {
 
 .nav.navbar-nav.navbar-right li a {
     color: white;
+}.terms {
+    width: 100%;
+    background-color: #ffffff;
+    top: 0;
+    position: static;
+    text-align: left;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+body {
+    background-image: url("background.png");
+    background-color: #222222;
+    background-size: cover;
+}
+
+nav .navbar-brand {
+    font-size: xx-large;
+}
+
+nav .navbar-brand .indigo {
+    color: #ffffff;
+    font-family: "CustomFont", "Proxima Nova Alt Rg";
+}
+
+.leftbar {
+    margin-right: 88%;
+    margin-top: 81px;
+    padding-top: 10px;
+    padding-bottom: 120px;
+    border-style: solid;
+    border-width: 0px;
+    border-right-width: 2px;
+    border-top-width: 1px;
+    border-color: #5c44de;
+    padding-right: 10px;
+    font-family: "CustomFont", "Proxima Nova Alt Rg";
+    color: #ffffff;
+    clear: left;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #222222;
+}
+
+.leftbottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.whitetext {
+    color: #ffffff;
+    font-family: "CustomFont", "Proxima Nova Alt Rg";
+}
+
+.helptext {
+    color: #ffffff;
+    font-family: "CustomFont", "Proxima Nova Rg";
+    text-align: left;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+.checkbox {
+    font-family: "CustomFont", "Proxima Nova Rg";
+    color: #ffffff;
+}
+
+.roomnumber {
+    color: #ffffff;
+    background-color: #5c44de80;
+    margin-left: 35%;
+    margin-right: 35%;
+    padding: 5px;
+    font-size: 20px;
+    font-family: "CustomFont", "Proxima Nova Rg";
+}
+
+.navbar-brand {
+    background-color: #222222;
+}
+
+.bg-dark2 {
+    background-color: #222222;
+}
+
+.choice {
+    padding: 9px;
+
+}
+
+.bigbutton:hover {
+    border: 2px solid #5C44DE;
+}
+
+.bigbutton:active {
+    border: 2px solid #3B0673;
+}
+
+.border2 {
+    border-color: #5c44de;
+    border-style: solid;
+    border-width: 0px;
+    border-bottom-width: 2px;
+}
+
+main .form-control {
+    display: inline-block;
+    width: auto;
+}
+
+main {
+    overflow-x: auto;
+    text-align: center;
+}
+
+main img {
+    max-width: 100%;
+}
+
+#homepageslogan{
+    position: relative;
+}
+
+#image{
+    height: 220px;
+    width: 220px;
+}
+
+#imagespacing{
+    height: 230px;
+}
+
+.roombutton{
+  background-color: #5c44de;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 1px 1px;
+  cursor: pointer;
+  transition-duration: 0.2s;
+}
+
+
+.addbutton{
+  background-color: #5c44de80;
+  width: 25%;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 1px 1px;
+  cursor: pointer;
+  transition-duration: 0.2s;
+}
+
+.roombutton_hover:hover{
+    box-shadow: 0 50px 50px 0 rgba(0,0,0,0.24),0 50px 100px 0 rgba(0,0,0,0.19);
+}
+
+.navitem {
+  padding:3px 2px;
+  margin: 1px;
+  font-size: 15px;
+  color: #FFFFFF;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  background-color: #222222;
+}
+
+.navitem:hover {
+    background-color: #5C44DE ;
+}
+
+
+.playlist{
+    width:100%;
+    height: 50px;
+    color: white;
+    text-align: center;
+    font-family: "CustomFont", "Proxima Nova Rg";
+    margin-left: 5px;
+}
+
+.button {
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+#heightchanger{
+    height: 230px;
+}
+
+.nav.navbar-nav.navbar-right li a {
+    color: white;
+}
+
+.tablerow:nth-child(even) {
+    background-color: #80808080
+}
+
+.tableheader {
+  padding: 8px;
+  background-color: #5c44de;
+  color: white;
+}
+.tableitem {
+    color: white;
+}
+.tablerow {
+    background-color: #2e2d3380
 }
 
 .tablerow:nth-child(even) {

@@ -325,6 +325,9 @@ def room():
     # Set up back end of room
     playlist = db.execute("SELECT * FROM rooms WHERE songid IS NOT NULL AND roomnumber = :roomnumber", roomnumber = session["roomnumber"])
 
+    # allow the user to like
+    session['liked'] = False
+
     # Show room and queue
     return render_template("room.html", roomnumber = session["roomnumber"], playlist = playlist)
 
@@ -335,8 +338,8 @@ def leave():
 
     """User leaves room"""
 
-    # Clear user cookies
-    session.clear()
+    # Clear user room cookies
+    session["roomnumber"] = None
 
     # Redirect to index
     return redirect("/")
@@ -348,24 +351,21 @@ def like():
 
     """Like a song"""
 
+    songid = request.args.get("songid")
+
     # Query amount of likes
-    likes = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = session["roomnumber"], songid = 1)
+    likes = db.execute("SELECT likes FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = session["roomnumber"], songid = songid)[0]['likes']
 
-    # Update likes to likes + 1
-    db.execute("UPDATE rooms SET likes = :likes WHERE roomname = :roomname AND songid = :songid",
-            likes = likes + 1, roomname = session["roomname"], songid = 1)
+    if session['liked'] == True:
+        return {'likes':likes}
 
+    else:
+        session['liked'] = True
 
-#### NOG MAKEN ########################################################################################
-# @app.route("/bin", methods=["GET"])
-# @login_required
-# @room_required
-# def bin():
+        # Update likes to likes + 1
+        db.execute("UPDATE rooms SET likes = :likes WHERE roomnumber = :roomnumber AND songid = :songid", likes = likes + 1, roomnumber = session["roomnumber"], songid = songid)
 
-#     """remove song from list"""
-
-#     db.execute("DELETE FROM rooms WHERE songid = :songid AND roomname = :roomname",  roomname = session["roomname"] , songid =  )
-#### NOG MAKEN ########################################################################################
+        return {'likes':likes + 1}
 
 
 @app.route("/add", methods=["GET", "POST"])
@@ -447,8 +447,8 @@ def disband():
     # Deletes room from database
     db.execute("DELETE FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])
 
-    # Clear user cookies
-    session.clear()
+    # Clear user room cookies
+    session["roomnumber"] = None
 
     # Go to index
     return redirect("/")
@@ -517,13 +517,13 @@ def usernamecheck():
         return jsonify(True)
 
 
-@app.route("/searchdrpdwn", methods=["GET"])
+@app.route("/searchdropdown", methods=["GET"])
 def dropdown():
 
     # Get top 5 spotify songs
     songs = searchsong(request.args.get("song"), 5, 0, "track")
 
-    return json.dumps(songs)
+    return {'songs':songs}
 
 @app.route("/terms")
 def terms():
@@ -531,3 +531,17 @@ def terms():
     """displays terms & conditions"""
 
     return render_template("terms.html")
+
+
+@app.route("/bin", methods=["GET"])
+@login_required
+@room_required
+def bin():
+
+    """remove song from list"""
+
+    # Retrieve id of binned item
+    binnedID = request.args.get("binned")
+
+    # Delete the number from the room
+    db.execute("DELETE FROM rooms WHERE songid = :songid AND roomnumber = :roomnumber",  roomnumber = session["roomnumber"] , songid = binnedID)
