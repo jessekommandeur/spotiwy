@@ -11,7 +11,7 @@ from flask import Flask, flash, jsonify, redirect, render_template, request, ses
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import login_required, apology, generatenumber, room_required, converter, songtoplaylist, roominfo
+from helpers import login_required, generatenumber, room_required, converter, songtoplaylist, roominfo
 from API import searchsong, createplaylist, connect, addtracks, removetracks
 
 # Configure application
@@ -110,9 +110,9 @@ def register():
         if len(rows) != 0:
             return redirect("/")
 
-        # Insert username and password into table users
-        db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)", username=request.form.get("username"),
-                hash=generate_password_hash(request.form.get("password")))
+        # Insert username, password and spotifykey into table users
+        db.execute("INSERT INTO users (username, hash, spotifykey) VALUES(:username, :hash, :spotifykey)", username=request.form.get("username"),
+                hash=generate_password_hash(request.form.get("password")), spotifykey='5q4hjdki3dulvsse9giqoxixt')
 
         # Redirect user to homepage
         return redirect("/login")
@@ -129,6 +129,8 @@ def login():
 
     # Forget any user id
     session.clear()
+
+    session['likeid'] = randint(1,999999)
 
     # User reached route via POST
     if request.method == "POST":
@@ -280,7 +282,6 @@ def joinroom():
     # Retrieve roomnumbers
     roomdict = roominfo()[0]
     roomnumbers = [key for key in roomdict.keys()]
-    session['visitorid'] = randint(1,999999)
 
     if request.method == "POST":
 
@@ -343,8 +344,6 @@ def room():
     # Set up back end of room
     playlist = db.execute("SELECT * FROM rooms WHERE songid IS NOT NULL AND roomnumber = :roomnumber", roomnumber = session["roomnumber"])
 
-    # allow the user to like
-    session['liked'] = False
 
     # Show room and queue
     return render_template("room.html", roomnumber = session["roomnumber"], playlist = playlist)
@@ -359,18 +358,14 @@ def like():
     # Retrieve song name
     song = request.args.get("song")
 
-    if not session['admin']:
-        userid = session['visitorid']
-    else:
-        userid = session['userid']
+    likecheck = db.execute("SELECT song FROM liked WHERE roomnumber = :roomnumber AND song = :song AND likeid = :likeid", roomnumber = session["roomnumber"], song = song, likeid = session['likeid'])
 
-    likecheck = db.execute("SELECT song FROM liked WHERE roomnumber = :roomnumber AND song = :song AND userid = :userid", roomnumber = session["roomnumber"], song = song, userid = userid)
+    likes = db.execute("SELECT likes FROM rooms WHERE roomnumber = :roomnumber AND song = :song", roomnumber = session["roomnumber"], song = song)[0]['likes']
 
     # Check if number has been liked
     if len(likecheck) < 1:
-        likes = db.execute("SELECT likes FROM rooms WHERE roomnumber = :roomnumber AND song = :song", roomnumber = session["roomnumber"], song = song)[0]['likes']
         db.execute("UPDATE rooms SET likes = :likes WHERE roomnumber = :roomnumber AND song = :song", likes = likes + 1, roomnumber = session["roomnumber"], song = song)
-        db.execute("INSERT INTO liked (song, roomnumber, userid) VALUES(:song, :roomnumber, :userid)", roomnumber = session["roomnumber"], song = song, userid = userid)
+        db.execute("INSERT INTO liked (song, roomnumber, likeid) VALUES(:song, :roomnumber, :likeid)", roomnumber = session["roomnumber"], song = song, likeid = session['likeid'])
         return {'likes':likes + 1}
     else:
         return {'likes':likes}
@@ -420,12 +415,10 @@ def add():
             rows = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])
             roomnumber = session["roomnumber"]
 
-            mostliked = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])
-            mostliked = {song["songid"] : song["likes"] for song in mostliked if song["likes"] != None}
             roomadmin = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["userid"]
             roomadminid = db.execute("SELECT * FROM users WHERE userid = :userid", userid = roomadmin)[0]["spotifykey"]
             playlistid = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["playlistid"]
-            addtracks(roomadminid,playlistid,max(mostliked))
+            addtracks(roomadminid,playlistid,songinfo[0]["songid"])
 
             # Go to room
             return redirect("/room")
