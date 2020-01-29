@@ -43,12 +43,9 @@ nav .navbar-brand .indigo {
     background-color: #222222;
 }
 
-.leftbottom {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    margin-bottom: 10px;
-    margin-left: 10px;
+.middle {
+    display: inline-block;
+    margin: auto;
 }
 
 .whitetext {
@@ -191,6 +188,7 @@ main img {
     text-align: center;
     font-family: "CustomFont", "Proxima Nova Rg";
     margin-left: 5px;
+    padding: 10px;
 }
 
 .button {

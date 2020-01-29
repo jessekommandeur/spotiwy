@@ -5,9 +5,10 @@
     {% endblock %}
 
     {% block main %}
+        <h1 class= "whitetext" style="background-color: #5c44de40; padding: 5px; margin-left: 30%; margin-right: 30%;">
 
-        <h1 class= "whitetext">
-           Playlist room: {{roomnumber}}
+           Playlist {{roomnumber}}
+
         </h1>
         <div>
         <table class="playlist" style="width:100%;border-collapse: collapse;">
@@ -16,8 +17,10 @@
                 <th><b>Artist</b></th>
                 <th><b>Duration</b></th>
             </tr>
+
         {% for song in roomdict[roomnumber] %}
-            <tr class="tablerow">
+
+            <tr class="tablerow" height="50px">
                 <td class="tableitem">{{song['song']}}</th>
                 <td class="tableitem">{{song['artist']}}</th>
                 <td class="tableitem">{{song['duration']}}</th>
@@ -27,5 +30,14 @@
 
         </table>
         </div>
+
+        <div class="middle a2a_kit a2a_kit_size_32 a2a_default_style">
+            <p class="whitetext">share this playlist!</p>
+            <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+            <a class="a2a_button_facebook"></a>
+            <a class="a2a_button_twitter"></a>
+            <a class="a2a_button_whatsapp"></a>
+        </div>
+        <script async src="https://static.addtoany.com/menu/page.js"></script>
 
     {% endblock %}

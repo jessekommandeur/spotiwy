@@ -7,7 +7,7 @@ from flask import Flask, flash, jsonify, redirect, render_template, request, ses
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required, apology, generatenumber, room_required, converter, songtoplaylist, roominfo
-from API import searchsong, createplaylist, connect, addtracks
+from API import searchsong, createplaylist, connect, addtracks, removetracks
 import json
 
 # Configure application
@@ -540,8 +540,14 @@ def bin():
 
     """remove song from list"""
 
-    # Retrieve id of binned item
+    # Get song, playlist and room info
+    playlist_id = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["playlistid"]
+    roomadmin = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["userid"]
+    roomadminid = db.execute("SELECT * FROM users WHERE userid = :userid", userid = roomadmin)[0]["spotifykey"]
     binnedID = request.args.get("binned")
 
-    # Delete the number from the room
+    # remove track from spotify
+    removetracks(roomadminid, playlist_id, binnedID)
+
+    # remove from room
     db.execute("DELETE FROM rooms WHERE songid = :songid AND roomnumber = :roomnumber",  roomnumber = session["roomnumber"] , songid = binnedID)
