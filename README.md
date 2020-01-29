@@ -3,10 +3,10 @@ Productnaam: Spotiwy
 Team: 10
 
 Teamleden:
-Koen Berenschot: application.py, html
-Jonne Hoek spaans: JavaScript, html
-Jesse Kommandeur: application.py, html
-Thomas Meijer: API.py, html
+Koen Berenschot: vooral application.py, html, css
+Jonne Hoek spaans: vooral JavaScript functies, html, css
+Jesse Kommandeur: vooral application.py, html, css
+Thomas Meijer: vooral API.py, html, css
 
 
 **Samenvatting:**
