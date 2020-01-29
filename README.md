@@ -97,7 +97,7 @@ functies application.py
 - passwordcheck(): gaat na of de twee ingevoerde wachtwoorden overeenkomen
 - usernamecheck(): gaat na of de gebruikersnaam beschikbaar is.
 
-### Helper functions
+## Helper functions
 functies helpers.py
 
 ### cookies:
