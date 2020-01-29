@@ -13,27 +13,26 @@
 
 
 ## Samenvatting
-Met onze webapplicatie kunnen gebruikers met een Spotify account een 'room' joinen óf hosten na het aanmaken van een account.
+Met onze webapplicatie kunnen gebruikers met een Spotify account een 'room' joinen zonder account óf hosten na het aanmaken van een account.
 Gebruikers kunnen vervolgens eigen nummers toevoegen aan de kamer. Daarnaast kunnen gebruikers nummers die door anderen toegevoegd
 zijn liken en kan de host nummers verwijderen. Met deze webapplicatie willen we onenigheid over muziek op bijvoorbeeld feestjes oplossen.
-Na afloop van een feestje kan men eventueel de afspeellijst terugvinden via de history functie. De applicatie is visueel aantrekkelijk
-vormgegeven met een gemakkelijk navigeerbare site.
+Na afloop van een feestje kan men de afspeellijst terugvinden via de history functie.
 
 
 ## Opmerkekingen voor de lezer
 - Alle bestanden staan in de git repository branch 'master'.
-- In application.py staan de functies die ervoor zorgen dat alle features op onze website functioneren.
-- In API.py staan functies die de koppeling met spotify mogelijk maakt.
-- In helpers.py staan hulpfuncties voor application.py
-- In README.md staat uiteraard de read me.
-- In HANDLEIDING.txt wordt beschreven hoe de API gekoppeld kan worden wanneer je de website voor de eerste keer wilt runnen.
+- In **application.py** staan de functies die ervoor zorgen dat alle features op onze website functioneren.
+- In **API.py** staan functies die de koppeling met spotify mogelijk maakt.
+- In **helpers.py** staan hulpfuncties voor application.py
+- In **README.md** staat uiteraard de read me.
+- In **API_handleiding.txt** wordt beschreven hoe je de API koppelt wanneer je de website voor het eerst gebruikt.
 - In de map static staan:
     - De afbeeldingen van de webapplicatie.
     - De lettertypen van de webapplicatie.
-    - Styles.css voor styling van de pagina.
-    - Stylesheet.css voor het configureren van lettertypen.
+    - **Styles.css** voor styling van de pagina.
+    - **Stylesheet.css** voor het configureren van lettertypen.
 - In de map templates staan:
-    - Alle HTML pagina's.
+    - Alle **HTML** pagina's.
     - op sommige pagina's staat JavaScript.
 
 
@@ -43,44 +42,42 @@ Deze features van de MVP zijn:
 - Pagina waarin gebruikers een kamer kunnen 'hosten'.
 - Pagina waarin gebruikers een kamer kunnen 'joinen'
 - Pagina waarin de 'host' en gebruikers die de kamer hebben gejoined, acties op de playlist kunnen uitvoeren.
--Homepage waarop gebruikers uit de volgende opties kunnen kiezen:
+- Afspeellijsten terug kunnen vinden.
+- Homepage waarop gebruikers uit de volgende opties kunnen kiezen:
 	- Host.
 	- Join.
-	- Playlists bekijken.
+	- History.
 
 
-## Key Feautures
+## Key feautures
 De belangrijkste features die we uiteindelijk geïmplementeerd hebben zijn:
 - Een registratie systeem waarmee gebruikers een account kunnen aanmaken.
 - Een login systeem waarmee gebruikers met een bestaand account kunnen inloggen.
 - Een host pagina waar ingelogde gebruikers een kamer kunnen aanmaken.
-- Er worden verschillende kamers met bijbehorende kamernummers gegenereerd.
-- Gebruikers kunnen een kamer joinen op basis van het kamernummer.
-- Gebruikers kunnen een nummer aan een kamer toevoegen en de afspeellijst bekijken.
-- De geschiedenis van een kamer wordt opgeslagen en kan bekeken worden.
+- Het genereren van kamers met bijbehorende kamernummers.
+- Het joinen van een kamer op basis van het kamernummer.
+- Nummers toevoegen en de afspeellijst bekijken.
+- Het opslaan van kamergeschiedenis en kunnen opzoeken.
 
 
-## Extra Features
+## Extra features
 De extra features die we uiteindelijk geïmplementeerd hebben zijn:
-- Alerts in JavaScript
-- Terms & Conditions
-- Gebruikers kunnen een nummer liken
-- De host kan nummer verwijderen
+- Alerts in JavaScript.
+- Terms & Conditions.
+- Een help pagina.
+- Gebruikers kunnen nummers liken.
+- De host kan nummers verwijderen.
 - Wanneer de 'host' de kamer verlaat, wordt de kamer verwijderd.
-- Gebruikers kunnen de kamer verlaten
-- Op de host pagina kan host van de room de volgende kameropties toevoegen:
-	- De 'host' kan nummers deleten.
-	- Maximaal aantal nummers dat gebruiker kan toevoegen.
+- Gebruikers kunnen de kamer verlaten.
 - Een settings pagina, waarop gebruikers:
 	- Gebruikersnaam kunnen veranderen.
-	- Wachtwoord kunnen veranderen veranderen.
-- Een help pagina.
+	- Wachtwoord kunnen veranderen.
 
 
 ## Main functions
 functies application.py
 
-### navigatie:
+### Directions:
 - index(): verwijst gebruikers naar index pagina.
 - settings(): verwijst gebruikers naar settings pagina.
 - help(): verwijst gebruikers naar de help pagina.
@@ -107,10 +104,10 @@ functies application.py
 - disband(): zorgt ervoor dat de host de kamer kan ontkoppelen.
 - dropdown(): zorgt dat gebruikers uit meerdere nummers of playlists kunnen kiezen.
 
-### extra's:
+### extras:
 - history(): zorgt ervoor dat alles wordt opgeslagen en op de history pagina wordt weergegeven.
 
-### controle:
+### checks:
 - availability(): controleert of een gebruikersnaam al in gebruik is.
 - passwordcheck(): gaat na of de twee ingevoerde wachtwoorden overeenkomen.
 - usernamecheck(): gaat na of de gebruikersnaam beschikbaar is.
@@ -123,11 +120,11 @@ functies helpers.py
 - login_required(): controleert of gebruiker is ingelogd met een bestaand account.
 - room_required(): controleert of een gebruiker momenteel in een room zitten.
 
-### converteren en genereren:
+### convert and generate:
 - converter(): converteert miliseconden naar aantal minuten en seconden.
 - generatenumber(): genereert een nieuw kamernummer.
 
-### toevoegen en verzamelen:
+### collect and send info:
 - songtoplaylist(): voegt nummers toe aan een bestaande spotify playlist.
 - roominfo(): verzameld informatie over bestaande kamers.
 
@@ -147,18 +144,18 @@ Tables van applicatie
 - rooms: slaat data van een kamer op.
 - history: slaat data van een kamer op als deze verwijderd is.
 
-## Plugins en Frameworks
-- Flask
-- Flask_session
-- Tempfile
-- Werkzeug.exceptions:
+## Plugins and frameworks
+- Flask: run application
+- Flask_session: cookies
+- Tempfile: temporary files
+- Werkzeug.exceptions: erros
 - Werkzeug.security: passwords
 - Bootstrapper: header
 - Spotipy: API
 - SQL: data
 
 
-## CSS Colours
+## CSS colours
 - Indigo: HEX #5C44DE
 - Dark Grey: HEX #222222
 - White: HEX #FFFFFF
