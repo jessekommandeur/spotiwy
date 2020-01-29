@@ -1,6 +1,7 @@
 import requests
 import urllib.parse
 import os
+
 from cs50 import SQL
 from random import randint
 
@@ -13,19 +14,7 @@ from API import addtracks
 db = SQL("sqlite:///spotiwy.db")
 
 
-def apology(message, code=400):
-    """Render message as an apology to user."""
-    def escape(s):
-        """
-        Escape special characters.
-
-        https://github.com/jacebrowning/memegen#special-characters
-        """
-        for old, new in [("-", "--"), (" ", "-"), ("_", "__"), ("?", "~q"),
-                         ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
-            s = s.replace(old, new)
-        return s
-    return render_template("apology.html", top=code, bottom=escape(message)), code
+"""COOKIE FUNCTIONS"""
 
 
 def login_required(f):
@@ -56,6 +45,18 @@ def room_required(f):
     return decorated_function
 
 
+"""CONVERT & GENERATE FUNCTIONS"""
+
+
+def converter(mseconds):
+
+    """converts miliseconds to song duration"""
+
+    minutes = int(mseconds / 60000)
+    seconds = "{:02d}".format(int(mseconds/1000 % 60))
+    return str("" + str(minutes) + ":" + str(seconds) + "")
+
+
 def generatenumber():
 
     """generates a random roomnumber"""
@@ -69,15 +70,7 @@ def generatenumber():
     return roomnumber
 
 
-
-def converter(mseconds):
-
-    """converts miliseconds to song duration"""
-
-    minutes = int(mseconds / 60000)
-    seconds = "{:02d}".format(int(mseconds/1000 % 60))
-    return str("" + str(minutes) + ":" + str(seconds) + "")
-
+"""COLLECT & SEND INFO FUNCTIONS"""
 
 
 def songtoplaylist():
@@ -91,18 +84,6 @@ def songtoplaylist():
 
     addtracks(roomadminid,playlistid,mostliked[0]["songid"])
 
-
-
-def timer(roomnumber):
-
-    """ recursive code"""
-
-    # if len songs_left < 1
-        # stop playing
-    # else
-        # song to playlist
-        # delete song from database
-        # timer (time, timer)
 
 def roominfo():
 

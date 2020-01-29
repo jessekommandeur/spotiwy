@@ -1,14 +1,18 @@
 import os
+import json
+
 from cs50 import SQL
 from tempfile import mkdtemp
 from random import randint
+
 from flask_session import Session
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
+
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
+
 from helpers import login_required, apology, generatenumber, room_required, converter, songtoplaylist, roominfo
 from API import searchsong, createplaylist, connect, addtracks, removetracks
-import json
 
 # Configure application
 app = Flask(__name__)
@@ -34,7 +38,7 @@ Session(app)
 db = SQL("sqlite:///spotiwy.db")
 
 
-""" START MAIN FUNCTIONS """
+"""DIRECTION FUNCTIONS"""
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -63,6 +67,7 @@ def help():
 
     return render_template("help.html")
 
+
 @app.route("/terms")
 def terms():
 
@@ -71,7 +76,9 @@ def terms():
     return render_template("terms.html")
 
 
-#### NOG COMMENTS DOOR JORIS ########################################################################################
+"""ACCOUNT FUNCTIONS"""
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
 
@@ -151,7 +158,6 @@ def login():
     # User reached route via GET
     else:
         return render_template("login.html")
-#### NOG COMMENTS DOOR JORIS ########################################################################################
 
 
 @app.route("/logout")
@@ -226,6 +232,9 @@ def changepassword():
         return render_template("password.html")
 
 
+"""ROOM SET UP FUNCTIONS"""
+
+
 @app.route("/host", methods=["GET", "POST"])
 @login_required
 def host():
@@ -260,20 +269,18 @@ def host():
         # Remember user is admin
         session["admin"] = True
 
-        # TO DO
-        # checker.delay()
-
         return render_template("host.html", roomnumber = roomnumber)
 
 
 @app.route("/joinroom", methods=["GET", "POST"])
-def join():
+def joinroom():
 
     """Join a room"""
 
     # Retrieve roomnumbers
     roomdict = roominfo()[0]
     roomnumbers = [key for key in roomdict.keys()]
+    session['visitorid'] = randint(1,999999)
 
     if request.method == "POST":
 
@@ -323,6 +330,10 @@ def homepage():
     else:
         return render_template("homepage.html")
 
+
+"""ROOM FUNCTIONS"""
+
+
 @app.route("/room", methods=["GET", "POST"])
 @room_required
 def room():
@@ -339,40 +350,50 @@ def room():
     return render_template("room.html", roomnumber = session["roomnumber"], playlist = playlist)
 
 
-@app.route("/leave", methods=["GET"])
-@room_required
-def leave():
-
-    """User leaves room"""
-
-    # Clear user room cookies
-    session["roomnumber"] = None
-
-    # Redirect to index
-    return redirect("/")
-
-
 @app.route("/like", methods=["GET"])
 @room_required
 def like():
 
     """Like a song"""
 
-    songid = request.args.get("songid")
+    # Retrieve song name
+    song = request.args.get("song")
 
-    # Query amount of likes
-    likes = db.execute("SELECT likes FROM rooms WHERE roomnumber = :roomnumber AND songid = :songid", roomnumber = session["roomnumber"], songid = songid)[0]['likes']
+    if not session['admin']:
+        userid = session['visitorid']
+    else:
+        userid = session['userid']
 
-    if session['liked'] == True:
+    likecheck = db.execute("SELECT song FROM liked WHERE roomnumber = :roomnumber AND song = :song AND userid = :userid", roomnumber = session["roomnumber"], song = song, userid = userid)
+
+    # Check if number has been liked
+    if len(likecheck) < 1:
+        likes = db.execute("SELECT likes FROM rooms WHERE roomnumber = :roomnumber AND song = :song", roomnumber = session["roomnumber"], song = song)[0]['likes']
+        db.execute("UPDATE rooms SET likes = :likes WHERE roomnumber = :roomnumber AND song = :song", likes = likes + 1, roomnumber = session["roomnumber"], song = song)
+        db.execute("INSERT INTO liked (song, roomnumber, userid) VALUES(:song, :roomnumber, :userid)", roomnumber = session["roomnumber"], song = song, userid = userid)
+        return {'likes':likes + 1}
+    else:
         return {'likes':likes}
 
-    else:
-        session['liked'] = True
 
-        # Update likes to likes + 1
-        db.execute("UPDATE rooms SET likes = :likes WHERE roomnumber = :roomnumber AND songid = :songid", likes = likes + 1, roomnumber = session["roomnumber"], songid = songid)
+@app.route("/bin", methods=["GET"])
+@login_required
+@room_required
+def bin():
 
-        return {'likes':likes + 1}
+    """remove song from list"""
+
+    # Get song, playlist and room info
+    playlist_id = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["playlistid"]
+    roomadmin = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["userid"]
+    roomadminid = db.execute("SELECT * FROM users WHERE userid = :userid", userid = roomadmin)[0]["spotifykey"]
+    binnedID = request.args.get("binned")
+
+    # remove track from spotify
+    removetracks(roomadminid, playlist_id, binnedID)
+
+    # remove from room
+    db.execute("DELETE FROM rooms WHERE songid = :songid AND roomnumber = :roomnumber",  roomnumber = session["roomnumber"] , songid = binnedID)
 
 
 @app.route("/add", methods=["GET", "POST"])
@@ -389,7 +410,6 @@ def add():
 
         # If no song is found
         if len(songinfo) != 0:
-            # TODO
 
             # store song information in database
             db.execute("INSERT INTO rooms (roomnumber, song, songid, artist, likes, duration, playing) VALUES(:roomnumber, :song, :songid, :artist, :likes, :duration, :playing)",
@@ -418,22 +438,17 @@ def add():
         return render_template("add.html")
 
 
-@app.route("/availability", methods=["GET"])
-def availability():
+@app.route("/leave", methods=["GET"])
+@room_required
+def leave():
 
-    """Checks if username is available, in json format"""
+    """User leaves room"""
 
-    # Query database for username
-    rows = db.execute("SELECT * FROM users WHERE username = :username",
-            username=request.args.get("username"))
+    # Clear user room cookies
+    session["roomnumber"] = None
 
-    # If available, return True
-    if len(rows) < 1:
-        return jsonify(True)
-
-    # Else, return False
-    else:
-        return jsonify(False)
+    # Redirect to index
+    return redirect("/")
 
 
 @app.route("/disband", methods=["GET", "POST"])
@@ -462,6 +477,18 @@ def disband():
     return redirect("/")
 
 
+@app.route("/searchdropdown", methods=["GET"])
+def dropdown():
+
+    # Get top 5 spotify songs
+    songs = searchsong(request.args.get("song"), 5, 0, "track")
+
+    return {'songs':songs}
+
+
+"""EXTRA FUNCTIONS"""
+
+
 @app.route("/history", methods=["GET", "POST"])
 def history():
 
@@ -478,6 +505,27 @@ def history():
     else:
         roomnumbers = [key for key in roomdict.keys()]
         return render_template("history.html", roomdict = roomdict, roomnumbers=roomnumbers)
+
+
+"""CHECK FUNCTIONS"""
+
+
+@app.route("/availability", methods=["GET"])
+def availability():
+
+    """Checks if username is available, in json format"""
+
+    # Query database for username
+    rows = db.execute("SELECT * FROM users WHERE username = :username",
+            username=request.args.get("username"))
+
+    # If available, return True
+    if len(rows) < 1:
+        return jsonify(True)
+
+    # Else, return False
+    else:
+        return jsonify(False)
 
 
 @app.route("/passwordcheck", methods=["GET"])
@@ -506,6 +554,7 @@ def passwordcheck():
     else:
         return jsonify(True)
 
+
 @app.route("/usernamecheck", methods=["GET"])
 def usernamecheck():
 
@@ -523,32 +572,3 @@ def usernamecheck():
         return jsonify(False)
     else:
         return jsonify(True)
-
-
-@app.route("/searchdropdown", methods=["GET"])
-def dropdown():
-
-    # Get top 5 spotify songs
-    songs = searchsong(request.args.get("song"), 5, 0, "track")
-
-    return {'songs':songs}
-
-
-@app.route("/bin", methods=["GET"])
-@login_required
-@room_required
-def bin():
-
-    """remove song from list"""
-
-    # Get song, playlist and room info
-    playlist_id = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["playlistid"]
-    roomadmin = db.execute("SELECT * FROM rooms WHERE roomnumber = :roomnumber", roomnumber = session["roomnumber"])[0]["userid"]
-    roomadminid = db.execute("SELECT * FROM users WHERE userid = :userid", userid = roomadmin)[0]["spotifykey"]
-    binnedID = request.args.get("binned")
-
-    # remove track from spotify
-    removetracks(roomadminid, playlist_id, binnedID)
-
-    # remove from room
-    db.execute("DELETE FROM rooms WHERE songid = :songid AND roomnumber = :roomnumber",  roomnumber = session["roomnumber"] , songid = binnedID)
