@@ -34,7 +34,7 @@ vormgegeven met een gemakkelijk navigeerbare site.
 
 
 ## Minimum viable product
-Deze features van de MVP
+Deze features van de MVP zijn:
 - Inlog/registratie systeem.
 - Pagina waarin gebruikers een kamer kunnen 'hosten'.
 - Pagina waarin gebruikers een kamer kunnen 'joinen'
@@ -43,10 +43,9 @@ Deze features van de MVP
 	- Host.
 	- Join.
 	- Playlists bekijken.
-	-
 
 ## Key Feautures
-De belangrijkste features die we geïmplementeerd hebben zijn:
+De belangrijkste features die we uiteindelijk geïmplementeerd hebben zijn:
 - Een registratie systeem waarmee gebruikers een account kunnen aanmaken.
 - Een login systeem waarmee gebruikers met een bestaand account kunnen inloggen.
 - Op de host pagina kunnen ingelogde gebruikers een kamer aanmaken.
@@ -57,7 +56,7 @@ De belangrijkste features die we geïmplementeerd hebben zijn:
 
 
 ## Extra Features
-De extra features die we geïmplementeerd hebben zijn:
+De extra features die we uiteindelijk geïmplementeerd hebben zijn:
 - Alerts in JavaScript
 - Terms & Conditions
 - Gebruikers kunnen een nummer liken
@@ -128,7 +127,7 @@ functies helpers.py
 
 
 ## API functions
-functies API.py:
+functies API.py
 
 - createplaylist(): maakt playlist aan in spotify
 - searchsong(): zoekt via de s API nummers in spotify op.
