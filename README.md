@@ -25,6 +25,7 @@ vormgegeven met een gemakkelijk navigeerbare site.
 - In API.py staan functies die de koppeling met spotify mogelijk maakt.
 - In helpers.py staan hulpfuncties voor application.py
 - In README.md staat uiteraard de read me.
+- In handleiding.txt wordt beschreven hoe de API gekoppeld kan worden wanneer je de website voor de eerste keer wilt runnen
 - In de map static staan:
     - De afbeeldingen van de webapplicatie.
     - De lettertypen van de webapplicatie.
@@ -33,6 +34,7 @@ vormgegeven met een gemakkelijk navigeerbare site.
 - In de map templates staan:
     - Alle HTML pagina's.
     - op sommige pagina's staat JavaScript.
+
 
 
 ## Minimum viable product
