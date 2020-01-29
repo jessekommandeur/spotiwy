@@ -19,8 +19,18 @@ vormgegeven met een gemakkelijk navigeerbare site.
 ## Opmerkekingen voor de lezer
 - Alle bestanden staan in de git repository branch 'master'.
 - In application.py staan de functies die ervoor zorgen dat alle features op onze website functioneren.
-- In API.py staan functies die gebruikmaken van de spotify API.
-- In helpers.py staan alle hulpfuncties
+- In API.py staan functies die de koppeling met spotify mogelijk maakt.
+- In helpers.py staan hulpfuncties voor application.py
+- In README.md staat uiteraard de read me.
+- In de map static staan:
+    - De afbeeldingen van de webapplicatie.
+    - De lettertypen van de webapplicatie.
+    - Styles.css voor styling van de pagina.
+    - Stylesheet.css voor het configureren van lettertypen.
+- In de map templates staan:
+    - Alle HTML pagina's.
+    - op sommige pagina's staat JavaScript.
+
 
 ## Minimum viable product
 Deze features van de MVP
@@ -120,6 +130,11 @@ functies API.py:
 - addtracks(): voegt nummers aan spotify playlist toe.
 - removetracks(): verwijderd nummers uit spotify playlist.
 
+## Database
+Tables van applicatie
+- users: slaat data van ingelogde gebruikers op
+- rooms: slaat data van een kamer op
+- history: slaat data van een kamer op als deze verwijdert is.
 
 ## Plugins en Frameworks
 - Flask
