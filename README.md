@@ -23,7 +23,7 @@ vormgegeven met een gemakkelijk navigeerbare site.
 - In helpers.py staan alle hulpfuncties
 
 ## Minimum viable product
-Deze features zijn nodig voor het minimum viable product:
+Deze features van de MVP
 - Inlog/registratie systeem.
 - Pagina waarin gebruikers een kamer kunnen 'hosten'.
 - Pagina waarin gebruikers een kamer kunnen 'joinen'
@@ -34,7 +34,7 @@ Deze features zijn nodig voor het minimum viable product:
 	- Playlists bekijken.
 
 ## Key Feautures
-De belangrijkste features die we in onze webapplicatie geïmplementeerd hebben zijn:
+De belangrijkste features die we geïmplementeerd hebben zijn:
 - Een registratie systeem waarmee gebruikers een account kunnen aanmaken.
 - Een login systeem waarmee gebruikers met een bestaand account kunnen inloggen.
 - Op de host pagina kunnen ingelogde gebruikers een kamer aanmaken.
@@ -45,7 +45,7 @@ De belangrijkste features die we in onze webapplicatie geïmplementeerd hebben z
 
 
 ## Extra Features
-De extra features die we in onze webapplicatie geïmplementeerd hebben zijn:
+De extra features die we geïmplementeerd hebben zijn:
 - Alerts in JavaScript
 - Terms & Conditions
 - Gebruikers kunnen een nummer liken
