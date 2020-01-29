@@ -3,7 +3,8 @@ import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
 
-
+# This function takes 1 argument: The spotify username.
+# You can connect to the Spotify API by using this function.
 def connect(username):
 
     client_id = 'a96ff6651252429ca81979ee4a293c4f'
@@ -11,6 +12,7 @@ def connect(username):
     redirect_uri = 'https://www.google.nl/callback/'
 
     scope = 'user-library-read playlist-modify-public playlist-read-private playlist-modify-private playlist-read-collaborative user-top-read'
+    # This spotipy function will generate a link to a page in which you can connect a spotify account to the webapplication
     token = util.prompt_for_user_token(username, scope)
 
     if token:
@@ -21,6 +23,7 @@ def connect(username):
     user_token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
     print("The user token is:", user_token)
 
+# This will execute the function with the spotify username '5q4hjdki3dulvsse9giqoxixt' which is the Webprogrammeren IK account
 connect("5q4hjdki3dulvsse9giqoxixt")
 
 
