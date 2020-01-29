@@ -51,7 +51,6 @@ def searchsong(query, limit, offset, Type):
             SongDict['duration'] = SongDuration
             # Place the dict with those 4 keys into a list
             SongList.append(SongDict)
-        print(SongList)
         return SongList
     else:
         return None
