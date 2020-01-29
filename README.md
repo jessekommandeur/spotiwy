@@ -16,24 +16,25 @@ zijn liken en kan de host nummers verwijderen. Met deze webapplicatie willen we 
 Na afloop van een feestje kan men eventueel de afspeellijst terugvinden via de history functie. De applicatie is visueel aantrekkelijk
 vormgegeven met een gemakkelijk navigeerbare site.
 
-## Belangrijke punten
-- Alle bestanden staan in de git repository in de branch 'master'.
-- In API.py staan functies die gebruikmaken van de spotify API.
-- In application.py staan de voornaamste functies die zorgen dat alle features op onze website goed functioneren.
-- In helpers.py staan een aantal hulpfuncties die we nodig hebben in application.py
-- In spotiwy.db staan drie tabellen: users, rooms en history. In deze drie tabellen wordt belangrijke informatie opgeslagen die nodig is om de site goed te laten functioneren.
+
+## Opmerkekingen voor de lezer
+- Alle bestanden staan in de git repository branch 'master'.
+- In application.py staan de functies die ervoor zorgen dat alle features op onze website functioneren.
+- In API.py staan functies die de koppeling met spotify mogelijk maakt.
+- In helpers.py staan hulpfuncties voor application.py
 - In README.md staat uiteraard de read me.
-- In het mapje static staan:
-    - De afbeeldingen die we gebruikt hebben voor de website.
-    - De lettertypen die we gebruikt hebben voor de website.
-    - In styles.css staat alle css code die we hebben gebruikt om onze website te stylen.
-    - In stylesheet.css worden de lettertypen geconfigureerd
-- In het mapje templates staan:
-    - Alle html pagina's van onze website.
-    - In sommige pagina's staat JavaScript.
+- In de map static staan:
+    - De afbeeldingen van de webapplicatie.
+    - De lettertypen van de webapplicatie.
+    - Styles.css voor styling van de pagina.
+    - Stylesheet.css voor het configureren van lettertypen.
+- In de map templates staan:
+    - Alle HTML pagina's.
+    - op sommige pagina's staat JavaScript.
+
 
 ## Minimum viable product
-Deze features zijn nodig voor het minimum viable product:
+Deze features van de MVP
 - Inlog/registratie systeem.
 - Pagina waarin gebruikers een kamer kunnen 'hosten'.
 - Pagina waarin gebruikers een kamer kunnen 'joinen'
@@ -42,9 +43,10 @@ Deze features zijn nodig voor het minimum viable product:
 	- Host.
 	- Join.
 	- Playlists bekijken.
+	-
 
 ## Key Feautures
-De belangrijkste features die we in onze webapplicatie geïmplementeerd hebben zijn:
+De belangrijkste features die we geïmplementeerd hebben zijn:
 - Een registratie systeem waarmee gebruikers een account kunnen aanmaken.
 - Een login systeem waarmee gebruikers met een bestaand account kunnen inloggen.
 - Op de host pagina kunnen ingelogde gebruikers een kamer aanmaken.
@@ -55,7 +57,7 @@ De belangrijkste features die we in onze webapplicatie geïmplementeerd hebben z
 
 
 ## Extra Features
-De extra features die we in onze webapplicatie geïmplementeerd hebben zijn:
+De extra features die we geïmplementeerd hebben zijn:
 - Alerts in JavaScript
 - Terms & Conditions
 - Gebruikers kunnen een nummer liken
@@ -68,6 +70,7 @@ De extra features die we in onze webapplicatie geïmplementeerd hebben zijn:
 - Een settings pagina, waarop gebruikers:
 	- Gebruikersnaam kunnen veranderen.
 	- Wachtwoord kunnen veranderen veranderen.
+
 
 ## Main functions
 functies application.py
@@ -107,6 +110,7 @@ functies application.py
 - passwordcheck(): gaat na of de twee ingevoerde wachtwoorden overeenkomen
 - usernamecheck(): gaat na of de gebruikersnaam beschikbaar is.
 
+
 ## Helper functions
 functies helpers.py
 
@@ -122,6 +126,7 @@ functies helpers.py
 - songtoplaylist(): voegt nummers toe aan een bestaande spotify playlist.
 - roominfo(): verzameld informatie over bestaande kamers.
 
+
 ## API functions
 functies API.py:
 
@@ -129,6 +134,13 @@ functies API.py:
 - searchsong(): zoekt via de s API nummers in spotify op.
 - addtracks(): voegt nummers aan spotify playlist toe.
 - removetracks(): verwijderd nummers uit spotify playlist.
+
+
+## Database
+Tables van applicatie
+- users: slaat data van ingelogde gebruikers op
+- rooms: slaat data van een kamer op
+- history: slaat data van een kamer op als deze verwijdert is.
 
 
 ## Plugins en Frameworks
@@ -140,6 +152,7 @@ functies API.py:
 - Bootstrapper: header
 - Spotipy: API
 - SQL: data
+
 
 ## CSS Colours
 - Indigo: HEX #5C44DE
