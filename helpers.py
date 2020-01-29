@@ -115,9 +115,6 @@ def roominfo():
     # Create dict with history per room
     for song in songinfo:
 
-        # Convert miliseconds to minutes and seconds
-        song['duration'] = converter(song['duration'])
-
         # If the roomnumber exists add song to value
         if song['roomname'] in roomdict:
             roomdict[song['roomname']] = roomdict[song['roomname']] + [song]
