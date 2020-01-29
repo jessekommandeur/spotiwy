@@ -82,26 +82,26 @@ def register():
 
         # Ensure username was created
         if not request.form.get("username"):
-            return apology("must provide username", 400)
+            return redirect("/")
 
         # Ensure password was created
         elif not request.form.get("password"):
-            return apology("must provide password", 400)
+            return redirect("/")
 
         # Ensure confirmation password was created
         elif not request.form.get("confirmation"):
-            return apology("must provide password", 400)
+            return redirect("/")
 
         # Ensure passwords match
         elif request.form.get("password") != request.form.get("confirmation"):
-            return apology ("passwords do not match", 400)
+            return redirect("/")
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
 
         # Ensure username exists and password is correct
         if len(rows) != 0:
-            return apology("username is already taken", 400)
+            return redirect("/")
 
         # Insert username and password into table users
         db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)", username=request.form.get("username"),
@@ -128,11 +128,11 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username", 400)
+            return redirect("/")
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 400)
+            return redirect("/")
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = :username",
@@ -140,7 +140,7 @@ def login():
 
         # Ensure username exists and password are correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return apology("invalid username or password", 400)
+            return redirect("/")
 
         # Remember which user has logged in
         session["userid"] = rows[0]["userid"]
@@ -177,14 +177,14 @@ def changeusername():
 
         # Ensure usernames are not same
         if request.form.get("username") == request.form.get("newusername"):
-            return apology ("new username cannot be the same as old username", 400)
+            return redirect("/")
 
        # Query database for username
         userinfo = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
 
         # Ensure username exists and password is correct
         if len(userinfo) != 1 or not check_password_hash(userinfo[0]["hash"], request.form.get("password")):
-            return apology("invalid password", 400)
+            return redirect("/")
 
         # Change usernamee in database
         db.execute("UPDATE users SET username = :username WHERE userid = :userid", username=request.form.get("username"), userid=session["userid"])
@@ -208,11 +208,11 @@ def changepassword():
 
         # Ensure passwords are not identical
         if request.form.get("password") == request.form.get("newpassword"):
-            return apology ("password cannot be the same as old password", 400)
+            return redirect("/")
 
         # Ensure new passwords match
         if request.form.get("newpassword") != request.form.get("newpassword2"):
-            return apology("new password does noet match", 400)
+            return redirect("/")
 
         # Change password in database
         db.execute("UPDATE users SET hash = :hash WHERE username = :username",
