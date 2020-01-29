@@ -110,7 +110,7 @@ functies application.py
 ### extra's:
 - history(): zorgt ervoor dat alles wordt opgeslagen en op de history pagina wordt weergegeven.
 
-### cotrole:
+### controle:
 - availability(): controleert of een gebruikersnaam al in gebruik is.
 - passwordcheck(): gaat na of de twee ingevoerde wachtwoorden overeenkomen.
 - usernamecheck(): gaat na of de gebruikersnaam beschikbaar is.
@@ -123,7 +123,7 @@ functies helpers.py
 - login_required(): controleert of gebruiker is ingelogd met een bestaand account.
 - room_required(): controleert of een gebruiker momenteel in een room zitten.
 
-### coverteren en genereren:
+### converteren en genereren:
 - converter(): converteert miliseconden naar aantal minuten en seconden.
 - generatenumber(): genereert een nieuw kamernummer.
 
@@ -135,6 +135,7 @@ functies helpers.py
 ## API functions
 functies API.py
 
+- connect(): zorgt ervoor dat de API gekoppeld wordt als de webapplicatie voor de eerste keer wordt gerund.
 - createplaylist(): maakt playlist aan in spotify.
 - searchsong(): zoekt via de s API nummers in spotify op.
 - addtracks(): voegt nummers aan spotify playlist toe.
@@ -144,7 +145,7 @@ functies API.py
 Tables van applicatie
 - users: slaat data van ingelogde gebruikers op.
 - rooms: slaat data van een kamer op.
-- history: slaat data van een kamer op als deze verwijdert is.
+- history: slaat data van een kamer op als deze verwijderd is.
 
 ## Plugins en Frameworks
 - Flask
