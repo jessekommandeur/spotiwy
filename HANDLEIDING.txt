@@ -1,13 +1,17 @@
-Handleiding ter voorbereiding gebruik van onze site:
+API handleiding voor koppeling met Spotify.
 
-Voer deze 3 regels in de terminal uit:
-export SPOTIPY_CLIENT_ID=b775ac73bb0e4a4e9189d3e6c1821c32
-export SPOTIPY_CLIENT_SECRET=6327175ca5894985be59ab4f8882e983
-export SPOTIPY_REDIRECT_URI=https://www.google.nl/callback/
 
-Voer daarna het bestand API.py door: 'python API.py' in de terminal uit te voeren.
-Ga naar de link die gegeven wordt.
- Je belandt dan op de spotify connect pagina. De username is: uvaprojects123@gmail.com en het wachtwoord is: WebprogrammerenIK.
- Druk daarna op akkoord.
- Je belandt op een pagina van google met een error erop. Kopieer de link van deze pagina en plak hem in de terminal bij 'Enter the URL you were redirected to:'
- Daarna ben je verbonden met spotify en kan je de site gebruiken.
+1. Voer deze 3 regels in de terminal uit:
+   export SPOTIPY_CLIENT_ID=b775ac73bb0e4a4e9189d3e6c1821c32
+   export SPOTIPY_CLIENT_SECRET=6327175ca5894985be59ab4f8882e983
+   export SPOTIPY_REDIRECT_URI=https://www.google.nl/callback/
+
+2. Voer daarna het bestand API.py uit door: 'python API.py' in de terminal uit te voeren.
+
+3. Ga naar de link die gegeven wordt.
+
+4. Je belandt dan op de spotify connect pagina. De username is: uvaprojects123@gmail.com en het wachtwoord is: WebprogrammerenIK.
+   Druk daarna op akkoord.
+
+5. Je belandt op een pagina van google met een error erop. Kopieer de link van deze pagina en plak hem in de terminal bij 'Enter the URL you were redirected to:'
+   Daarna ben je verbonden met spotify en kan je de site gebruiken.

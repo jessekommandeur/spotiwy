@@ -1,8 +1,11 @@
-# webprogrammeren IK
-- Productnaam: ***Spotiwy***
-- Team: ***10***
+![screenshot webapplicatie](/static/homepage.png "homepage")
 
-***Teamleden:***
+# webprogrammeren IK
+- Productnaam: **Spotiwy**
+- Team: **10**
+
+
+**Teamleden:**
 - Koen Berenschot: vooral application.py, html, css
 - Jonne Hoek spaans: vooral JavaScript functies, html, css
 - Jesse Kommandeur: vooral application.py, html, css
@@ -16,14 +19,26 @@ zijn liken en kan de host nummers verwijderen. Met deze webapplicatie willen we 
 Na afloop van een feestje kan men eventueel de afspeellijst terugvinden via de history functie. De applicatie is visueel aantrekkelijk
 vormgegeven met een gemakkelijk navigeerbare site.
 
+
 ## Opmerkekingen voor de lezer
 - Alle bestanden staan in de git repository branch 'master'.
 - In application.py staan de functies die ervoor zorgen dat alle features op onze website functioneren.
-- In API.py staan functies die gebruikmaken van de spotify API.
-- In helpers.py staan alle hulpfuncties
+- In API.py staan functies die de koppeling met spotify mogelijk maakt.
+- In helpers.py staan hulpfuncties voor application.py
+- In README.md staat uiteraard de read me.
+- In HANDLEIDING.txt wordt beschreven hoe de API gekoppeld kan worden wanneer je de website voor de eerste keer wilt runnen.
+- In de map static staan:
+    - De afbeeldingen van de webapplicatie.
+    - De lettertypen van de webapplicatie.
+    - Styles.css voor styling van de pagina.
+    - Stylesheet.css voor het configureren van lettertypen.
+- In de map templates staan:
+    - Alle HTML pagina's.
+    - op sommige pagina's staat JavaScript.
+
 
 ## Minimum viable product
-Deze features zijn nodig voor het minimum viable product:
+Deze features van de MVP zijn:
 - Inlog/registratie systeem.
 - Pagina waarin gebruikers een kamer kunnen 'hosten'.
 - Pagina waarin gebruikers een kamer kunnen 'joinen'
@@ -33,24 +48,25 @@ Deze features zijn nodig voor het minimum viable product:
 	- Join.
 	- Playlists bekijken.
 
+
 ## Key Feautures
-De belangrijkste features die we in onze webapplicatie geïmplementeerd hebben zijn:
+De belangrijkste features die we uiteindelijk geïmplementeerd hebben zijn:
 - Een registratie systeem waarmee gebruikers een account kunnen aanmaken.
 - Een login systeem waarmee gebruikers met een bestaand account kunnen inloggen.
-- Op de host pagina kunnen ingelogde gebruikers een kamer aanmaken.
-- Er worden verschillende kamers met bijbehorend kamernummer gegenereerd.
+- Een host pagina waar ingelogde gebruikers een kamer kunnen aanmaken.
+- Er worden verschillende kamers met bijbehorende kamernummers gegenereerd.
 - Gebruikers kunnen een kamer joinen op basis van het kamernummer.
-- Gebruikers kunnen een nummer aan een kamer toevoegen en de lijst bekijken.
+- Gebruikers kunnen een nummer aan een kamer toevoegen en de afspeellijst bekijken.
 - De geschiedenis van een kamer wordt opgeslagen en kan bekeken worden.
 
 
 ## Extra Features
-De extra features die we in onze webapplicatie geïmplementeerd hebben zijn:
+De extra features die we uiteindelijk geïmplementeerd hebben zijn:
 - Alerts in JavaScript
 - Terms & Conditions
 - Gebruikers kunnen een nummer liken
 - De host kan nummer verwijderen
-- Wanneer de 'host' de kamer verlaat, wordt de playlist gestopt. (TODO THOMAS)
+- Wanneer de 'host' de kamer verlaat, wordt de kamer verwijderd.
 - Gebruikers kunnen de kamer verlaten
 - Op de host pagina kan host van de room de volgende kameropties toevoegen:
 	- De 'host' kan nummers deleten.
@@ -58,15 +74,17 @@ De extra features die we in onze webapplicatie geïmplementeerd hebben zijn:
 - Een settings pagina, waarop gebruikers:
 	- Gebruikersnaam kunnen veranderen.
 	- Wachtwoord kunnen veranderen veranderen.
+- Een help pagina.
+
 
 ## Main functions
 functies application.py
 
-***navigatie:***
+### navigatie:
 - index(): verwijst gebruikers naar index pagina.
 - settings(): verwijst gebruikers naar settings pagina.
 - help(): verwijst gebruikers naar de help pagina.
-- terms(): verwijst gebruikers naar de terms & conditions
+- terms(): verwijst gebruikers naar de terms & conditions.
 
 ### account:
 - register(): zorgt ervoor dat nieuwe gebruikers een account kunnen aanmaken.
@@ -78,7 +96,7 @@ functies application.py
 ### room setup:
 - host(): zorgt ervoor dat gebruikers een room kunnen aanmaken.
 - joinroom(): zorgt ervoor dat gebruikers een bestaande kamer kunnen joinen.
-- homepage(): zorgt ervoor dat gebruikers die eeen onjuist kamernummer worden doorverwezen
+- homepage(): zorgt ervoor dat gebruikers die eeen onjuist kamernummer worden doorverwezen.
 
 ### room:
 - room(): zorgt ervoor dat de Spotify nummers worden weergegeven op de room pagina.
@@ -92,19 +110,20 @@ functies application.py
 ### extra's:
 - history(): zorgt ervoor dat alles wordt opgeslagen en op de history pagina wordt weergegeven.
 
-### cotrole:
+### controle:
 - availability(): controleert of een gebruikersnaam al in gebruik is.
-- passwordcheck(): gaat na of de twee ingevoerde wachtwoorden overeenkomen
+- passwordcheck(): gaat na of de twee ingevoerde wachtwoorden overeenkomen.
 - usernamecheck(): gaat na of de gebruikersnaam beschikbaar is.
 
-### Helper functions
+
+## Helper functions
 functies helpers.py
 
 ### cookies:
-- login_required(): controleert of gebruiker is ingelogd met een bestaand account
+- login_required(): controleert of gebruiker is ingelogd met een bestaand account.
 - room_required(): controleert of een gebruiker momenteel in een room zitten.
 
-### coverteren en genereren:
+### converteren en genereren:
 - converter(): converteert miliseconden naar aantal minuten en seconden.
 - generatenumber(): genereert een nieuw kamernummer.
 
@@ -112,14 +131,21 @@ functies helpers.py
 - songtoplaylist(): voegt nummers toe aan een bestaande spotify playlist.
 - roominfo(): verzameld informatie over bestaande kamers.
 
-## API functions
-functies API.py:
 
-- createplaylist(): maakt playlist aan in spotify
+## API functions
+functies API.py
+
+- connect(): zorgt ervoor dat de API gekoppeld wordt als de webapplicatie voor de eerste keer wordt gerund.
+- createplaylist(): maakt playlist aan in spotify.
 - searchsong(): zoekt via de s API nummers in spotify op.
 - addtracks(): voegt nummers aan spotify playlist toe.
 - removetracks(): verwijderd nummers uit spotify playlist.
 
+## Database
+Tables van applicatie
+- users: slaat data van ingelogde gebruikers op.
+- rooms: slaat data van een kamer op.
+- history: slaat data van een kamer op als deze verwijderd is.
 
 ## Plugins en Frameworks
 - Flask
@@ -130,6 +156,7 @@ functies API.py:
 - Bootstrapper: header
 - Spotipy: API
 - SQL: data
+
 
 ## CSS Colours
 - Indigo: HEX #5C44DE
