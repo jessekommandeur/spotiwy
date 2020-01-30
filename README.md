@@ -11,6 +11,7 @@
 - Jesse Kommandeur: vooral application.py, html, css
 - Thomas Meijer: vooral API.py, html, css
 
+## Productvideo Spotiwy: https://www.youtube.com/watch?v=oDY37yoT9V0
 
 ## Samenvatting
 Met onze webapplicatie kunnen gebruikers met een Spotify account een 'room' joinen zonder account óf hosten na het aanmaken van een account.
