@@ -112,7 +112,7 @@ def register():
 
         # Insert username, password and spotifykey into table users
         db.execute("INSERT INTO users (username, hash, spotifykey) VALUES(:username, :hash, :spotifykey)", username=request.form.get("username"),
-                hash=generate_password_hash(request.form.get("password")), spotifykey='5q4hjdki3dulvsse9giqoxixt')
+                hash=generate_password_hash(request.form.get("password")), spotifykey='qck1onpl2n6mlpdkiwt8rajq4')
 
         # Redirect user to homepage
         return redirect("/login")
@@ -342,7 +342,7 @@ def room():
     """Room functions"""
 
     # Set up back end of room
-    playlist = db.execute("SELECT * FROM rooms WHERE songid IS NOT NULL AND roomnumber = :roomnumber", roomnumber = session["roomnumber"])
+    playlist = db.execute("SELECT * FROM rooms WHERE songid IS NOT NULL AND roomnumber = :roomnumber ORDER BY likes DESC", roomnumber = session["roomnumber"])
 
 
     # Show room and queue
